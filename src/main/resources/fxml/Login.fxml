@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LoginController">
+   <children>
+      <Label layoutX="236.0" layoutY="5.0" text="Locadora de veiculos" />
+      <Label layoutX="14.0" layoutY="49.0" text="E-mail" />
+       <Label layoutX="14.0" layoutY="128.0" text="Senha" />
+      <Button fx:id="btnEntrar" layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onAction="#fazerLogin" text="Entrar" />
+      <TextField fx:id="campoemail" layoutX="14.0" layoutY="67.0" />
+      <PasswordField fx:id="campoSenha" layoutX="14.0" layoutY="146.0" />
+   </children>
+</AnchorPane>

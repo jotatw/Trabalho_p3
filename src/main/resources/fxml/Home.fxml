@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnVeiculos" mnemonicParsing="false" onAction="#abrirVeiculos" text="Veículos" />
+            <Button fx:id="btnClientes" mnemonicParsing="false" onAction="#abrirClientes" text="Clientes" />
+            <Button fx:id="btnLocacao" mnemonicParsing="false" onAction="#abrirLocacao" text="Nova Locação" />
+            <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#abrirDevolucao" text="Devoluções" />
+            <Button fx:id="btnUsuarios" mnemonicParsing="false" onAction="#abrirUsuarios" text="Usuários" />
+            <Button fx:id="btnSair" mnemonicParsing="false" onAction="#sair" text="Sair" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <Label text="Bem vindo ao sistema" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
