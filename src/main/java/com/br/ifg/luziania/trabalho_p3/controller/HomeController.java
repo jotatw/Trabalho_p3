@@ -12,6 +12,8 @@ public class HomeController {
     @FXML private Button btnClientes;
     @FXML private Button btnVeiculos;
     @FXML private Button btnUsuarios;
+    @FXML private Button btnLocacao;
+    @FXML private Button btnDevolucao;
 
 
 
@@ -45,11 +47,31 @@ public class HomeController {
     }
     @FXML
     private void abrirLocacao() {
-        System.out.println("Nova Locação");
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/Locacao.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnLocacao.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Locadora - Locacao");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     private void abrirDevolucao() {
-        System.out.println("Devoluções");
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/Devolucao.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) btnDevolucao.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Devolucao - Devolucao");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     private void abrirUsuarios() {
