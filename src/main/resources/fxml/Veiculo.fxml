@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.VeiculoController">
+   <children>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Placa" />
+            <Label text="Modelo" GridPane.rowIndex="1" />
+            <Label text="Marca" GridPane.rowIndex="2" />
+            <Label text="Categoria" GridPane.rowIndex="3" />
+            <Label text="Valor da Diaria" GridPane.rowIndex="4" />
+            <TextField fx:id="campoPlaca" GridPane.columnIndex="1" />
+            <TextField fx:id="campoModelo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="campoMarca" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="campoCategoria" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="campoValor" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <CheckBox fx:id="ckbDisponivel" mnemonicParsing="false" text="Disponivel" />
+            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
+            <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" text="Limpar" />
+         </children>
+      </HBox>
+      <TableView fx:id="tabelaVeiculo" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="colunaPlaca" prefWidth="75.0" text="Placa" />
+          <TableColumn fx:id="colunaModelo" prefWidth="75.0" text="Modelo" />
+            <TableColumn fx:id="colunaMarca" prefWidth="75.0" text="Marca" />
+            <TableColumn fx:id="colunaCategoria" prefWidth="75.0" text="Categoria" />
+            <TableColumn fx:id="colunaValor" prefWidth="131.0" text="Valor da Diaria" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

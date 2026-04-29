@@ -5,7 +5,7 @@ public class Usuario {
     private String  email;
     private String  senha;
     private int id;
-    private String perfil; //"ADM" "ATEND"
+    private String perfil; //"ADMIM" "ATENDENDENTE"
     private boolean ativo;
     public Usuario() {
     }
