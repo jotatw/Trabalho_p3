@@ -4,16 +4,16 @@ public class Usuario {
     private String  nomeCompleto;
     private String  email;
     private String  senha;
-    private int cpf;
+    private int id;
     private String perfil; //"ADMIM" "ATENDENDENTE"
     private boolean ativo;
     public Usuario() {
     }
-    public Usuario(String nomeCompleto, String email, String senha,int cpf, String perfil) {
+    public Usuario(String nomeCompleto, String email, String senha,int id, String perfil) {
         this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.senha = senha;
-        this.cpf = cpf;
+        this.id = id;
         this.perfil = perfil;
 
     }
@@ -42,12 +42,12 @@ public class Usuario {
         this.perfil = perfil;
     }
 
-    public int getCpf() {
-        return cpf;
+    public int getId() {
+        return id;
     }
 
-    public void setCpf(int cpf) {
-        this.cpf = cpf;
+    public void setCpf(int id) {
+        this.id = id;
     }
 
     public String getSenha() {
