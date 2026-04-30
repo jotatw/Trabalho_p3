@@ -6,16 +6,26 @@ public class Cliente {
     private String cpf;
     private String telefone;
     private String cnh;
+    private String email;
     private boolean ativo;
 
     public Cliente() {}
 
-    public Cliente(String nome, String cpf, String telefone, String cnh, boolean ativo, int id) {
+    public Cliente(String nome, String cpf, String telefone, String cnh, boolean ativo, int id, String email) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.cnh = cnh;
+        this.email = email;
         this.ativo = ativo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNome() {
