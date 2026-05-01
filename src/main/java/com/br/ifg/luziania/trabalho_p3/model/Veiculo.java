@@ -5,7 +5,7 @@ public class Veiculo {
     private String marca;
     private String modelo;
     private String categoria;
-    private boolean disponibilidade;
+    private boolean disponivel;
     private double valorLocacao;
     private String placa;
 
@@ -59,12 +59,12 @@ public class Veiculo {
         this.categoria = categoria;
     }
 
-    public boolean isDisponibilidade() {
-        return disponibilidade;
+    public boolean isDisponivel() {
+        return disponivel;
     }
 
-    public void setDisponibilidade(boolean disponibilidade) {
-        this.disponibilidade = disponibilidade;
+    public void setDisponivel(boolean disponibilidade) {
+        this.disponivel = disponibilidade;
     }
 
     public double getValorLocacao() {

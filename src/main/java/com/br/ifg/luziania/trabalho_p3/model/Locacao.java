@@ -28,6 +28,9 @@ public class Locacao {
         this.cliente = cliente;
     }
 
+    public Locacao(Cliente cliente, Veiculo veiculo, Usuario usuarioLogado, LocalDate dataRetirada, LocalDate dataDevolucao, double valorTotal) {
+    }
+
     public int getId() {
         return id;
     }
