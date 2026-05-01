@@ -16,6 +16,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Placa" />
@@ -28,11 +29,11 @@
             <TextField fx:id="campoMarca" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="campoCategoria" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="campoValor" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <CheckBox fx:id="ckbDisponivel" mnemonicParsing="false" text="Disponivel" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <CheckBox fx:id="ckbDisponivel" mnemonicParsing="false" text="Disponivel" />
             <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
             <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" text="Limpar" />
          </children>
