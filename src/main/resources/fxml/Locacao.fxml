@@ -37,5 +37,6 @@
          </children>
       </GridPane>
       <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#confirmarLocacao" text="Confirmar Locacao" />
+      <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
    </children>
 </VBox>

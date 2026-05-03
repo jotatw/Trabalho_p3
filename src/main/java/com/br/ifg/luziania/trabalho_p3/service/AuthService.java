@@ -1,8 +1,8 @@
 package com.br.ifg.luziania.trabalho_p3.service;
 
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
-
 import com.br.ifg.luziania.trabalho_p3.dao.UsuarioDAO;
+import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 import java.sql.SQLException;
 
 public class AuthService {
@@ -27,6 +27,7 @@ public class AuthService {
             return null;
         }
         //login bem sucedido
+        LogUtil.registrar("LOGIN", usuario);
         return usuario;
     }
 }

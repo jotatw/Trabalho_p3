@@ -14,21 +14,16 @@ public class Locacao {
     private double multas;
     private String status; //"ATIVA", "ENCERRADA", "CANCELADA"
 
-    public Locacao() {
-    }
-
-    public Locacao(double valorTotal, LocalDate dataDevolucaoPrevista, LocalDate dataRetirada, Veiculo veiculo, Usuario usuario, Cliente cliente) {
-        this.status = "ATIVA";
-        this.multas = 0.0;
-        this.valorTotal = valorTotal;
-        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
-        this.dataRetirada = dataRetirada;
+    public Locacao(){}
+    public Locacao(Cliente cliente, Veiculo veiculo, Usuario usuario, LocalDate dataRetirada, LocalDate dataDevolucaoPrevista, double valorTotal) {
+        this.cliente = cliente;
         this.veiculo = veiculo;
         this.usuario = usuario;
-        this.cliente = cliente;
-    }
-
-    public Locacao(Cliente cliente, Veiculo veiculo, Usuario usuarioLogado, LocalDate dataRetirada, LocalDate dataDevolucao, double valorTotal) {
+        this.dataRetirada = dataRetirada;
+        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
+        this.valorTotal = valorTotal;
+        this.status = "ATIVA";
+        this.multas = 0.0;
     }
 
     public int getId() {

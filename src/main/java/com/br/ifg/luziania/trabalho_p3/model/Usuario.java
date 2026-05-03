@@ -18,6 +18,10 @@ public class Usuario {
 
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public boolean isAtivo() {
         return ativo;
     }

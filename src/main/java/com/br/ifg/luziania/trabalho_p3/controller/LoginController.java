@@ -2,6 +2,7 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import com.br.ifg.luziania.trabalho_p3.service.AuthService;
+import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ public class LoginController {
 
     @FXML private TextField campoemail;
     @FXML private PasswordField campoSenha;
+
 
     private AuthService authService = new AuthService();
 
@@ -35,6 +37,7 @@ public class LoginController {
             Usuario usuario = authService.login(email, senha);
             if(usuario != null) {
                 //quando logar ira para o home
+                Sessao.inicia(usuario);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
                 Parent root = loader.load();
                 Stage stage = (Stage) campoemail.getScene().getWindow();

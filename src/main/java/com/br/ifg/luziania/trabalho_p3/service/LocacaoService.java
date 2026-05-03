@@ -7,6 +7,7 @@ import com.br.ifg.luziania.trabalho_p3.model.Cliente;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
+import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ public class LocacaoService {
         //5. cria e salva a locação
         Locacao locacao = new Locacao(cliente, veiculo, usuarioLogado, dataRetirada, dataDevolucao, valorTotal);
         locacaoDAO.salvar(locacao);
+        LogUtil.registrar("LOCACAO_REALIZADA", usuarioLogado);
         return locacao;
     }
 

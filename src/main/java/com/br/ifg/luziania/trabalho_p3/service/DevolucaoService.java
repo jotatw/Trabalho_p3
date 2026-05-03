@@ -2,6 +2,7 @@ package com.br.ifg.luziania.trabalho_p3.service;
 
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
+import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -32,6 +33,7 @@ public class DevolucaoService {
         locacao.setMultas(multa);
         locacao.setStatus("ENCERRADA");
         locacaoDAO.atualizarDevolucao(locacao);
+        LogUtil.registrar("DEVOLUCAO_REALIZADA", null);
         return locacao;
     }
 }
