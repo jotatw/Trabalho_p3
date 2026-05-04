@@ -7,6 +7,7 @@ import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
 import com.br.ifg.luziania.trabalho_p3.service.LocacaoService;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
+import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -36,8 +37,12 @@ public class LocacaoController {
     private void buscarCliente() {
         String cpf = campoCpf.getText();
 
-        if (cpf.isEmpty()) {
-            mostrarAlerta("Preencha o campo CPF!");
+        if (ValidacaoUtil.cpfValido(cpf)) {
+            mostrarAlerta("Informe o cpf!");
+            return;
+        }
+        if (!ValidacaoUtil.cpfValido(cpf)) {
+            mostrarAlerta("CPF invalido! Use o formato: 000.000.000-00");
             return;
         }
         try {
@@ -55,9 +60,12 @@ public class LocacaoController {
     private void buscarVeiculo() {
         String placa = campoPlaca.getText();
 
-        if (placa.isEmpty()) {
-            mostrarAlerta("Preencha o campo Placa!");
+        if (ValidacaoUtil.campoVazio(placa)) {
+            mostrarAlerta("Informe a Placa!");
             return;
+        }
+        if (!ValidacaoUtil.placaValido(placa.toUpperCase())) {
+            mostrarAlerta("Placa invalido! Utilize o formato Mercosul: ABC1D23");
         }
         try {
             Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);

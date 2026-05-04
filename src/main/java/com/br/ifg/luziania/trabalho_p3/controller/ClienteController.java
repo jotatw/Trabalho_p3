@@ -3,15 +3,18 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 import com.br.ifg.luziania.trabalho_p3.dao.ClienteDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Cliente;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ClienteController {
     @FXML private TextField campoNome;
@@ -21,7 +24,7 @@ public class ClienteController {
     @FXML private TextField campoCnh;
     @FXML private Button btnVoltar;
 
-    @FXML private TableView <Cliente> tabelaClientes;
+    @FXML private TableView <Cliente> tabelaCliente;
     @FXML private TableColumn <Cliente, String> colunaNome;
     @FXML private TableColumn <Cliente, String> colunaCpf;
     @FXML private TableColumn <Cliente, String> colunaTelefone;
@@ -41,11 +44,11 @@ public class ClienteController {
             mostraAlerta("Nome e obrigatorio!");
             return;
         }
-        if (ValidacaoUtil.cpfValido(cpf)) {
+        if (!ValidacaoUtil.cpfValido(cpf)) {
             mostraAlerta(("CPF invalido!  use o formato: 000.000.000-00"));
             return;
         }
-        if (ValidacaoUtil.cnhValido(cnh)) {
+        if (!ValidacaoUtil.cnhValido(cnh)) {
             mostraAlerta("CNH invalida! informe 11 digitos numericos");
             return;
         }
@@ -67,6 +70,7 @@ public class ClienteController {
             dao.salvar(cliente);
             mostraSucesso("Cliente salvo com sucesso!");
             limpar();
+            carregarTabela();
         } catch (SQLException e) {
             mostraAlerta("Erro ao salvar: " + e.getMessage());
         }
@@ -92,6 +96,26 @@ public class ClienteController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    @FXML
+    public void initialize() {
+        //configura cada coluna para pegar o atributo certo do model
+        colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+        colunaCnh.setCellValueFactory(new PropertyValueFactory<>("cnh"));
+        colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
+        carregarTabela();
+    }
+    private void carregarTabela() {
+        try {
+            ClienteDAO dao = new ClienteDAO();
+            List<Cliente> lista = dao.listarTodos();
+            tabelaCliente.setItems(FXCollections.observableArrayList(lista));
+        } catch (SQLException e) {
+            mostraAlerta("Erro ao carregar cliente: !" +  e.getMessage());
         }
     }
     private void mostraAlerta(String msg) {

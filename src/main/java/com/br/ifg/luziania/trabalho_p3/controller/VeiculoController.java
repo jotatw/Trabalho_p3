@@ -3,15 +3,18 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class VeiculoController {
     @FXML private TextField campoPlaca;
@@ -22,7 +25,7 @@ public class VeiculoController {
     @FXML private CheckBox ckbDisponivel;
     @FXML private Button btnVoltar;
 
-    @FXML private TableView <Veiculo> tableVeiculo;
+    @FXML private TableView <Veiculo> tabelaVeiculo;
     @FXML private TableColumn<Veiculo, String> colunaPlaca;
     @FXML private TableColumn<Veiculo, String> colunaModelo;
     @FXML private TableColumn<Veiculo, String> colunaMarca;
@@ -82,6 +85,7 @@ public class VeiculoController {
             dao.salvar(veiculo);
             mostraSucesso("Veiculo cadastrado com sucesso");
             limpar();
+            carregarTabela();
         } catch (SQLException e) {
             mostraAlerta("Erro ao cadastrar veiculo" + e.getMessage());
         }
@@ -108,6 +112,24 @@ public class VeiculoController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    @FXML
+    public void initialize() {
+        colunaPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
+        colunaModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        colunaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valorLocacao"));
+        carregarTabela();
+    }
+    private void carregarTabela() {
+        try {
+            VeiculoDAO dao = new VeiculoDAO();
+            List<Veiculo> lista = dao.listarTodos();
+            tabelaVeiculo.setItems(FXCollections.observableArrayList(lista));
+        } catch (SQLException e) {
+            mostraAlerta("Erro ao carregar veiculos: " + e.getMessage());
         }
     }
     private void mostraAlerta(String msg) {

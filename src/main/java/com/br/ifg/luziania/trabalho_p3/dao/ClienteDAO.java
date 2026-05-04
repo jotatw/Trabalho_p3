@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO {
     //salva um novo cliente no banco de dados
@@ -55,5 +57,31 @@ public class ClienteDAO {
             throw e;
         }
         return null; //para clientes não encontrados
+    }
+    public List<Cliente> listarTodos() throws SQLException {
+        String sql = "SELECT * FROM cliente WHERE ativo = true ORDER BY nome";
+        List<Cliente> lista = new ArrayList<>();
+
+        try {
+            Connection conn = DBConnection.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Cliente c = new Cliente();
+                c.setId(rs.getInt("id"));
+                c.setNome(rs.getString("nome"));
+                c.setCpf(rs.getString("cpf"));
+                c.setCnh(rs.getString("cnh"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setEmail(rs.getString("email"));
+                c.setAtivo(rs.getBoolean("ativo"));
+                lista.add(c);
+            }
+        } catch (SQLException e) {
+            LogUtil.registrarErro("ClienteDAO.listarTodos", Sessao.getUsuarioLogado(), e);
+            throw e;
+        }
+        return lista;
     }
 }

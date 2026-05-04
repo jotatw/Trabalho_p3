@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VeiculoDAO {
     //salva um novo veiculo
@@ -55,5 +57,31 @@ public class VeiculoDAO {
             throw  e;
         }
         return null;
+    }
+    public List<Veiculo> listarTodos() throws SQLException {
+        String sql = "SELECT * FROM veiculo ORDER BY modelo";
+        List<Veiculo> lista = new ArrayList<>();
+
+        try {
+            Connection conn = DBConnection.getConexao();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Veiculo v = new Veiculo();
+                v.setId(rs.getInt("id"));
+                v.setPlaca(rs.getString("placa"));
+                v.setModelo(rs.getString("modelo"));
+                v.setMarca(rs.getString("marca"));
+                v.setCategoria(rs.getString("categoria"));
+                v.setValorLocacao(rs.getDouble("valor_diaria"));
+                v.setDisponivel(rs.getBoolean("disponivel"));
+                lista.add(v);
+            }
+        } catch (SQLException e) {
+            LogUtil.registrarErro("VeiculoDAO.listarTodos", Sessao.getUsuarioLogado(), e);
+            throw  e;
+        }
+        return lista;
     }
 }
