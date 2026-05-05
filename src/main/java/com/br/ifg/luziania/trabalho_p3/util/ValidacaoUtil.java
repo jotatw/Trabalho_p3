@@ -33,5 +33,4 @@ public class ValidacaoUtil {
     public static boolean campoVazio(String texto) {
         return texto == null || texto.trim().isEmpty();
     }
-
 }

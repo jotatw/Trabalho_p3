@@ -11,11 +11,10 @@ module com.br.ifg.luziania.trabalho_p3 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    //requires org.mindrot.jbcrypt;
 
     opens com.br.ifg.luziania.trabalho_p3 to javafx.graphics, javafx.fxml;
     opens com.br.ifg.luziania.trabalho_p3.controller to javafx.fxml;
-    opens com.br.ifg.luziania.trabalho_p3.model to java.base, javafx.fxml;
+    opens com.br.ifg.luziania.trabalho_p3.model to javafx.base, javafx.fxml;
 
     exports com.br.ifg.luziania.trabalho_p3;
 }
