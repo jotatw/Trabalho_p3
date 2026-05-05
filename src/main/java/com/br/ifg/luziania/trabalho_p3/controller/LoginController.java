@@ -43,6 +43,7 @@ public class LoginController {
                 Stage stage = (Stage) campoemail.getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Locadora - Home");
+                stage.show();
             } else {
                 mostrarAlerta("E-mail ou senha invalidos");
             }

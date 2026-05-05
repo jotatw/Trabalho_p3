@@ -37,10 +37,6 @@ public class LocacaoController {
     private void buscarCliente() {
         String cpf = campoCpf.getText();
 
-        if (ValidacaoUtil.cpfValido(cpf)) {
-            mostrarAlerta("Informe o cpf!");
-            return;
-        }
         if (!ValidacaoUtil.cpfValido(cpf)) {
             mostrarAlerta("CPF invalido! Use o formato: 000.000.000-00");
             return;

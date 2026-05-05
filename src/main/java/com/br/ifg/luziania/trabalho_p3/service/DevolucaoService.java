@@ -3,6 +3,7 @@ package com.br.ifg.luziania.trabalho_p3.service;
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
+import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -28,12 +29,12 @@ public class DevolucaoService {
             //multa = dias de atraso x valor diaria x 20%
             double valorDiaria = locacao.getValorTotal() / ChronoUnit.DAYS.between(locacao.getDataRetirada(), locacao.getDataDevolucaoPrevista());
             multa = diasAtraso * valorDiaria * 0.20;
-            //5. atualiza locaçaõ
         }
+        //5. atualiza locaçaõ
         locacao.setMultas(multa);
         locacao.setStatus("ENCERRADA");
         locacaoDAO.atualizarDevolucao(locacao);
-        LogUtil.registrar("DEVOLUCAO_REALIZADA", null);
+        LogUtil.registrar("DEVOLUCAO_REALIZADA", Sessao.getUsuarioLogado());
         return locacao;
     }
 }

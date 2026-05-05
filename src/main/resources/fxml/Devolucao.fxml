@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.DevolucaoController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.DevolucaoController">
    <children>
       <GridPane>
         <columnConstraints>
@@ -25,7 +25,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVeiculo" text="Buscar" GridPane.columnIndex="2" />
+            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVeiculo" styleClass="btn-primario" text="Buscar" GridPane.columnIndex="2" />
             <Label text="Placa" />
             <TextField fx:id="campoPlaca" GridPane.columnIndex="1" />
             <Label text="Cliente" GridPane.rowIndex="2" />
@@ -38,7 +38,7 @@
             <Label text="Dias de Atraso" GridPane.rowIndex="6" />
             <Label text="Multa" GridPane.rowIndex="7" />
             <Label text="Valor Final" GridPane.rowIndex="8" />
-            <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#confirmarDevolucao" text="Confirmar Devolucao" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#confirmarDevolucao" styleClass="btn-primario" text="Confirmar Devolucao" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <Label fx:id="labelValor" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label fx:id="labelAtraso" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label fx:id="labelMulta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />

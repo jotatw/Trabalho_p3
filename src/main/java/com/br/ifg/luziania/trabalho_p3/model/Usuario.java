@@ -18,10 +18,6 @@ public class Usuario {
 
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public boolean isAtivo() {
         return ativo;
     }
@@ -50,7 +46,7 @@ public class Usuario {
         return id;
     }
 
-    public void setCpf(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

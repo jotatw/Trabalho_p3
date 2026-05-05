@@ -1,0 +1,51 @@
+.root{
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #F5F5F5;
+}
+.titulo{
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1565C0;
+}
+.label-campo{
+    -fx-font-size: 13px;
+    -fx-text-fill: #616161;
+}
+.campo-texto{
+    -fx-background-color: white;
+    -fx-border-color: #BDBDBD;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 14px;
+    -fx-pref-height: 38px;
+    -fx-pref-width: 280px;
+}
+.campo-texto:focused{
+    -fx-border-color: #1565C0;
+    -fx-border-width: 1.5;
+}
+/* estilizar os botões */
+.button{
+    -fx-background-color: #1565C0;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+.btn-primario {
+    -fx-background-color: #1565C0;
+    -fx-text-fill: white;
+}
+.btn-perigo {
+    -fx-background-color: #C62828;
+    -fx-text-fill: white;
+}
+.button-salvar {
+    -fx-background-color: #006907;
+}
+/* efeito ao passar o mouse */
+.button:hover{
+    -fx-background-color: #0D47A1;
+}
