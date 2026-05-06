@@ -3,28 +3,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
+<BorderPane styleClass="pagina" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
    <left>
-      <VBox prefHeight="400.0" prefWidth="142.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+      <VBox prefWidth="220" spacing="8" styleClass="sidebar">
          <children>
-            <Label text="MENU" styleClass="sidebar-titulo" />
+            <Label styleClass="sidebar-titulo" text="MENU" />
             <Button fx:id="btnVeiculos" mnemonicParsing="false" onAction="#abrirVeiculos" styleClass="nav-btn" text="Veículos" />
             <Button fx:id="btnClientes" mnemonicParsing="false" onAction="#abrirClientes" styleClass="nav-btn" text="Clientes" />
             <Button fx:id="btnLocacao" mnemonicParsing="false" onAction="#abrirLocacao" styleClass="nav-btn" text="Nova Locação" />
             <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#abrirDevolucao" styleClass="nav-btn" text="Devoluções" />
             <Button fx:id="btnUsuarios" mnemonicParsing="false" onAction="#abrirUsuarios" styleClass="nav-btn" text="Usuários" />
-            <Pane VBox.vgrow="ALWAYS"/>
+            <Pane VBox.vgrow="ALWAYS" />
             <Button fx:id="btnSair" mnemonicParsing="false" onAction="#sair" styleClass="nav-btn-sair" text="Sair" />
          </children>
       </VBox>
    </left>
    <center>
-      <VBox alignment="CENTER" spacing="10" styleClass="area-central">
-         <children>
-            <Label text="🚗" style="-fx-font-size: 60px;"/>
-            <Label text="Locadora de Veiculos" styleClass="titulo-home"/>
-            <Label text="Selecione uma opção no menu lateral" styleClass="subtitulo-home"/>
-         </children>
-      </VBox>
+      <StackPane styleClass="area-home">
+         <VBox alignment="CENTER" spacing="10" styleClass="area-central">
+            <children>
+               <Label style="-fx-font-size: 56px;" text="🚗" />
+               <Label styleClass="titulo-home" text="Locadora de Veiculos" />
+               <Label styleClass="subtitulo-home" text="Selecione uma opção no menu lateral" />
+            </children>
+         </VBox>
+      </StackPane>
    </center>
 </BorderPane>
