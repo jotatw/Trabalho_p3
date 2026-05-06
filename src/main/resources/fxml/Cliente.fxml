@@ -5,7 +5,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.ClienteController">
    <children>
-      <GridPane>
+      <GridPane prefHeight="176.0" prefWidth="520.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -19,7 +19,7 @@
         </rowConstraints>
          <children>
             <Label text="Nome" />
-            <TextField fx:id="campoNome" styleClass="label-campo" GridPane.columnIndex="1" />
+            <TextField fx:id="campoNome" GridPane.columnIndex="1" />
             <TextField fx:id="campoCpf" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="campoCnh" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="campoTelefone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -32,9 +32,9 @@
       </GridPane>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
-            <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-perigo" text="Limpar" />
-            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
+            <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
+            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
          </children>
       </HBox>
       <TableView fx:id="tabelaCliente" prefHeight="200.0" prefWidth="200.0">
@@ -42,8 +42,8 @@
           <TableColumn fx:id="colunaNome" prefWidth="75.0" text="Nome" />
           <TableColumn fx:id="colunaCpf" prefWidth="75.0" text="CPF" />
             <TableColumn fx:id="colunaCnh" prefWidth="93.0" text="CNH" />
-            <TableColumn fx:id="colunaTelefone" prefWidth="151.0" text="Telefone" />
-            <TableColumn fx:id="colunaEmail" prefWidth="205.0" text="E-mail" />
+            <TableColumn fx:id="colunaTelefone" prefWidth="110.0" text="Telefone" />
+            <TableColumn fx:id="colunaEmail" prefWidth="166.0" text="E-mail" />
         </columns>
       </TableView>
    </children>

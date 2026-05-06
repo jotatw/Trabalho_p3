@@ -29,9 +29,9 @@
       </GridPane>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
-            <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-perigo" text="Limpar" />
-            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
+            <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
+            <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
          </children>
       </HBox>
       <TableView fx:id="tabelaUsuario" prefHeight="200.0" prefWidth="200.0">

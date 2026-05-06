@@ -5,18 +5,26 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
    <left>
-      <VBox prefHeight="400.0" prefWidth="142.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="400.0" prefWidth="142.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnVeiculos" mnemonicParsing="false" onAction="#abrirVeiculos" styleClass="btn-primario" text="Veículos" />
-            <Button fx:id="btnClientes" mnemonicParsing="false" onAction="#abrirClientes" text="Clientes" />
-            <Button fx:id="btnLocacao" mnemonicParsing="false" onAction="#abrirLocacao" text="Nova Locação" />
-            <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#abrirDevolucao" text="Devoluções" />
-            <Button fx:id="btnUsuarios" mnemonicParsing="false" onAction="#abrirUsuarios" text="Usuários" />
-            <Button fx:id="btnSair" mnemonicParsing="false" onAction="#sair" text="Sair" />
+            <Label text="MENU" styleClass="sidebar-titulo" />
+            <Button fx:id="btnVeiculos" mnemonicParsing="false" onAction="#abrirVeiculos" styleClass="nav-btn" text="Veículos" />
+            <Button fx:id="btnClientes" mnemonicParsing="false" onAction="#abrirClientes" styleClass="nav-btn" text="Clientes" />
+            <Button fx:id="btnLocacao" mnemonicParsing="false" onAction="#abrirLocacao" styleClass="nav-btn" text="Nova Locação" />
+            <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#abrirDevolucao" styleClass="nav-btn" text="Devoluções" />
+            <Button fx:id="btnUsuarios" mnemonicParsing="false" onAction="#abrirUsuarios" styleClass="nav-btn" text="Usuários" />
+            <Pane VBox.vgrow="ALWAYS"/>
+            <Button fx:id="btnSair" mnemonicParsing="false" onAction="#sair" styleClass="nav-btn-sair" text="Sair" />
          </children>
       </VBox>
    </left>
    <center>
-      <Label styleClass="titulo" text="Bem vindo ao sistema" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER" spacing="10" styleClass="area-central">
+         <children>
+            <Label text="🚗" style="-fx-font-size: 60px;"/>
+            <Label text="Locadora de Veiculos" styleClass="titulo-home"/>
+            <Label text="Selecione uma opção no menu lateral" styleClass="subtitulo-home"/>
+         </children>
+      </VBox>
    </center>
 </BorderPane>

@@ -1,16 +1,84 @@
+/* fundo da tela */
 .root{
     -fx-font-family: "Segoe UI", Arial, sans-serif;
-    -fx-background-color: #F5F5F5;
+    -fx-background-color: #E3F2FD;
 }
-.titulo{
-    -fx-font-size: 22px;
+/* card central */
+VBox {
+    -fx-background-color: white;
+    -fx-padding: 40px;
+    -fx-max-width: 360px;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 0, 4);
+}
+/* sidebar */
+.sidebar {
+    -fx-background-color: #0D47A1;
+    -fx-padding: 0 0 16 0;
+    -fx-pref-width: 200;
+    -fx-pref-height: 200;
+}
+.sidebar-titulo {
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-padding: 20 20 10 20;
+    -fx-letter-spacing: 1;
+}
+.nav-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 20 12 20;
+    -fx-cursor: hand;
+    -fx-pref-width: 200;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+}
+.nav-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-text-fill: white;
+}
+.nav-btn-sair:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-text-fill: #FF6B6B;
+}
+/* area cental do home */
+.area-central {
+    -fx-background-color: #F5F7FA;
+    -fx-padding: 40px;
+}
+.titulo-home {
+    -fx-font-size: 12;
     -fx-font-weight: bold;
     -fx-text-fill: #1565C0;
 }
-.label-campo{
-    -fx-font-size: 13px;
-    -fx-text-fill: #616161;
+.subtitulo-home {
+    -fx-font-size: 14;
+    -fx-text-fill: #90A4AE;
 }
+/* tableview */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+.table-view .colum-header {
+    -fx-background-color: #E3F2FD;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1565C0;
+    -fx-padding: 10;
+}
+.table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+.table-row-cell:selected {
+    -fx-background-color: #BBDEFB;
+    -fx-text-fill: #212121;
+}
+/* campo dos formularios */
 .campo-texto{
     -fx-background-color: white;
     -fx-border-color: #BDBDBD;
@@ -19,33 +87,44 @@
     -fx-padding: 8 12 8 12;
     -fx-font-size: 14px;
     -fx-pref-height: 38px;
-    -fx-pref-width: 280px;
 }
 .campo-texto:focused{
     -fx-border-color: #1565C0;
     -fx-border-width: 1.5;
 }
-/* estilizar os botões */
-.button{
-    -fx-background-color: #1565C0;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 8 20 8 20;
-    -fx-background-radius: 6;
-    -fx-cursor: hand;
-}
+/* botões */
 .btn-primario {
     -fx-background-color: #1565C0;
     -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-padding: 10 24 10 24;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
 }
-.btn-perigo {
-    -fx-background-color: #C62828;
-    -fx-text-fill: white;
-}
-.button-salvar {
-    -fx-background-color: #006907;
-}
-/* efeito ao passar o mouse */
-.button:hover{
+.btn-primario:hover{
     -fx-background-color: #0D47A1;
+}
+.btn-secundario {
+    -fx-background-color: transparent;
+    -fx-border-color: #1565C0;
+    -fx-border-radius: 6;
+    -fx-text-fill: #1565C0;
+    -fx-font-size: 14;
+    -fx-padding: 9 22 9 22;
+    -fx-cursor: hand;
+}
+.btn-secundario:hover{
+    -fx-background-color: #E3F2FD;
+}
+/* titulo e labels */
+.titulo {
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1565C0;
+    -fx-padding: 0 0 10 0;
+}
+.label-campo {
+    -fx-font-size: 13;
+    -fx-text-fill: #616161;
 }

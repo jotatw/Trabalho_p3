@@ -3,13 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="root" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LoginController">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="15" styleClass="VBox" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LoginController">
    <children>
       <Label layoutX="185.0" layoutY="-2.0" styleClass="titulo" text="Locadora de veiculos" />
-      <Label layoutX="13.0" layoutY="49.0" styleClass="campo-texto" text="E-mail" />
-       <Label layoutX="13.0" layoutY="113.0" prefWidth="358.0" styleClass="campo-texto" text="Senha" />
+      <TextField fx:id="campoemail" promptText="E-mail" styleClass="campo-texto" />
+      <PasswordField fx:id="campoSenha" promptText="Senha" styleClass="campo-texto" />
       <Button fx:id="btnEntrar" layoutX="13.0" layoutY="164.0" mnemonicParsing="false" onAction="#fazerLogin" styleClass="btn-primario" text="Entrar" />
-      <TextField fx:id="campoemail" layoutX="81.0" layoutY="55.0" prefHeight="26.0" prefWidth="208.0" styleClass="label-campo" />
-      <PasswordField fx:id="campoSenha" layoutX="81.0" layoutY="119.0" prefHeight="26.0" prefWidth="208.0" styleClass="label-campo" />
    </children>
-</AnchorPane>
+</VBox>

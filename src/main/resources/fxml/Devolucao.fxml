@@ -25,9 +25,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVeiculo" styleClass="btn-primario" text="Buscar" GridPane.columnIndex="2" />
+            <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVeiculo" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" />
             <Label text="Placa" />
-            <TextField fx:id="campoPlaca" GridPane.columnIndex="1" />
+            <TextField fx:id="campoPlaca" styleClass="campo-texto" GridPane.columnIndex="1" />
             <Label text="Cliente" GridPane.rowIndex="2" />
             <Label fx:id="labelCliente" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="Retirada" GridPane.rowIndex="3" />
@@ -45,6 +45,6 @@
             <Label fx:id="labelValorFinal" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
          </children>
       </GridPane>
-      <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+      <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
    </children>
 </VBox>

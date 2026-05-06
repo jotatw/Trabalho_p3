@@ -5,7 +5,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LocacaoController">
    <children>
-      <GridPane>
+      <GridPane prefHeight="200.0" prefWidth="520.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -20,8 +20,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnBuscarCliente" mnemonicParsing="false" onAction="#buscarCliente" text="Buscar" GridPane.columnIndex="2" />
-            <Button fx:id="btnBuscarVeiculo" mnemonicParsing="false" onAction="#buscarVeiculo" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="btnBuscarCliente" mnemonicParsing="false" onAction="#buscarCliente" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" />
+            <Button fx:id="btnBuscarVeiculo" mnemonicParsing="false" onAction="#buscarVeiculo" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="labelCliente" text="Label" GridPane.columnIndex="3" />
             <Label fx:id="labelVeiculo" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <DatePicker fx:id="dataRetirada" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -31,12 +31,12 @@
             <Label text="Retirada" GridPane.rowIndex="2" />
             <Label text="Placa" GridPane.rowIndex="1" />
             <Label text="CPF" />
-            <TextField fx:id="campoCpf" GridPane.columnIndex="1" />
-            <TextField fx:id="campoPlaca" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="campoCpf" styleClass="campo-texto" GridPane.columnIndex="1" />
+            <TextField fx:id="campoPlaca" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="labelValor" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#confirmarLocacao" text="Confirmar Locacao" />
-      <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+      <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#confirmarLocacao" styleClass="btn-primario" text="Confirmar Locacao" />
+      <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
    </children>
 </VBox>
