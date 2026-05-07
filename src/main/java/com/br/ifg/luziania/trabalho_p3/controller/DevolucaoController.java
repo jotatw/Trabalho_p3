@@ -89,13 +89,13 @@ public class DevolucaoController {
     }
     private void limparCampos() {
         campoPlaca.clear();
-        labelCliente.setText("Label");
-        labelRetirada.setText("Label");
-        labelDevolucao.setText("Label");
-        labelValor.setText("Label");
-        labelAtraso.setText("Label");
-        labelMulta.setText("Label");
-        labelValorFinal.setText("Label");
+        labelCliente.setText("-");
+        labelRetirada.setText("-");
+        labelDevolucao.setText("-");
+        labelValor.setText("R$ 0,00");
+        labelAtraso.setText("-");
+        labelMulta.setText("-");
+        labelValorFinal.setText("R$ 0,00");
     }
     @FXML
     private void voltar() {
