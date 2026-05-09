@@ -2,12 +2,10 @@ package com.br.ifg.luziania.trabalho_p3.util;
 
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
