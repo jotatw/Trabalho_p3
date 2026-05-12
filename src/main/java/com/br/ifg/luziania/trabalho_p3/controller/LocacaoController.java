@@ -6,6 +6,7 @@ import com.br.ifg.luziania.trabalho_p3.model.Cliente;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
 import com.br.ifg.luziania.trabalho_p3.service.LocacaoService;
+import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.fxml.FXML;
@@ -32,6 +33,13 @@ public class LocacaoController {
     @FXML private Label labelVeiculo;
     @FXML private Label labelValor;
     @FXML private Button btnVoltar;
+
+    @FXML
+    public void initialize() {
+        //aplica validação nos campos de busca
+        MascaraUtil.cpf(campoCpf);
+        MascaraUtil.placa(campoPlaca);
+    }
 
     @FXML
     private void buscarCliente() {
@@ -61,7 +69,7 @@ public class LocacaoController {
             return;
         }
         if (!ValidacaoUtil.placaValido(placa.toUpperCase())) {
-            mostrarAlerta("Placa invalido! Utilize o formato Mercosul: ABC1D23");
+            mostrarAlerta("Placa invalido! Utilize o formato Mercosul ou o antigo: ABC1D23/ABC1234");
         }
         try {
             Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);

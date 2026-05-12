@@ -3,37 +3,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox styleClass="pagina" spacing="0" alignment="TOP_CENTER" stylesheets="@../css/estilos.css"
-      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LocacaoController">
+<VBox alignment="TOP_CENTER" spacing="0" styleClass="pagina" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LocacaoController">
     <VBox styleClass="tela-formulario">
         <VBox styleClass="painel-formulario">
             <GridPane hgap="12" vgap="10">
                 <columnConstraints>
-                    <ColumnConstraints minWidth="120" prefWidth="140"/>
-                    <ColumnConstraints minWidth="220" prefWidth="280"/>
-                    <ColumnConstraints minWidth="110" prefWidth="130"/>
-                    <ColumnConstraints minWidth="160" prefWidth="200" hgrow="ALWAYS"/>
+                    <ColumnConstraints minWidth="120" prefWidth="140" />
+                    <ColumnConstraints minWidth="220" prefWidth="280" />
+                    <ColumnConstraints minWidth="110" prefWidth="130" />
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="160" prefWidth="200" />
                 </columnConstraints>
 
-                <Label text="CPF" styleClass="rotulo-campo"/>
+                <Label styleClass="rotulo-campo" text="CPF" />
                 <TextField fx:id="campoCpf" styleClass="campo-texto" GridPane.columnIndex="1" />
-                <Button fx:id="btnBuscarCliente" mnemonicParsing="false" onAction="#buscarCliente" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2"/>
-                <Label fx:id="labelCliente" text="-" GridPane.columnIndex="3" styleClass="rotulo-resultado"/>
+                <Button fx:id="btnBuscarCliente" mnemonicParsing="false" onAction="#buscarCliente" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" />
+                <Label fx:id="labelCliente" styleClass="rotulo-resultado" text="-" GridPane.columnIndex="3" />
 
-                <Label text="Placa" GridPane.rowIndex="1" styleClass="rotulo-campo"/>
+                <Label styleClass="rotulo-campo" text="Placa" GridPane.rowIndex="1" />
                 <TextField fx:id="campoPlaca" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Button fx:id="btnBuscarVeiculo" mnemonicParsing="false" onAction="#buscarVeiculo" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Label fx:id="labelVeiculo" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" styleClass="rotulo-resultado"/>
+                <Label fx:id="labelVeiculo" styleClass="rotulo-resultado" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                <Label text="Retirada" GridPane.rowIndex="2" styleClass="rotulo-campo"/>
+                <Label styleClass="rotulo-campo" text="Retirada" GridPane.rowIndex="2" />
                 <DatePicker fx:id="dataRetirada" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <Label text="Devolucao" GridPane.rowIndex="3" styleClass="rotulo-campo"/>
+                <Label styleClass="rotulo-campo" text="Devolucao" GridPane.rowIndex="3" />
                 <DatePicker fx:id="dataDevolucao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                <Label text="Valor total" GridPane.rowIndex="4" styleClass="rotulo-campo"/>
-                <Label fx:id="labelValor" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label styleClass="rotulo-campo" text="Valor total" GridPane.rowIndex="4" />
+                <Label fx:id="labelValor" styleClass="rotulo-resultado" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
             </GridPane>
 
             <HBox styleClass="linha-btn">

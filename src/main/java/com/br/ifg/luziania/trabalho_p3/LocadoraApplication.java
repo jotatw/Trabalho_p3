@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class HelloApplication extends Application {
+public class LocadoraApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
         } catch (SQLException e) {
             System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
         }
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/fxml/Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(LocadoraApplication.class.getResource("/fxml/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Locadora");
         stage.setScene(scene);

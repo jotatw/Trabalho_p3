@@ -2,6 +2,7 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 
 import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
+import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
@@ -116,6 +117,9 @@ public class VeiculoController {
     }
     @FXML
     public void initialize() {
+        //aplica a mascara de placa - aceita formato antigo e mercosul
+        MascaraUtil.placa(campoPlaca);
+
         colunaPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
         colunaModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
         colunaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));

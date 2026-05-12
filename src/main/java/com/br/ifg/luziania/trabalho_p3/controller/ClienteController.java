@@ -2,6 +2,7 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 
 import com.br.ifg.luziania.trabalho_p3.dao.ClienteDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Cliente;
+import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -80,9 +81,9 @@ public class ClienteController {
     private void limpar() {
         campoNome.clear();
         campoCpf.clear();
+        campoCnh.clear();
         campoTelefone.clear();
         campoEmail.clear();
-        campoCnh.clear();
     }
     @FXML
     private void voltar() {
@@ -100,6 +101,11 @@ public class ClienteController {
     }
     @FXML
     public void initialize() {
+        //aplica as mascaras no campo de entrada
+        MascaraUtil.cpf(campoCpf);
+        MascaraUtil.cnh(campoCnh);
+        MascaraUtil.telefone(campoTelefone);
+
         //configura cada coluna para pegar o atributo certo do model
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaCpf.setCellValueFactory(new PropertyValueFactory<>("cpf"));

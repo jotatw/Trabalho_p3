@@ -4,6 +4,7 @@ import com.br.ifg.luziania.trabalho_p3.dao.ClienteDAO;
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.service.DevolucaoService;
+import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,6 +31,11 @@ public class DevolucaoController {
     @FXML private Label labelMulta;
     @FXML private Label labelValorFinal;
     @FXML private Button btnVoltar;
+
+    @FXML
+    public void initialize(){
+        MascaraUtil.placa(campoPlaca);
+    }
 
     @FXML
     private void buscarVeiculo() {
