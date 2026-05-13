@@ -3,6 +3,8 @@ package com.br.ifg.luziania.trabalho_p3.service;
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import com.br.ifg.luziania.trabalho_p3.dao.UsuarioDAO;
 import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
+import com.br.ifg.luziania.trabalho_p3.util.SenhaUtil;
+
 import java.sql.SQLException;
 
 public class AuthService {
@@ -14,16 +16,18 @@ public class AuthService {
 
         //se não for encontrado retorna null
         if (usuario == null) {
+            LogUtil.registrar("LOGIN_FALHOU", null, "Usuario nao encontrado com email: " + email);
             return null;
         }
-
         //verifica se o usuario esta ativo
         if(!usuario.isAtivo()){
+            LogUtil.registrar("LOGIN_FALHOU", usuario, "Usuario não esta ativo");
             return null;
         }
 
         //verifica senha
-        if (!usuario.getSenha().equals(senha)) {
+        if (!SenhaUtil.verificarSenha(senha, usuario.getSenha())) {
+            LogUtil.registrar("LOGIN_FALHOU", usuario, "Senha incorreta");
             return null;
         }
         //login bem sucedido

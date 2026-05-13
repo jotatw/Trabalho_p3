@@ -2,6 +2,7 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 
 import com.br.ifg.luziania.trabalho_p3.dao.UsuarioDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
+import com.br.ifg.luziania.trabalho_p3.util.SenhaUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -68,7 +69,8 @@ public class UsuarioController {
             Usuario usuario = new Usuario();
             usuario.setNomeCompleto(nome);
             usuario.setEmail(email);
-            usuario.setSenha(senha);
+            String senhaHash = SenhaUtil.gerarHash(senha);
+            usuario.setSenha(senhaHash);
             usuario.setPerfil(perfil);
 
             UsuarioDAO dao = new UsuarioDAO();

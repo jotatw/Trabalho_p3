@@ -11,6 +11,7 @@ module com.br.ifg.luziania.trabalho_p3 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires jbcrypt;
 
     opens com.br.ifg.luziania.trabalho_p3 to javafx.graphics, javafx.fxml;
     opens com.br.ifg.luziania.trabalho_p3.controller to javafx.fxml;

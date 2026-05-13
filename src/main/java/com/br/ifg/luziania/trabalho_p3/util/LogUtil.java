@@ -5,6 +5,7 @@ import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -25,13 +26,22 @@ public class LogUtil {
             System.err.println("Erro ao criar pasta de logs: " + e.getMessage());
         }
     }
-
     public static void registrar(String acao, Usuario usuario) {
-       String linha = String.format("[%s] ACAO='%s' USUARIO='%s'",
+        registrar(acao, usuario, null);
+    }
+    public static void registrar(String acao, Usuario usuario, String detalhes) {
+       String linha = String.format("[%s] ACAO='%s' USUARIO='%s' DETALHES='%s'",
                LocalDateTime.now().format(FMT),
                acao,
-               usuario != null ? usuario.getEmail() : "anonimo");
+               usuario != null ? usuario.getEmail() : "anonimo",
+               detalhes != null ? detalhes : "-");
        gravar(ARQ_USO, linha);
+    }
+    public static void registrarAcao(String acao) {
+        registrar(acao, Sessao.getUsuarioLogado(), null);
+    }
+    public static void registrarAcao(String acao, String detalhes) {
+        registrar(acao, Sessao.getUsuarioLogado(), detalhes);
     }
     public static void registrarErro(String acao,Usuario usuario, Exception ex) {
         String linha = String.format("[%s] ERRO acao='%s' usuario='%s' descricao='%s'",
@@ -39,6 +49,13 @@ public class LogUtil {
                 acao, usuario != null ? usuario.getEmail() : "anonimo",
                 ex.getMessage());
         gravar(ARQ_ERROS, linha);
+        gravar(ARQ_ERROS, stackTraceParaTexto(ex));
+    }
+    private static String stackTraceParaTexto(Exception ex) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        ex.printStackTrace(pw);
+        return sw.toString();
     }
     private static synchronized void gravar(String arquivo, String conteudo) {
         try (FileWriter fw = new FileWriter(arquivo, true);
