@@ -22,27 +22,32 @@ public class LocacaoService {
         //1. buscar o cliente
         Cliente cliente = clienteDAO.buscarPorCpf(cpf);
         if(cliente == null){
+            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Cliente não encontrado. CPF: " + cpf);
             throw new IllegalArgumentException("Cliente não encontrado para o CPF informado.");
         }
         //2. busca o veiculo
         Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);
         if(veiculo == null){
+            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Veiculo não encontrado. Placa: " + placa);
             throw new IllegalArgumentException("Veiculo não encontrado para o placa informada.");
         }
         //3. verificar a disponibilidade
         if(!veiculo.isDisponivel()){
+            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Veiculo indisponivel. Placa: " + placa);
             throw new IllegalArgumentException("Veiculo não esta disponivel para a locação");
         }
         //4. calcular o valor total
         long dias = ChronoUnit.DAYS.between(dataRetirada, dataDevolucao);
         if(dias <= 0){
+            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Data invalida. Retirada: " + dataRetirada + " Devolucao: " + dataDevolucao);
             throw new IllegalArgumentException("Data de devolução deve ser posterior a data de retirada.");
         }
         double valorTotal = dias*veiculo.getValorLocacao();
         //5. cria e salva a locação
         Locacao locacao = new Locacao(cliente, veiculo, usuarioLogado, dataRetirada, dataDevolucao, valorTotal);
         locacaoDAO.salvar(locacao);
-        LogUtil.registrar("LOCACAO_REALIZADA", usuarioLogado);
+        veiculoDAO.atualizarDisponivel(false,veiculo.getId());
+        LogUtil.registrar("LOCACAO_REALIZADA", usuarioLogado, "CPF" + cpf + " Placa: " + placa + "DIAS" + dias + " VALOR_TOTAL: " + valorTotal);
         return locacao;
     }
 

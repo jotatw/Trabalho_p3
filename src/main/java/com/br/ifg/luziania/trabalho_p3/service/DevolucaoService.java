@@ -1,6 +1,7 @@
 package com.br.ifg.luziania.trabalho_p3.service;
 
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
+import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
@@ -11,11 +12,13 @@ import java.time.temporal.ChronoUnit;
 
 public class DevolucaoService {
     private LocacaoDAO locacaoDAO =  new LocacaoDAO();
+    private VeiculoDAO veiculoDAO = new VeiculoDAO();
 
     public Locacao registrarDevolucao(String placa) throws SQLException{
         //1. busca a locação ativa
         Locacao locacao = locacaoDAO.buscarLocacaoAtivaPorPlaca(placa);
         if(locacao == null){
+            LogUtil.registrarAcao("DEVOLUCAO_FALHOU", "Nenhuma locação encontrada. PLACA:" + placa);
             throw new IllegalArgumentException("Nenhuma locação ativa encontrada para essa placa informada.");
         }
         //2. defini a data de devolução real como hoje
@@ -34,7 +37,8 @@ public class DevolucaoService {
         locacao.setMultas(multa);
         locacao.setStatus("ENCERRADA");
         locacaoDAO.atualizarDevolucao(locacao);
-        LogUtil.registrar("DEVOLUCAO_REALIZADA", Sessao.getUsuarioLogado());
+        veiculoDAO.atualizarDisponivel(true, locacao.getVeiculo().getId());
+        LogUtil.registrarAcao("DEVOLUCAO_REALIZADA", "PLACA:" + placa + " MULTA: " + multa + "DATA_DEVOLUCAO" + hoje);
         return locacao;
     }
 }

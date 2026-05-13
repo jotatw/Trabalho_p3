@@ -83,6 +83,7 @@ public class LocacaoDAO extends BaseDAO {
 
         Veiculo veiculo = new Veiculo();
         veiculo.setId(rs.getInt("veiculo_id"));
+        locacao.setVeiculo(veiculo);
 
         Usuario usuario = new Usuario();
         usuario.setId(rs.getInt("usuario_id"));
