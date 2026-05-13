@@ -1,7 +1,6 @@
 package com.br.ifg.luziania.trabalho_p3.util;
 
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 
 public class MascaraUtil {
     public static void cpf (TextField campo){

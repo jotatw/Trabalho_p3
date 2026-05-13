@@ -43,7 +43,7 @@ public class VeiculoController {
 
         //validações
         if(!ValidacaoUtil.placaValido(placa)) {
-            mostraAlerta("Placa invalida! use o modelo Mercoosul: ABC1D23");
+            mostraAlerta("Placa invalida! use o modelo Mercoosul ou a antigo: ABC1D23/ABC1234");
             return;
         }
         if(ValidacaoUtil.campoVazio(modelo)) {

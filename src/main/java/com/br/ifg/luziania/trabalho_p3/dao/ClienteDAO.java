@@ -17,9 +17,9 @@ public class ClienteDAO {
     public void salvar(Cliente cliente) throws SQLException {
         String sql = "INSERT INTO cliente (nome, cpf, cnh, telefone, email)  VALUES (?, ?, ?, ?, ?)";
 
-        try {
-            Connection conn = DBConnection.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = DBConnection.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getCnh());
@@ -35,53 +35,53 @@ public class ClienteDAO {
     public Cliente buscarPorCpf(String cpf) throws SQLException {
         String sql = "SELECT * FROM cliente WHERE cpf = ?";
 
-        try {
-            Connection conn = DBConnection.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = DBConnection.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             stmt.setString(1, cpf);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Cliente c = new Cliente();
-                c.setId(rs.getInt("id"));
-                c.setNome(rs.getString("nome"));
-                c.setCpf(rs.getString("cpf"));
-                c.setCnh(rs.getString("cnh"));
-                c.setTelefone(rs.getString("telefone"));
-                c.setEmail(rs.getString("email"));
-                c.setAtivo(rs.getBoolean("ativo"));
-                return c;//retorna cliente
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Cliente c = new Cliente();
+                    c.setId(rs.getInt("id"));
+                    c.setNome(rs.getString("nome"));
+                    c.setCpf(rs.getString("cpf"));
+                    c.setCnh(rs.getString("cnh"));
+                    c.setTelefone(rs.getString("telefone"));
+                    c.setEmail(rs.getString("email"));
+                    c.setAtivo(rs.getBoolean("ativo"));
+                    return c;//retorna cliente
+                }
+            } catch (SQLException e) {
+                LogUtil.registrarErro("ClienteDAO.buscarPorCpf", Sessao.getUsuarioLogado(), e);
+                throw e;
             }
-        } catch (SQLException e) {
-            LogUtil.registrarErro("ClienteDAO.buscarPorCpf", Sessao.getUsuarioLogado(), e);
-            throw e;
+            return null; //para clientes não encontrados
         }
-        return null; //para clientes não encontrados
     }
     public List<Cliente> listarTodos() throws SQLException {
         String sql = "SELECT * FROM cliente WHERE ativo = true ORDER BY nome";
         List<Cliente> lista = new ArrayList<>();
 
-        try {
-            Connection conn = DBConnection.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Cliente c = new Cliente();
-                c.setId(rs.getInt("id"));
-                c.setNome(rs.getString("nome"));
-                c.setCpf(rs.getString("cpf"));
-                c.setCnh(rs.getString("cnh"));
-                c.setTelefone(rs.getString("telefone"));
-                c.setEmail(rs.getString("email"));
-                c.setAtivo(rs.getBoolean("ativo"));
-                lista.add(c);
+        try (Connection conn = DBConnection.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Cliente c = new Cliente();
+                    c.setId(rs.getInt("id"));
+                    c.setNome(rs.getString("nome"));
+                    c.setCpf(rs.getString("cpf"));
+                    c.setCnh(rs.getString("cnh"));
+                    c.setTelefone(rs.getString("telefone"));
+                    c.setEmail(rs.getString("email"));
+                    c.setAtivo(rs.getBoolean("ativo"));
+                    lista.add(c);
+                }
+            }catch (SQLException e) {
+                LogUtil.registrarErro("ClienteDAO.listarTodos", Sessao.getUsuarioLogado(), e);
+                throw e;
             }
-        } catch (SQLException e) {
-            LogUtil.registrarErro("ClienteDAO.listarTodos", Sessao.getUsuarioLogado(), e);
-            throw e;
+            return lista;
         }
-        return lista;
     }
 }

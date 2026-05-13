@@ -17,15 +17,16 @@ public class VeiculoDAO {
     public void salvar(Veiculo veiculo) throws SQLException {
         String sql = "INSERT INTO veiculo (placa, modelo, marca, categoria, valor_diaria) VALUES (?, ?, ?, ?, ?)";
 
-        try {
-            Connection conn = DBConnection.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = DBConnection.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             stmt.setString(1, veiculo.getPlaca());
             stmt.setString(2, veiculo.getModelo());
             stmt.setString(3, veiculo.getMarca());
             stmt.setString(4, veiculo.getCategoria());
             stmt.setDouble(5, veiculo.getValorLocacao());
             stmt.executeUpdate();
+
         } catch (SQLException e) {
             LogUtil.registrarErro("VeiculoDAO.salvar", Sessao.getUsuarioLogado(), e);
             throw  e;
@@ -35,53 +36,54 @@ public class VeiculoDAO {
     public Veiculo buscarPorPlaca(String placa) throws SQLException {
         String sql = "SELECT * FROM veiculo WHERE placa = ?";
 
-        try {
-            Connection conn = DBConnection.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try ( Connection conn = DBConnection.getConexao();
+              PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             stmt.setString(1, placa);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Veiculo v = new Veiculo();
-                v.setId(rs.getInt("id"));
-                v.setPlaca(rs.getString("placa"));
-                v.setModelo(rs.getString("modelo"));
-                v.setMarca(rs.getString("marca"));
-                v.setCategoria(rs.getString("categoria"));
-                v.setValorLocacao(rs.getDouble("valor_diaria"));
-                v.setDisponivel(rs.getBoolean("disponivel"));
-                return v;
+            try ( ResultSet rs = stmt.executeQuery();) {
+                if (rs.next()) {
+                    Veiculo v = new Veiculo();
+                    v.setId(rs.getInt("id"));
+                    v.setPlaca(rs.getString("placa"));
+                    v.setModelo(rs.getString("modelo"));
+                    v.setMarca(rs.getString("marca"));
+                    v.setCategoria(rs.getString("categoria"));
+                    v.setValorLocacao(rs.getDouble("valor_diaria"));
+                    v.setDisponivel(rs.getBoolean("disponivel"));
+                    return v; //retona veiculo
+                }
+            }catch (SQLException e) {
+                LogUtil.registrarErro("VeiculoDAO.buscarPorPlaca", Sessao.getUsuarioLogado(), e);
+                throw  e;
             }
-        } catch (SQLException e) {
-            LogUtil.registrarErro("VeiculoDAO.buscarPorPlaca", Sessao.getUsuarioLogado(), e);
-            throw  e;
+            return null;
         }
-        return null;
+
     }
     public List<Veiculo> listarTodos() throws SQLException {
         String sql = "SELECT * FROM veiculo ORDER BY modelo";
         List<Veiculo> lista = new ArrayList<>();
 
-        try {
-            Connection conn = DBConnection.getConexao();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Veiculo v = new Veiculo();
-                v.setId(rs.getInt("id"));
-                v.setPlaca(rs.getString("placa"));
-                v.setModelo(rs.getString("modelo"));
-                v.setMarca(rs.getString("marca"));
-                v.setCategoria(rs.getString("categoria"));
-                v.setValorLocacao(rs.getDouble("valor_diaria"));
-                v.setDisponivel(rs.getBoolean("disponivel"));
-                lista.add(v);
+        try (Connection conn = DBConnection.getConexao();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            try (ResultSet rs = stmt.executeQuery();) {
+                while (rs.next()) {
+                    Veiculo v = new Veiculo();
+                    v.setId(rs.getInt("id"));
+                    v.setPlaca(rs.getString("placa"));
+                    v.setModelo(rs.getString("modelo"));
+                    v.setMarca(rs.getString("marca"));
+                    v.setCategoria(rs.getString("categoria"));
+                    v.setValorLocacao(rs.getDouble("valor_diaria"));
+                    v.setDisponivel(rs.getBoolean("disponivel"));
+                    lista.add(v);
+                }
+            }catch (SQLException e) {
+                LogUtil.registrarErro("VeiculoDAO.listarTodos", Sessao.getUsuarioLogado(), e);
+                throw  e;
             }
-        } catch (SQLException e) {
-            LogUtil.registrarErro("VeiculoDAO.listarTodos", Sessao.getUsuarioLogado(), e);
-            throw  e;
+            return lista;
         }
-        return lista;
     }
 }
