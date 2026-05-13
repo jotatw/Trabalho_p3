@@ -1,17 +1,19 @@
 package com.br.ifg.luziania.trabalho_p3.dao;
 
+import com.br.ifg.luziania.trabalho_p3.model.Cliente;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
-import com.br.ifg.luziania.trabalho_p3.util.DBConnection;
-import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
-import com.br.ifg.luziania.trabalho_p3.util.Sessao;
+import com.br.ifg.luziania.trabalho_p3.model.Usuario;
+import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
 
 import java.sql.*;
 
-public class LocacaoDAO {
+public class LocacaoDAO extends BaseDAO {
     public void salvar(Locacao locacao) throws SQLException {
-        String sql = "INSERT INTO locacao (cliente_id, veiculo_id, usuario_id, dt_retirada, dt_devolucao_prevista, valor_total) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = """
+            INSERT INTO locacao (cliente_id, veiculo_id, usuario_id, dt_retirada, dt_devolucao_prevista, valor_total, multas, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """;
 
-        try (Connection conn = DBConnection.getConexao();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setInt(1, locacao.getCliente().getId());
@@ -20,18 +22,22 @@ public class LocacaoDAO {
             stmt.setDate(4, Date.valueOf(locacao.getDataRetirada()));
             stmt.setDate(5, Date.valueOf(locacao.getDataDevolucaoPrevista()));
             stmt.setDouble(6, locacao.getValorTotal());
+            stmt.setDouble(7, locacao.getMultas());
+            stmt.setString(8, locacao.getStatus());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            LogUtil.registrarErro("LocacaoDAO.salvar", Sessao.getUsuarioLogado(), e);
+            registrarErro("LocacaoDAO.salvar", e);
             throw e;
         }
     }
 
     public void atualizarDevolucao(Locacao locacao) throws SQLException {
-        String sql = "UPDATE locacao SET dt_devolucao_real = ?, multa = ?, status = ? WHERE id = ?";
+        String sql = """
+            UPDATE locacao SET dt_devolucao_real = ?, multas = ?, status = ? WHERE id = ?
+            """;
 
-        try (Connection conn = DBConnection.getConexao();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setDate(1, Date.valueOf(locacao.getDataDevolucaoReal()));
@@ -41,7 +47,7 @@ public class LocacaoDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            LogUtil.registrarErro("LocacaoDAO.atualizarDevolucao", Sessao.getUsuarioLogado(), e);
+            registrarErro("LocacaoDAO.atualizarDevolucao", e);
             throw e;
         }
     }
@@ -49,30 +55,49 @@ public class LocacaoDAO {
     public Locacao buscarLocacaoAtivaPorPlaca(String placa) throws SQLException {
         //busca pela tabela placa em outra database a partir do join
         String sql = """
-            SELECT l.* FROM locacao l
+            SELECT l.id, l.cliente_id, l.veiculo_id, l.usuaria_id, l.dt_retirada, l.dt_devolucao_prevista, l.dt_devolucao_real, l.valor_total, l.multaas, l.status FROM locacao l
             JOIN veiculo v ON l.veiculo_id = v.id
             WHERE v.placa = ? AND l.status = 'ATIVA'
         """;
 
-        try (Connection conn = DBConnection.getConexao();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setString(1, placa);
             try (ResultSet rs = stmt.executeQuery();) {
                 if (rs.next()) {
-                    Locacao l = new Locacao();
-                    l.setId(rs.getInt("id"));
-                    l.setValorTotal(rs.getDouble("valor_total"));
-                    l.setStatus(rs.getString("status"));
-                    l.setDataRetirada(rs.getDate("dt_retirada").toLocalDate());
-                    l.setDataDevolucaoPrevista(rs.getDate("dt_devolucao_prevista").toLocalDate());
-                    return l;
+                    return mapearLocacao(rs);
                 }
-            } catch (SQLException e) {
-                LogUtil.registrarErro("LocacaoDAO.buscarLocacaoAtivaPorPlaca", Sessao.getUsuarioLogado(), e);
-                throw e;
             }
-            return null;
+        }catch (SQLException e) {
+            registrarErro("LocacaoDAO.buscarLocacaoAtivaPorPlaca", e);
+            throw e;
         }
+        return null;
+    }
+    private Locacao mapearLocacao(ResultSet rs) throws SQLException {
+        Locacao locacao = new Locacao();
+
+        Cliente cliente = new Cliente();
+        cliente.setId(rs.getInt("cliente_id"));
+
+        Veiculo veiculo = new Veiculo();
+        veiculo.setId(rs.getInt("veiculo_id"));
+
+        Usuario usuario = new Usuario();
+        usuario.setId(rs.getInt("usuario_id"));
+
+        locacao.setId(rs.getInt("id"));
+        locacao.setCliente(cliente);
+        locacao.setVeiculo(veiculo);
+        locacao.setUsuario(usuario);
+        locacao.setDataRetirada(rs.getDate("dt_retirada").toLocalDate());
+        locacao.setDataDevolucaoPrevista(rs.getDate("dt_devolucao_prevista").toLocalDate());
+
+        Date dataDevolucaoReal = rs.getDate("dt_devolucao_real");
+        locacao.setMultas(rs.getDouble("multas"));
+        locacao.setStatus(rs.getString("status"));
+
+        return locacao;
     }
 }

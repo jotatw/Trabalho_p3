@@ -13,7 +13,7 @@ public class ValidacaoUtil {
     private static final Pattern EMAIL = Pattern.compile("^[\\w._%+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$");
 
     // Placa Mercosul: ABC1D23
-    private static final Pattern PLACA = Pattern.compile("^[A-Z]{3}[0-9][A-Z][0-9]{2}$");
+    private static final Pattern PLACA = Pattern.compile("^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$");
 
     public static boolean cpfValido(String cpf) {
         return cpf != null && CPF.matcher(cpf.trim()).matches();

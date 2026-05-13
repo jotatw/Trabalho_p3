@@ -1,9 +1,6 @@
 package com.br.ifg.luziania.trabalho_p3.dao;
 
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
-import com.br.ifg.luziania.trabalho_p3.util.DBConnection;
-import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
-import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VeiculoDAO {
+public class VeiculoDAO extends BaseDAO{
     //salva um novo veiculo
     public void salvar(Veiculo veiculo) throws SQLException {
-        String sql = "INSERT INTO veiculo (placa, modelo, marca, categoria, valor_diaria) VALUES (?, ?, ?, ?, ?)";
+        String sql = """
+            INSERT INTO veiculo (placa, modelo, marca, categoria, valor_diaria) VALUES (?, ?, ?, ?, ?)
+            """;
 
-        try (Connection conn = DBConnection.getConexao();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setString(1, veiculo.getPlaca());
@@ -28,62 +27,127 @@ public class VeiculoDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            LogUtil.registrarErro("VeiculoDAO.salvar", Sessao.getUsuarioLogado(), e);
+            registrarErro("VeiculoDAO.salvar", e);
             throw  e;
         }
     }
     //busca um veiculo a partir da placa
     public Veiculo buscarPorPlaca(String placa) throws SQLException {
-        String sql = "SELECT * FROM veiculo WHERE placa = ?";
+        String sql = """
+            SELECT id, placa, modelo, marca, categoria, valor_diaria, disponivel FROM veiculo WHERE placa = ?
+            """;
 
-        try ( Connection conn = DBConnection.getConexao();
+        try ( Connection conn = getConnection();
               PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setString(1, placa);
             try ( ResultSet rs = stmt.executeQuery();) {
                 if (rs.next()) {
-                    Veiculo v = new Veiculo();
-                    v.setId(rs.getInt("id"));
-                    v.setPlaca(rs.getString("placa"));
-                    v.setModelo(rs.getString("modelo"));
-                    v.setMarca(rs.getString("marca"));
-                    v.setCategoria(rs.getString("categoria"));
-                    v.setValorLocacao(rs.getDouble("valor_diaria"));
-                    v.setDisponivel(rs.getBoolean("disponivel"));
-                    return v; //retona veiculo
+                    return mapearVeiculo(rs);
                 }
-            }catch (SQLException e) {
-                LogUtil.registrarErro("VeiculoDAO.buscarPorPlaca", Sessao.getUsuarioLogado(), e);
-                throw  e;
             }
-            return null;
+        } catch (SQLException e) {
+            registrarErro("VeiculoDAO.buscarPorPlaca", e);
+            throw  e;
         }
-
+        return null;
     }
     public List<Veiculo> listarTodos() throws SQLException {
-        String sql = "SELECT * FROM veiculo ORDER BY modelo";
+        String sql = """
+            SELECT id, placa, modelo, marca, categoria, valor_diaria, disponivel FROM veiculo ORDER BY modelo
+            """;
         List<Veiculo> lista = new ArrayList<>();
 
-        try (Connection conn = DBConnection.getConexao();
+        try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             try (ResultSet rs = stmt.executeQuery();) {
                 while (rs.next()) {
-                    Veiculo v = new Veiculo();
-                    v.setId(rs.getInt("id"));
-                    v.setPlaca(rs.getString("placa"));
-                    v.setModelo(rs.getString("modelo"));
-                    v.setMarca(rs.getString("marca"));
-                    v.setCategoria(rs.getString("categoria"));
-                    v.setValorLocacao(rs.getDouble("valor_diaria"));
-                    v.setDisponivel(rs.getBoolean("disponivel"));
-                    lista.add(v);
+                    lista.add(mapearVeiculo(rs));
                 }
-            }catch (SQLException e) {
-                LogUtil.registrarErro("VeiculoDAO.listarTodos", Sessao.getUsuarioLogado(), e);
-                throw  e;
             }
-            return lista;
+        }catch (SQLException e) {
+            registrarErro("VeiculoDAO.listarTodos", e);
+            throw  e;
         }
+        return lista;
+    }
+    public List<Veiculo> listarDisponiveis() throws SQLException {
+        String sql = """
+                SELECT id, placa, modelo, marca, categoria, valor_diaria, disponivel FROM veiculo WHERE disponivel = true ORDER BY modelo
+                """;
+        List<Veiculo> lista = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            try (ResultSet rs = stmt.executeQuery();) {
+                while (rs.next()) {
+                    lista.add(mapearVeiculo(rs));
+                }
+            }
+        }catch (SQLException e) {
+            registrarErro("VeiculoDAO.listarDisponiveis", e);
+            throw e;
+        }
+        return lista;
+    }
+    public void atualizarDisponivel(boolean disponivel, int id) throws SQLException{
+        String sql = """
+                UPDATE veiculo SET disponivel = ? WHERE id = ?
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setBoolean(1, disponivel);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            registrarErro("VeiculoDAO.atualizarDisponivel", e);
+            throw e;
+        }
+    }
+    public void atualizar(Veiculo veiculo) throws SQLException {
+        String sql = """
+                UPDATE veiculo SET placa = ?, modelo = ?, marca = ?, categoria = ?, valor_diaria = ? WHERE id = ?
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setString(1, veiculo.getPlaca());
+            stmt.setString(2, veiculo.getModelo());
+            stmt.setString(3, veiculo.getMarca());
+            stmt.setString(4, veiculo.getCategoria());
+            stmt.setDouble(5, veiculo.getValorLocacao());
+            stmt.setInt(6, veiculo.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            registrarErro("VeiculoDAO.atualizar", e);
+            throw e;
+        }
+    }
+    public void deletar(int id) throws SQLException {
+        String sql = """
+                DELETE FROM veiculo WHERE id = ?
+                """;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            registrarErro("VeiculoDAO.deletar", e);
+            throw e;
+        }
+    }
+    private Veiculo mapearVeiculo(ResultSet rs) throws SQLException {
+        Veiculo veiculo = new Veiculo();
+        veiculo.setId(rs.getInt("id"));
+        veiculo.setPlaca(rs.getString("placa"));
+        veiculo.setModelo(rs.getString("modelo"));
+        veiculo.setMarca(rs.getString("marca"));
+        veiculo.setCategoria(rs.getString("categoria"));
+        veiculo.setValorLocacao(rs.getDouble("valor_diaria"));
+        veiculo.setDisponivel(rs.getBoolean("disponivel"));
+        return veiculo;
     }
 }
