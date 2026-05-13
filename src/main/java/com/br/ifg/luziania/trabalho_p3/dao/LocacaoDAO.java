@@ -55,7 +55,7 @@ public class LocacaoDAO extends BaseDAO {
     public Locacao buscarLocacaoAtivaPorPlaca(String placa) throws SQLException {
         //busca pela tabela placa em outra database a partir do join
         String sql = """
-            SELECT l.id, l.cliente_id, l.veiculo_id, l.usuaria_id, l.dt_retirada, l.dt_devolucao_prevista, l.dt_devolucao_real, l.valor_total, l.multaas, l.status FROM locacao l
+            SELECT l.id, l.cliente_id, l.veiculo_id, l.usuario_id, l.dt_retirada, l.dt_devolucao_prevista, l.dt_devolucao_real, l.valor_total, l.multas, l.status FROM locacao l
             JOIN veiculo v ON l.veiculo_id = v.id
             WHERE v.placa = ? AND l.status = 'ATIVA'
         """;
@@ -96,6 +96,10 @@ public class LocacaoDAO extends BaseDAO {
         locacao.setDataDevolucaoPrevista(rs.getDate("dt_devolucao_prevista").toLocalDate());
 
         Date dataDevolucaoReal = rs.getDate("dt_devolucao_real");
+        if (dataDevolucaoReal != null) {
+            locacao.setDataDevolucaoReal(dataDevolucaoReal.toLocalDate());
+        }
+        locacao.setValorTotal(rs.getDouble("valor_total"));
         locacao.setMultas(rs.getDouble("multas"));
         locacao.setStatus(rs.getString("status"));
 

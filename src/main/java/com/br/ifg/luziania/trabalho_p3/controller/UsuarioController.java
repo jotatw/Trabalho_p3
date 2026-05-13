@@ -1,8 +1,7 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
-import com.br.ifg.luziania.trabalho_p3.dao.UsuarioDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
-import com.br.ifg.luziania.trabalho_p3.util.SenhaUtil;
+import com.br.ifg.luziania.trabalho_p3.service.UsuarioService;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -18,6 +17,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UsuarioController {
+    UsuarioService usuarioService = new UsuarioService();
+
     @FXML private TextField campoNome;
     @FXML private TextField campoEmail;
     @FXML private TextField campoSenha;
@@ -69,12 +70,10 @@ public class UsuarioController {
             Usuario usuario = new Usuario();
             usuario.setNomeCompleto(nome);
             usuario.setEmail(email);
-            String senhaHash = SenhaUtil.gerarHash(senha);
-            usuario.setSenha(senhaHash);
+            usuario.setSenha(senha);
             usuario.setPerfil(perfil);
 
-            UsuarioDAO dao = new UsuarioDAO();
-            dao.salvar(usuario);
+            usuarioService.salvar(usuario);
             mostraSucesso("Usuario salvo com sucesso!");
             limpar();
             carregarTabela();
@@ -106,8 +105,7 @@ public class UsuarioController {
     }
     private void carregarTabela() {
         try {
-            UsuarioDAO dao = new UsuarioDAO();
-            List<Usuario> lista = dao.listarTodos();
+            List<Usuario> lista = usuarioService.listarTodos();
             tabelaUsuario.setItems(FXCollections.observableArrayList(lista));
         } catch (SQLException e) {
             mostraAlerta("Erro ao carregar Usuarios: " + e.getMessage());

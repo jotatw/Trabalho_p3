@@ -1,7 +1,7 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
-import com.br.ifg.luziania.trabalho_p3.dao.ClienteDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Cliente;
+import com.br.ifg.luziania.trabalho_p3.service.ClienteService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ClienteController {
+    private ClienteService clienteService = new ClienteService();
+
     @FXML private TextField campoNome;
     @FXML private TextField campoCpf;
     @FXML private TextField campoTelefone;
@@ -67,8 +69,7 @@ public class ClienteController {
             cliente.setTelefone(telefone);
             cliente.setEmail(email);
 
-            ClienteDAO dao = new ClienteDAO();
-            dao.salvar(cliente);
+            clienteService.salvar(cliente);
             mostraSucesso("Cliente salvo com sucesso!");
             limpar();
             carregarTabela();
@@ -117,8 +118,7 @@ public class ClienteController {
     }
     private void carregarTabela() {
         try {
-            ClienteDAO dao = new ClienteDAO();
-            List<Cliente> lista = dao.listarTodos();
+            List<Cliente> lista = clienteService.listarTodos();
             tabelaCliente.setItems(FXCollections.observableArrayList(lista));
         } catch (SQLException e) {
             mostraAlerta("Erro ao carregar cliente: !" +  e.getMessage());

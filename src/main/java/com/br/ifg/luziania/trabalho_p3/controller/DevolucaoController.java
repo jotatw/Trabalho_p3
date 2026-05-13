@@ -1,6 +1,5 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
-import com.br.ifg.luziania.trabalho_p3.dao.ClienteDAO;
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.service.DevolucaoService;
@@ -55,7 +54,7 @@ public class DevolucaoController {
             //prencher os label com os detelhes da locação
             labelRetirada.setText(locacaoAtual.getDataRetirada().toString());
             labelDevolucao.setText(locacaoAtual.getDataDevolucaoPrevista().toString());
-            labelValor.setText("R$ " + locacaoAtual.getValorTotal());
+            labelValor.setText("R$ " + String.format("%.2f",locacaoAtual.getValorTotal()));
 
             //calcula atraso e multas para exibir
             long diasAtraso = ChronoUnit.DAYS.between(locacaoAtual.getDataDevolucaoPrevista(), LocalDate.now());
@@ -69,12 +68,11 @@ public class DevolucaoController {
             } else {
                 labelAtraso.setText("Sem atrasos");
                 labelMulta.setText("R$ 0,00");
-                labelValorFinal.setText("R$ " + locacaoAtual.getValorTotal());
+                labelValorFinal.setText("R$ " + String.format("%.2f", locacaoAtual.getValorTotal()) );
             }
         } catch (SQLException e){
             mostrarAlerta("Erro ao buscar locação: " + e.getMessage());
         }
-
     }
     @FXML
     private void confirmarDevolucao() {

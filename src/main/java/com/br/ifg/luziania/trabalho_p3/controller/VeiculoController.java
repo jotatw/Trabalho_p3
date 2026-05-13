@@ -1,7 +1,7 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
-import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
+import com.br.ifg.luziania.trabalho_p3.service.VeiculoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
@@ -18,6 +18,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class VeiculoController {
+    private VeiculoService veiculoService = new VeiculoService();
+
     @FXML private TextField campoPlaca;
     @FXML private TextField campoModelo;
     @FXML private TextField campoMarca;
@@ -82,8 +84,7 @@ public class VeiculoController {
             veiculo.setCategoria(categoria);
             veiculo.setValorLocacao(Double.parseDouble(valor));
 
-            VeiculoDAO dao = new VeiculoDAO();
-            dao.salvar(veiculo);
+            veiculoService.salvar(veiculo);
             mostraSucesso("Veiculo cadastrado com sucesso");
             limpar();
             carregarTabela();
@@ -129,8 +130,7 @@ public class VeiculoController {
     }
     private void carregarTabela() {
         try {
-            VeiculoDAO dao = new VeiculoDAO();
-            List<Veiculo> lista = dao.listarTodos();
+            List<Veiculo> lista = veiculoService.listarTodos();
             tabelaVeiculo.setItems(FXCollections.observableArrayList(lista));
         } catch (SQLException e) {
             mostraAlerta("Erro ao carregar veiculos: " + e.getMessage());

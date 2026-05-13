@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class LocacaoController {
     private LocacaoService locacaoService = new LocacaoService();
@@ -39,6 +40,11 @@ public class LocacaoController {
         //aplica validação nos campos de busca
         MascaraUtil.cpf(campoCpf);
         MascaraUtil.placa(campoPlaca);
+
+        dataRetirada.valueProperty().addListener((observable, oldValue, newValue) -> atualizarValorTotal());
+        dataDevolucao.valueProperty().addListener((observable, oldValue, newValue) -> atualizarValorTotal());
+
+        campoPlaca.textProperty().addListener((observable, oldValue, newValue) -> atualizarValorTotal());
     }
 
     @FXML
@@ -75,12 +81,15 @@ public class LocacaoController {
             Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);
             if (veiculo != null) {
                 labelVeiculo.setText(veiculo.getModelo() + " - R$" + veiculo.getValorLocacao() + "/dia");
+                atualizarValorTotal();
             } else {
                 labelVeiculo.setText("Veiculo não encontrado!");
+                labelValor.setText("R$: 0,00");
             }
         } catch (SQLException e) {
             mostrarAlerta("Erro ao buscar veiculo: " + e.getMessage());
         }
+
     }
     @FXML
     private void confirmarLocacao() {
@@ -116,6 +125,32 @@ public class LocacaoController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private void atualizarValorTotal() {
+        String placa = campoPlaca.getText();
+        LocalDate retirada = dataRetirada.getValue();
+        LocalDate devolucao = dataDevolucao.getValue();
+
+        if (placa == null || placa.isBlank() || retirada == null || devolucao == null) {
+            labelValor.setText("R$: ");
+            return;
+        }
+        long dias = ChronoUnit.DAYS.between(retirada, devolucao);
+        if (dias <= 0) {
+            labelValor.setText("Data invalida!");
+            return;
+        }
+        try {
+            Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);
+            if (veiculo == null) {
+                labelValor.setText("Veiculo não encontrado!");
+                return;
+            }
+            double valorTotal = dias * veiculo.getValorLocacao();
+            labelValor.setText("R$: " + String.format("%.2f", valorTotal));
+        } catch (SQLException e) {
+            mostrarAlerta("Erro ao atualizar valor total: " + e.getMessage());
         }
     }
     private void mostrarAlerta(String msg) {
