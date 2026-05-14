@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UsuarioService {
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public void salvar(Usuario usuario) throws SQLException {
         String senhaHash = SenhaUtil.gerarHash(usuario.getSenha());

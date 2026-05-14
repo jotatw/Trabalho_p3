@@ -36,11 +36,11 @@ public class ClienteController {
 
     @FXML
     private void salvar() {
-        String nome = campoNome.getText();
-        String cpf = campoCpf.getText();
-        String cnh = campoCnh.getText();
-        String telefone = campoTelefone.getText();
-        String email = campoEmail.getText();
+        String nome = campoNome.getText().trim();
+        String cpf = campoCpf.getText().trim();
+        String cnh = campoCnh.getText().trim();
+        String telefone = campoTelefone.getText().trim();
+        String email = campoEmail.getText().trim();
 
         //validações
         if (ValidacaoUtil.campoVazio(nome)) {
@@ -55,7 +55,19 @@ public class ClienteController {
             mostraAlerta("CNH invalida! informe 11 digitos numericos");
             return;
         }
-        if (!email.isEmpty() && !ValidacaoUtil.emailValido(email)) {
+        if (ValidacaoUtil.campoVazio(telefone)) {
+            mostraAlerta("Telefone e obrigatorio!");
+            return;
+        }
+        if (!ValidacaoUtil.telefoneValido(telefone)) {
+            mostraAlerta("Telefone invalido! Use o formato: (00) 99999-9999 ou (00) 1111-2222");
+            return;
+        }
+        if (ValidacaoUtil.campoVazio(email)) {
+            mostraAlerta("Email e obrigatorio!");
+            return;
+        }
+        if (!ValidacaoUtil.emailValido(email)) {
             mostraAlerta("Email invalido!");
             return;
         }

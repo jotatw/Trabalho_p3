@@ -27,8 +27,6 @@
 
                 <Label styleClass="rotulo-campo" text="Valor da diária" GridPane.rowIndex="4" />
                 <TextField fx:id="campoValor" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-
-                <CheckBox fx:id="ckbDisponivel" mnemonicParsing="false" styleClass="rotulo-campo" text="Disponível" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <rowConstraints>
                <RowConstraints />
                <RowConstraints />

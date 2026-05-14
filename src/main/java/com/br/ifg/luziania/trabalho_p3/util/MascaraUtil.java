@@ -26,7 +26,7 @@ public class MascaraUtil {
             String digito = novo.replaceAll("[^0-9]", "");
 
             //limita a 11 digitos
-            if (novo.length() > 11) {
+            if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
             };
 
@@ -41,11 +41,11 @@ public class MascaraUtil {
             String digito = novo.replaceAll("[^0-9]", "");
 
             //limita a 11digitos (DDD + 9 digitos)
-            if (novo.length() > 11) {
+            if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
             };
 
-            String formatado = formatarTelefone(novo);
+            String formatado = formatarTelefone(digito);
             if (!novo.equals(formatado)) {
                 campo.setText(formatado);
                 campo.positionCaret(formatado.length());
@@ -58,7 +58,7 @@ public class MascaraUtil {
             String limpo = novo.toUpperCase().replaceAll("[^A-Z0-9]", "");
 
             //limita a 7 cacarteres (tamanho de qualquer placa)
-            if (novo.length() > 7) {
+            if (limpo.length() > 7) {
                 limpo = novo.substring(0, 7);
             };
 

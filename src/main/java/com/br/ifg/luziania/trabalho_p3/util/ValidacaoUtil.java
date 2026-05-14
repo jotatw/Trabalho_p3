@@ -15,6 +15,9 @@ public class ValidacaoUtil {
     // Placa Mercosul: ABC1D23
     private static final Pattern PLACA = Pattern.compile("^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$");
 
+    //Telefone: (99) 99999-9999 ou (99) 3333-4444
+    private static final Pattern TELEFONE = Pattern.compile("^\\(\\d{2}\\)\\s\\d{4,5}-\\d{4}$");
+
     public static boolean cpfValido(String cpf) {
         return cpf != null && CPF.matcher(cpf.trim()).matches();
     }
@@ -32,5 +35,8 @@ public class ValidacaoUtil {
     }
     public static boolean campoVazio(String texto) {
         return texto == null || texto.trim().isEmpty();
+    }
+    public static boolean telefoneValido(String telefone) {
+        return telefone != null && TELEFONE.matcher(telefone.trim()).matches();
     }
 }
