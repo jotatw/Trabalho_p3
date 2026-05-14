@@ -71,7 +71,7 @@ public class DevolucaoController {
                 double valorDiaria = locacaoAtual.getValorTotal() / diasLocacao;
                 double multa = diasAtraso * valorDiaria * 0.20;
 
-                labelAtraso.setText(diasAtraso + "Dias");
+                labelAtraso.setText(diasAtraso + "dias");
                 labelMulta.setText("R$ " + String.format("%.2f", multa));
                 labelValorFinal.setText("R$ " + String.format("%.2f", locacaoAtual.getValorTotal() + multa));
             } else {
@@ -92,9 +92,10 @@ public class DevolucaoController {
         String placa = campoPlaca.getText().trim().toUpperCase();
         try {
             Locacao locacao = devolucaoService.registrarDevolucao(placa);
-            mostrarSucesso("Devolução confirmada com sucesso!\nMulta: " +
-                    String.format("%.2f", locacao.getMultas()) + "\nValor final: R$" +
-                    String.format("%.2f",  locacao.getValorTotal() + locacao.getMultas()));
+            mostrarSucesso("Devolução confirmada com sucesso!\nMulta: R$ " +
+                    String.format("%.2f", locacao.getMultas()) +
+                    "\nValor final: R$ " +
+                    String.format("%.2f", locacao.getValorTotal() + locacao.getMultas()));
             locacaoAtual = null;
             limparCampos();
         } catch (IllegalArgumentException e){
@@ -124,7 +125,7 @@ public class DevolucaoController {
             stage.setTitle("Locadora - Home");
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            mostrarAlerta("Erro ao voltar para a tela inicial.");
         }
     }
     private void mostrarAlerta(String msg) {
