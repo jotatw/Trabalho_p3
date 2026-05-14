@@ -1,11 +1,11 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
-import com.br.ifg.luziania.trabalho_p3.dao.ClienteDAO;
-import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Cliente;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
+import com.br.ifg.luziania.trabalho_p3.service.ClienteService;
 import com.br.ifg.luziania.trabalho_p3.service.LocacaoService;
+import com.br.ifg.luziania.trabalho_p3.service.VeiculoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
@@ -22,9 +22,9 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class LocacaoController {
-    private LocacaoService locacaoService = new LocacaoService();
-    private ClienteDAO clienteDAO = new ClienteDAO();
-    private VeiculoDAO veiculoDAO = new VeiculoDAO();
+    private final LocacaoService locacaoService = new LocacaoService();
+    private final ClienteService clienteService = new ClienteService();
+    private final VeiculoService veiculoService = new VeiculoService();
 
     @FXML private TextField campoCpf;
     @FXML private TextField campoPlaca;
@@ -56,14 +56,14 @@ public class LocacaoController {
             return;
         }
         try {
-            Cliente cliente = clienteDAO.buscarPorCpf(cpf);
+            Cliente cliente = clienteService.buscarPorCpf(cpf);
             if (cliente != null) {
                 labelCliente.setText(cliente.getNome());
             } else {
                 labelCliente.setText("Cliente não encontrado!");
             }
         } catch (SQLException e) {
-            mostrarAlerta("Erro ao buscar cliente: " + e.getMessage());
+            mostrarAlerta("Erro ao buscar cliente. Tente novamente.");
         }
     }
     @FXML
@@ -75,10 +75,11 @@ public class LocacaoController {
             return;
         }
         if (!ValidacaoUtil.placaValido(placa.toUpperCase())) {
-            mostrarAlerta("Placa invalido! Utilize o formato Mercosul ou o antigo: ABC1D23/ABC1234");
+            mostrarAlerta("Placa inválida! Use o formato: ABC1D23 ou ABC1234");
+            return;
         }
         try {
-            Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);
+            Veiculo veiculo = veiculoService.buscarPorPlaca(placa);
             if (veiculo != null) {
                 labelVeiculo.setText(veiculo.getModelo() + " - R$" + veiculo.getValorLocacao() + "/dia");
                 atualizarValorTotal();
@@ -93,14 +94,22 @@ public class LocacaoController {
     }
     @FXML
     private void confirmarLocacao() {
-        String cpf = campoCpf.getText();
-        String placa = campoPlaca.getText();
+        String cpf = campoCpf.getText().trim();
+        String placa = campoPlaca.getText().trim().toUpperCase();
         LocalDate retirada = dataRetirada.getValue();
         LocalDate devolucao = dataDevolucao.getValue();
 
         //validação basica
         if (cpf.isEmpty() || placa.isEmpty() || retirada == null || devolucao == null) {
             mostrarAlerta("Prencha todos os campos");
+            return;
+        }
+        if (!ValidacaoUtil.cpfValido(cpf)) {
+            mostrarAlerta("CPF inválido! Use o formato: 000.000.000-00");
+            return;
+        }
+        if (!ValidacaoUtil.placaValido(placa)) {
+            mostrarAlerta("Placa inválida! Use o formato: ABC1D23 ou ABC1234");
             return;
         }
         try {
@@ -110,7 +119,7 @@ public class LocacaoController {
         } catch (IllegalArgumentException e) {
             mostrarAlerta(e.getMessage());
         } catch (SQLException e){
-            mostrarAlerta("Erro no banco: " + e.getMessage());
+            mostrarAlerta("Não foi possível realizar a locação. Tente novamente.");
         }
     }
     @FXML
@@ -124,7 +133,7 @@ public class LocacaoController {
             stage.setTitle("Locadora - Home");
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            mostrarAlerta("Erro ao voltar para a tela inicial.");
         }
     }
     private void atualizarValorTotal() {
@@ -142,7 +151,7 @@ public class LocacaoController {
             return;
         }
         try {
-            Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);
+            Veiculo veiculo = veiculoService.buscarPorPlaca(placa);
             if (veiculo == null) {
                 labelValor.setText("Veiculo não encontrado!");
                 return;
@@ -150,7 +159,7 @@ public class LocacaoController {
             double valorTotal = dias * veiculo.getValorLocacao();
             labelValor.setText("R$: " + String.format("%.2f", valorTotal));
         } catch (SQLException e) {
-            mostrarAlerta("Erro ao atualizar valor total: " + e.getMessage());
+            mostrarAlerta("Erro ao calcular valor");
         }
     }
     private void mostrarAlerta(String msg) {

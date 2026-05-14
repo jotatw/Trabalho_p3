@@ -20,12 +20,12 @@ public class LoginController {
     @FXML private PasswordField campoSenha;
 
 
-    private AuthService authService = new AuthService();
+    private final AuthService authService = new AuthService();
 
     @FXML
     private void fazerLogin() {
-        String email = campoemail.getText();
-        String senha = campoSenha.getText();
+        String email = campoemail.getText().trim();
+        String senha = campoSenha.getText().trim();
 
         //validar os campos vazios
         if(email.isEmpty() || senha.isEmpty()) {
@@ -47,9 +47,10 @@ public class LoginController {
             } else {
                 mostrarAlerta("E-mail ou senha invalidos");
             }
-        } catch (SQLException | IOException e){
-            mostrarAlerta("Erro ao conectar no banco de dados: " + e.getMessage());
-            e.printStackTrace();
+        } catch (SQLException e){
+            mostrarAlerta("Não foi possível acessar o banco de dados. Tente novamente. " );
+        } catch (IOException e) {
+            mostrarAlerta("Erro ao carregar a tela de login");
         }
     }
     private void mostrarAlerta(String mensagem) {

@@ -4,6 +4,7 @@ import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.service.DevolucaoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
+import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,8 +18,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class DevolucaoController {
-    private DevolucaoService devolucaoService = new DevolucaoService();
-    private LocacaoDAO locacaoDAO = new LocacaoDAO();
+    private final DevolucaoService devolucaoService = new DevolucaoService();
+    private final LocacaoDAO locacaoDAO = new LocacaoDAO();
     private Locacao locacaoAtual; //guarda a locação encontrada
 
     @FXML private TextField campoPlaca;
@@ -38,10 +39,14 @@ public class DevolucaoController {
 
     @FXML
     private void buscarVeiculo() {
-        String placa = campoPlaca.getText();
+        String placa = campoPlaca.getText().trim().toUpperCase();
 
         if (placa.isEmpty()) {
             mostrarAlerta("Preencha o campo Placa!");
+            return;
+        }
+        if (!ValidacaoUtil.placaValido(placa)) {
+            mostrarAlerta("Placa inválida! Use o formato: ABC1D23 ou ABC1234");
             return;
         }
         try {
@@ -58,8 +63,14 @@ public class DevolucaoController {
 
             //calcula atraso e multas para exibir
             long diasAtraso = ChronoUnit.DAYS.between(locacaoAtual.getDataDevolucaoPrevista(), LocalDate.now());
+
             if (diasAtraso > 0){
-                double valorDiaria = locacaoAtual.getValorTotal() / ChronoUnit.DAYS.between(locacaoAtual.getDataRetirada(), locacaoAtual.getDataDevolucaoPrevista());
+                long diasLocacao = ChronoUnit.DAYS.between(locacaoAtual.getDataRetirada(), locacaoAtual.getDataDevolucaoPrevista());
+                if (diasLocacao <= 0) {
+                    mostrarAlerta("Período de locação inválido.");
+                    return;
+                }
+                double valorDiaria = locacaoAtual.getValorTotal() / diasLocacao;
                 double multa = diasAtraso * valorDiaria * 0.20;
 
                 labelAtraso.setText(diasAtraso + "Dias");
@@ -71,7 +82,7 @@ public class DevolucaoController {
                 labelValorFinal.setText("R$ " + String.format("%.2f", locacaoAtual.getValorTotal()) );
             }
         } catch (SQLException e){
-            mostrarAlerta("Erro ao buscar locação: " + e.getMessage());
+            mostrarAlerta("Erro ao buscar locação. Tente novamente. ");
         }
     }
     @FXML
