@@ -36,6 +36,7 @@
 
             <HBox styleClass="linha-btn">
                 <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
+                <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar"/>
                 <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
                 <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
             </HBox>
