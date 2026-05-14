@@ -13,6 +13,10 @@ public class DevolucaoService {
     private final LocacaoDAO locacaoDAO = new LocacaoDAO();
     private final VeiculoService veiculoService = new VeiculoService();
 
+    public Locacao buscarLocacaoAtivaPorPlaca(String placa) throws SQLException {
+        return locacaoDAO.buscarLocacaoAtivaPorPlaca(placa);
+    }
+
     public Locacao registrarDevolucao(String placa) throws SQLException {
         Locacao locacao = locacaoDAO.buscarLocacaoAtivaPorPlaca(placa);
 

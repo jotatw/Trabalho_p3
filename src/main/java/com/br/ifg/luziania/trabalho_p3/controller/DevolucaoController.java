@@ -1,6 +1,5 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
-import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.service.DevolucaoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
@@ -19,7 +18,6 @@ import java.time.temporal.ChronoUnit;
 
 public class DevolucaoController {
     private final DevolucaoService devolucaoService = new DevolucaoService();
-    private final LocacaoDAO locacaoDAO = new LocacaoDAO();
     private Locacao locacaoAtual; //guarda a locação encontrada
 
     @FXML private TextField campoPlaca;
@@ -50,7 +48,7 @@ public class DevolucaoController {
             return;
         }
         try {
-            locacaoAtual = locacaoDAO.buscarLocacaoAtivaPorPlaca(placa);
+            locacaoAtual = devolucaoService.buscarLocacaoAtivaPorPlaca(placa);
 
             if (locacaoAtual == null){
                 mostrarAlerta("Nenhuma locação ativa para essa placa.");
@@ -91,15 +89,18 @@ public class DevolucaoController {
             mostrarAlerta("Busque uma locação ativa primeiro!");
             return;
         }
+        String placa = campoPlaca.getText().trim().toUpperCase();
         try {
-            Locacao locacao = devolucaoService.registrarDevolucao(campoPlaca.getText());
+            Locacao locacao = devolucaoService.registrarDevolucao(placa);
             mostrarSucesso("Devolução confirmada com sucesso!\nMulta: " +
                     String.format("%.2f", locacao.getMultas()) + "\nValor final: R$" +
                     String.format("%.2f",  locacao.getValorTotal() + locacao.getMultas()));
             locacaoAtual = null;
             limparCampos();
-        } catch (IllegalArgumentException | SQLException e){
+        } catch (IllegalArgumentException e){
             mostrarAlerta(e.getMessage());
+        } catch (SQLException e) {
+            mostrarAlerta("Não foi possível confirmar a devolução. Tente novamente.");
         }
     }
     private void limparCampos() {
