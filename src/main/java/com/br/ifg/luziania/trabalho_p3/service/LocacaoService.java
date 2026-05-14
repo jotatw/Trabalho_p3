@@ -12,41 +12,81 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class LocacaoService {
+
     private final ClienteService clienteService = new ClienteService();
     private final VeiculoService veiculoService = new VeiculoService();
     private final LocacaoDAO locacaoDAO = new LocacaoDAO();
 
-    public Locacao realizarLocacao(String cpf, String placa, LocalDate dataRetirada, LocalDate dataDevolucao, Usuario usuarioLogado) throws SQLException{
-        //1. buscar o cliente
+    public Locacao realizarLocacao(
+            String cpf,
+            String placa,
+            LocalDate dataRetirada,
+            LocalDate dataDevolucao,
+            Usuario usuarioLogado
+    ) throws SQLException {
+
         Cliente cliente = clienteService.buscarPorCpf(cpf);
-        if(cliente == null){
-            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Cliente não encontrado. CPF: " + cpf);
+        if (cliente == null) {
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    usuarioLogado,
+                    "Cliente não encontrado. CPF=" + cpf
+            );
             throw new IllegalArgumentException("Cliente não encontrado para o CPF informado.");
         }
-        //2. busca o veiculo
+
         Veiculo veiculo = veiculoService.buscarPorPlaca(placa);
-        if(veiculo == null){
-            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Veiculo não encontrado. Placa: " + placa);
-            throw new IllegalArgumentException("Veiculo não encontrado para o placa informada.");
+        if (veiculo == null) {
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    usuarioLogado,
+                    "Veículo não encontrado. PLACA=" + placa
+            );
+            throw new IllegalArgumentException("Veículo não encontrado para a placa informada.");
         }
-        //3. verificar a disponibilidade
-        if(!veiculo.isDisponivel()){
-            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Veiculo indisponivel. Placa: " + placa);
-            throw new IllegalArgumentException("Veiculo não esta disponivel para a locação");
+
+        if (!veiculo.isDisponivel()) {
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    usuarioLogado,
+                    "Veículo indisponível. PLACA=" + placa
+            );
+            throw new IllegalArgumentException("Veículo não está disponível para locação.");
         }
-        //4. calcular o valor total
+
         long dias = ChronoUnit.DAYS.between(dataRetirada, dataDevolucao);
-        if(dias <= 0){
-            LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Data invalida. Retirada: " + dataRetirada + " Devolucao: " + dataDevolucao);
-            throw new IllegalArgumentException("Data de devolução deve ser posterior a data de retirada.");
+        if (dias <= 0) {
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    usuarioLogado,
+                    "Data inválida. Retirada=" + dataRetirada + ", Devolução=" + dataDevolucao
+            );
+            throw new IllegalArgumentException("Data de devolução deve ser posterior à data de retirada.");
         }
-        double valorTotal = dias*veiculo.getValorLocacao();
-        //5. cria e salva a locação
-        Locacao locacao = new Locacao(cliente, veiculo, usuarioLogado, dataRetirada, dataDevolucao, valorTotal);
+
+        double valorTotal = dias * veiculo.getValorLocacao();
+
+        Locacao locacao = new Locacao(
+                cliente,
+                veiculo,
+                usuarioLogado,
+                dataRetirada,
+                dataDevolucao,
+                valorTotal
+        );
+
         locacaoDAO.salvar(locacao);
-        veiculoService.atualizarDisponivel(false,veiculo.getId());
-        LogUtil.registrar("LOCACAO_REALIZADA", usuarioLogado, "CPF" + cpf + " Placa: " + placa + "DIAS" + dias + " VALOR_TOTAL: " + valorTotal);
+        veiculoService.atualizarDisponivel(false, veiculo.getId());
+
+        LogUtil.registrar(
+                "LOCACAO_REALIZADA",
+                usuarioLogado,
+                "CPF=" + cpf +
+                        ", PLACA=" + placa +
+                        ", DIAS=" + dias +
+                        ", VALOR_TOTAL=" + valorTotal
+        );
+
         return locacao;
     }
-
 }
