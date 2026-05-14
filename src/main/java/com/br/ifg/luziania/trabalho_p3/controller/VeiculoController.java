@@ -59,7 +59,7 @@ public class VeiculoController {
             mostraAlerta("Categoria e obrigatoria!");
             return;
         }
-        if(ValidacaoUtil.campoVazio(valor)) {
+        if(ValidacaoUtil.campoVazio(valorTexto)) {
             mostraAlerta("Informe o valor da diaria");
             return;
         }

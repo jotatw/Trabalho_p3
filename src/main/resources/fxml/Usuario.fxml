@@ -21,7 +21,7 @@
                 <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="campo-texto"/>
 
                 <Label text="Senha" GridPane.rowIndex="2" styleClass="rotulo-campo"/>
-                <TextField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="campo-texto"/>
+                <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="campo-texto"/>
 
                 <Label text="Perfil" GridPane.rowIndex="3" styleClass="rotulo-campo"/>
                 <ComboBox fx:id="cmbPerfil" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="campo-texto"/>

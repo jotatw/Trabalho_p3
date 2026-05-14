@@ -8,15 +8,18 @@ import com.br.ifg.luziania.trabalho_p3.util.SenhaUtil;
 import java.sql.SQLException;
 
 public class AuthService {
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     public Usuario login(String email, String senha) throws SQLException {
         //busco usuario pelo email
+        String emailTratado = email != null ? email.trim() : "";
+        String senhaTratada = senha != null ? senha.trim() : "";
+
         Usuario usuario = usuarioDAO.buscarPorEmail(email);
 
         //se não for encontrado retorna null
         if (usuario == null) {
-            LogUtil.registrar("LOGIN_FALHOU", null, "Usuario nao encontrado com email: " + email);
+            LogUtil.registrar("LOGIN_FALHOU", null, "Usuario nao encontrado. EMAIL: " + emailTratado);
             return null;
         }
         //verifica se o usuario esta ativo
@@ -26,12 +29,12 @@ public class AuthService {
         }
 
         //verifica senha
-        if (!SenhaUtil.verificarSenha(senha, usuario.getSenha())) {
+        if (!SenhaUtil.verificarSenha(senhaTratada, usuario.getSenha())) {
             LogUtil.registrar("LOGIN_FALHOU", usuario, "Senha incorreta");
             return null;
         }
         //login bem sucedido
-        LogUtil.registrar("LOGIN", usuario);
+        LogUtil.registrar("LOGIN_REALIZADO", usuario);
         return usuario;
     }
 }

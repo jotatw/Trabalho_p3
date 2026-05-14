@@ -39,4 +39,7 @@ public class ValidacaoUtil {
     public static boolean telefoneValido(String telefone) {
         return telefone != null && TELEFONE.matcher(telefone.trim()).matches();
     }
+    public static boolean senhaValida(String senha) {
+        return senha != null && senha.length() >= 6;
+    }
 }

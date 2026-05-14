@@ -17,11 +17,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UsuarioController {
-    UsuarioService usuarioService = new UsuarioService();
+    private final UsuarioService usuarioService = new UsuarioService();
 
     @FXML private TextField campoNome;
     @FXML private TextField campoEmail;
-    @FXML private TextField campoSenha;
+    @FXML private PasswordField campoSenha;
     @FXML private ComboBox<String> cmbPerfil;
     @FXML private Button btnVoltar;
     @FXML private Button btnSalvar;
@@ -42,9 +42,9 @@ public class UsuarioController {
 
     @FXML
     private void salvar(){
-        String nome = campoNome.getText();
-        String email = campoEmail.getText();
-        String senha = campoSenha.getText();
+        String nome = campoNome.getText().trim();
+        String email = campoEmail.getText().trim();
+        String senha = campoSenha.getText().trim();
         String perfil = cmbPerfil.getValue();
 
         //validações
@@ -56,8 +56,8 @@ public class UsuarioController {
             mostraAlerta("Email invalido ou obrigatorio!");
             return;
         }
-        if (ValidacaoUtil.campoVazio(senha)){
-            mostraAlerta("Senha obrigatorio!");
+        if (!ValidacaoUtil.senhaValida(senha)){
+            mostraAlerta("Senha obrigatória e deve ter pelo menos 6 caracteres!");
             return;
         }
         if(perfil == null){
@@ -78,7 +78,7 @@ public class UsuarioController {
             limpar();
             carregarTabela();
         } catch (SQLException e) {
-            mostraAlerta("Erro ao salvar" + e.getMessage());
+            mostraAlerta("Erro ao salvar usuário. Verifique se o e-mail já está cadastrado.");
         }
     }
 
