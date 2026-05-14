@@ -1,8 +1,6 @@
 package com.br.ifg.luziania.trabalho_p3.service;
 
-import com.br.ifg.luziania.trabalho_p3.dao.ClienteDAO;
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
-import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Cliente;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
@@ -14,19 +12,19 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class LocacaoService {
-    private ClienteDAO clienteDAO = new ClienteDAO();
-    private VeiculoDAO veiculoDAO = new VeiculoDAO();
-    private LocacaoDAO locacaoDAO = new LocacaoDAO();
+    private final ClienteService clienteService = new ClienteService();
+    private final VeiculoService veiculoService = new VeiculoService();
+    private final LocacaoDAO locacaoDAO = new LocacaoDAO();
 
     public Locacao realizarLocacao(String cpf, String placa, LocalDate dataRetirada, LocalDate dataDevolucao, Usuario usuarioLogado) throws SQLException{
         //1. buscar o cliente
-        Cliente cliente = clienteDAO.buscarPorCpf(cpf);
+        Cliente cliente = clienteService.buscarPorCpf(cpf);
         if(cliente == null){
             LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Cliente não encontrado. CPF: " + cpf);
             throw new IllegalArgumentException("Cliente não encontrado para o CPF informado.");
         }
         //2. busca o veiculo
-        Veiculo veiculo = veiculoDAO.buscarPorPlaca(placa);
+        Veiculo veiculo = veiculoService.buscarPorPlaca(placa);
         if(veiculo == null){
             LogUtil.registrar("LOCACAO_FALHOU", usuarioLogado, "Veiculo não encontrado. Placa: " + placa);
             throw new IllegalArgumentException("Veiculo não encontrado para o placa informada.");
@@ -46,7 +44,7 @@ public class LocacaoService {
         //5. cria e salva a locação
         Locacao locacao = new Locacao(cliente, veiculo, usuarioLogado, dataRetirada, dataDevolucao, valorTotal);
         locacaoDAO.salvar(locacao);
-        veiculoDAO.atualizarDisponivel(false,veiculo.getId());
+        veiculoService.atualizarDisponivel(false,veiculo.getId());
         LogUtil.registrar("LOCACAO_REALIZADA", usuarioLogado, "CPF" + cpf + " Placa: " + placa + "DIAS" + dias + " VALOR_TOTAL: " + valorTotal);
         return locacao;
     }

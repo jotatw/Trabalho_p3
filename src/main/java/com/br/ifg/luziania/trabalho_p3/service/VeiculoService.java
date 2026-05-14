@@ -13,7 +13,7 @@ public class VeiculoService {
     public void salvar(Veiculo veiculo) throws SQLException {
         veiculo.setDisponivel(true);
         veiculoDAO.salvar(veiculo);
-        LogUtil.registrarAcao("VEICULO_CADASTRADO", ", PLACA=" + veiculo.getPlaca());
+        LogUtil.registrarAcao("VEICULO_CADASTRADO", "PLACA=" + veiculo.getPlaca());
     }
     public List<Veiculo> listarTodos() throws SQLException {
         return veiculoDAO.listarTodos();

@@ -15,7 +15,7 @@ public class UsuarioService {
         String senhaHash = SenhaUtil.gerarHash(usuario.getSenha());
         usuario.setSenha(senhaHash);
         usuarioDAO.salvar(usuario);
-        LogUtil.registrarAcao("USUARIO_CADASTRADO", "EMAIL=" + usuario.getEmail() + ", PERFIl=" + usuario.getPerfil());
+        LogUtil.registrarAcao("USUARIO_CADASTRADO", "EMAIL=" + usuario.getEmail() + ", PERFIL=" + usuario.getPerfil());
     }
     public List<Usuario> listarTodos() throws SQLException {
         return usuarioDAO.listarTodos();

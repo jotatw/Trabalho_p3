@@ -1,18 +1,16 @@
 package com.br.ifg.luziania.trabalho_p3.service;
 
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
-import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
-import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class DevolucaoService {
-    private LocacaoDAO locacaoDAO =  new LocacaoDAO();
-    private VeiculoDAO veiculoDAO = new VeiculoDAO();
+    private final LocacaoDAO locacaoDAO =  new LocacaoDAO();
+    private final VeiculoService veiculoService = new VeiculoService();
 
     public Locacao registrarDevolucao(String placa) throws SQLException{
         //1. busca a locação ativa
@@ -37,7 +35,7 @@ public class DevolucaoService {
         locacao.setMultas(multa);
         locacao.setStatus("ENCERRADA");
         locacaoDAO.atualizarDevolucao(locacao);
-        veiculoDAO.atualizarDisponivel(true, locacao.getVeiculo().getId());
+        veiculoService.atualizarDisponivel(true, locacao.getVeiculo().getId());
         LogUtil.registrarAcao("DEVOLUCAO_REALIZADA", "PLACA:" + placa + " MULTA: " + multa + "DATA_DEVOLUCAO" + hoje);
         return locacao;
     }

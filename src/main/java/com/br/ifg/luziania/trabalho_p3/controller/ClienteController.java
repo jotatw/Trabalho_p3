@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ClienteController {
-    private ClienteService clienteService = new ClienteService();
+    private final ClienteService clienteService = new ClienteService();
 
     @FXML private TextField campoNome;
     @FXML private TextField campoCpf;
@@ -121,7 +121,7 @@ public class ClienteController {
             List<Cliente> lista = clienteService.listarTodos();
             tabelaCliente.setItems(FXCollections.observableArrayList(lista));
         } catch (SQLException e) {
-            mostraAlerta("Erro ao carregar cliente: !" +  e.getMessage());
+            mostraAlerta("Erro ao carregar cliente: " +  e.getMessage());
         }
     }
     private void mostraAlerta(String msg) {

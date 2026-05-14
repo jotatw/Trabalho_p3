@@ -18,14 +18,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class VeiculoController {
-    private VeiculoService veiculoService = new VeiculoService();
+    private final VeiculoService veiculoService = new VeiculoService();
 
     @FXML private TextField campoPlaca;
     @FXML private TextField campoModelo;
     @FXML private TextField campoMarca;
     @FXML private TextField campoCategoria;
     @FXML private TextField campoValor;
-    @FXML private CheckBox ckbDisponivel;
     @FXML private Button btnVoltar;
 
     @FXML private TableView <Veiculo> tabelaVeiculo;
@@ -89,7 +88,7 @@ public class VeiculoController {
             limpar();
             carregarTabela();
         } catch (SQLException e) {
-            mostraAlerta("Erro ao cadastrar veiculo" + e.getMessage());
+            mostraAlerta("Erro ao cadastrar veiculo: " + e.getMessage());
         }
     }
 
@@ -100,7 +99,6 @@ public class VeiculoController {
         campoMarca.clear();
         campoCategoria.clear();
         campoValor.clear();
-        ckbDisponivel.setSelected(false);
     }
     @FXML
     private void voltar() {
