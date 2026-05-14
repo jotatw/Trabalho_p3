@@ -36,11 +36,11 @@ public class VeiculoController {
 
     @FXML
     private void salvar() {
-        String  placa = campoPlaca.getText();
-        String modelo = campoModelo.getText();
-        String marca = campoMarca.getText();
-        String categoria = campoCategoria.getText();
-        String valor = campoValor.getText();
+        String  placa = campoPlaca.getText().trim().toUpperCase();
+        String modelo = campoModelo.getText().trim();
+        String marca = campoMarca.getText().trim();
+        String categoria = campoCategoria.getText().trim();
+        String valorTexto = campoValor.getText().trim().replace(",",".");
 
         //validações
         if(!ValidacaoUtil.placaValido(placa)) {
@@ -63,14 +63,15 @@ public class VeiculoController {
             mostraAlerta("Informe o valor da diaria");
             return;
         }
+        double valorDiaria;
         try {
-            double v = Double.parseDouble(valor);
-            if (!ValidacaoUtil.valorPositivo(v)) {
+            valorDiaria = Double.parseDouble(valorTexto);
+            if (!ValidacaoUtil.valorPositivo(valorDiaria)) {
                 mostraAlerta("O valor de diaria deve ser maior que zero");
                 return;
             }
         } catch (NumberFormatException e) {
-            mostraAlerta("Valor invalido! use apenas numeros. EX: 89.90");
+            mostraAlerta("Valor inválido! Use apenas números. Exemplo: 89.90 ou 89,90");
             return;
         }
 
@@ -81,9 +82,9 @@ public class VeiculoController {
             veiculo.setModelo(modelo);
             veiculo.setMarca(marca);
             veiculo.setCategoria(categoria);
-            veiculo.setValorLocacao(Double.parseDouble(valor));
-
+            veiculo.setValorLocacao(valorDiaria);
             veiculoService.salvar(veiculo);
+
             mostraSucesso("Veiculo cadastrado com sucesso");
             limpar();
             carregarTabela();
