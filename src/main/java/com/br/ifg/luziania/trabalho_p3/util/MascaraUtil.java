@@ -11,7 +11,7 @@ public class MascaraUtil {
             //limita a 11 digitos
             if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
-            };
+            }
 
             //formata e atualiza só se mudou para evitar loop infinito
             String formatado = formatarCpf(digito);
@@ -28,7 +28,7 @@ public class MascaraUtil {
             //limita a 11 digitos
             if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
-            };
+            }
 
             if (!novo.equals(digito)) {
                 campo.setText(digito);
@@ -43,7 +43,7 @@ public class MascaraUtil {
             //limita a 11digitos (DDD + 9 digitos)
             if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
-            };
+            }
 
             String formatado = formatarTelefone(digito);
             if (!novo.equals(formatado)) {
@@ -59,8 +59,8 @@ public class MascaraUtil {
 
             //limita a 7 cacarteres (tamanho de qualquer placa)
             if (limpo.length() > 7) {
-                limpo = novo.substring(0, 7);
-            };
+                limpo = limpo.substring(0, 7);
+            }
 
             if (!novo.equals(limpo)) {
                 campo.setText(limpo);
