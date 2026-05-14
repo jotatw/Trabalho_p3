@@ -9,34 +9,64 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class DevolucaoService {
-    private final LocacaoDAO locacaoDAO =  new LocacaoDAO();
+
+    private final LocacaoDAO locacaoDAO = new LocacaoDAO();
     private final VeiculoService veiculoService = new VeiculoService();
 
-    public Locacao registrarDevolucao(String placa) throws SQLException{
-        //1. busca a locação ativa
+    public Locacao registrarDevolucao(String placa) throws SQLException {
         Locacao locacao = locacaoDAO.buscarLocacaoAtivaPorPlaca(placa);
-        if(locacao == null){
-            LogUtil.registrarAcao("DEVOLUCAO_FALHOU", "Nenhuma locação encontrada. PLACA:" + placa);
-            throw new IllegalArgumentException("Nenhuma locação ativa encontrada para essa placa informada.");
+
+        if (locacao == null) {
+            LogUtil.registrarAcao(
+                    "DEVOLUCAO_FALHOU",
+                    "Nenhuma locação ativa encontrada. PLACA=" + placa
+            );
+            throw new IllegalArgumentException(
+                    "Nenhuma locação ativa encontrada para essa placa informada."
+            );
         }
-        //2. defini a data de devolução real como hoje
+
         LocalDate hoje = LocalDate.now();
         locacao.setDataDevolucaoReal(hoje);
-        //3. calcula dias de atraso
-        long diasAtraso = ChronoUnit.DAYS.between(locacao.getDataDevolucaoPrevista(), hoje);
-        //4. calcula multas se houver atraso
+
+        long diasAtraso = ChronoUnit.DAYS.between(
+                locacao.getDataDevolucaoPrevista(),
+                hoje
+        );
+
         double multa = 0.0;
-        if(diasAtraso > 0){
-            //multa = dias de atraso x valor diaria x 20%
-            double valorDiaria = locacao.getValorTotal() / ChronoUnit.DAYS.between(locacao.getDataRetirada(), locacao.getDataDevolucaoPrevista());
+
+        if (diasAtraso > 0) {
+            long diasLocacao = ChronoUnit.DAYS.between(
+                    locacao.getDataRetirada(),
+                    locacao.getDataDevolucaoPrevista()
+            );
+
+            if (diasLocacao <= 0) {
+                LogUtil.registrarAcao(
+                        "DEVOLUCAO_FALHOU",
+                        "Período de locação inválido. PLACA=" + placa
+                );
+                throw new IllegalArgumentException("Período de locação inválido.");
+            }
+
+            double valorDiaria = locacao.getValorTotal() / diasLocacao;
             multa = diasAtraso * valorDiaria * 0.20;
         }
-        //5. atualiza locaçaõ
+
         locacao.setMultas(multa);
         locacao.setStatus("ENCERRADA");
+
         locacaoDAO.atualizarDevolucao(locacao);
         veiculoService.atualizarDisponivel(true, locacao.getVeiculo().getId());
-        LogUtil.registrarAcao("DEVOLUCAO_REALIZADA", "PLACA:" + placa + " MULTA: " + multa + "DATA_DEVOLUCAO" + hoje);
+
+        LogUtil.registrarAcao(
+                "DEVOLUCAO_REALIZADA",
+                "PLACA=" + placa +
+                        ", MULTA=" + multa +
+                        ", DATA_DEVOLUCAO=" + hoje
+        );
+
         return locacao;
     }
 }
