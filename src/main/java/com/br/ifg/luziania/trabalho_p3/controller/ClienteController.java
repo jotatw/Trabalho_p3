@@ -5,6 +5,8 @@ import com.br.ifg.luziania.trabalho_p3.service.ClienteService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,12 +22,15 @@ import java.util.List;
 public class ClienteController {
     private final ClienteService clienteService = new ClienteService();
     private Cliente clienteSelecionado;
+    private ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
+    private FilteredList<Cliente> listaFiltrada;
 
     @FXML private TextField campoNome;
     @FXML private TextField campoCpf;
     @FXML private TextField campoTelefone;
     @FXML private TextField campoEmail;
     @FXML private TextField campoCnh;
+    @FXML private TextField campoBusca;
     @FXML private Button btnVoltar;
     @FXML private Button btnAtualizar;
     @FXML private Button btnInativar;
@@ -54,11 +59,12 @@ public class ClienteController {
         colunaAtivo.setCellValueFactory(new PropertyValueFactory<>("ativo"));
 
         carregarTabela();
+        configurarBusca();
 
         tabelaCliente.getSelectionModel().selectedItemProperty().addListener((obs, antigo, selecionado) -> {
             if (selecionado != null) {
                 clienteSelecionado = selecionado;
-                preecherFormulario(selecionado);
+                preencherFormulario(selecionado);
             }
         });
     }
@@ -126,6 +132,7 @@ public class ClienteController {
         campoCnh.clear();
         campoTelefone.clear();
         campoEmail.clear();
+        campoBusca.clear();
 
         clienteSelecionado = null;
         tabelaCliente.getSelectionModel().clearSelection();
@@ -170,6 +177,7 @@ public class ClienteController {
         }
         if (ValidacaoUtil.campoVazio(telefone)) {
             mostraAlerta("Telefone e obrigatorio!");
+            return;
         }
         if (!ValidacaoUtil.telefoneValido(telefone)) {
             mostraAlerta("Telefone invalido! Use o formato: (00) 99999-9999 ou (00) 1111-2222");
@@ -181,6 +189,7 @@ public class ClienteController {
         }
         if (!ValidacaoUtil.emailValido(email)) {
             mostraAlerta("Email invalido!");
+            return;
         }
         try {
             clienteSelecionado.setNome(nome);
@@ -228,7 +237,7 @@ public class ClienteController {
             mostraAlerta("Erro ao inativar cliente. Tente novamente.");
         }
     }
-    private void preecherFormulario(Cliente cliente) {
+    private void preencherFormulario(Cliente cliente) {
         campoNome.setText(cliente.getNome());
         campoCpf.setText(cliente.getCpf());
         campoCnh.setText(cliente.getCnh());
@@ -239,10 +248,34 @@ public class ClienteController {
     private void carregarTabela() {
         try {
             List<Cliente> lista = clienteService.listarTodos();
-            tabelaCliente.setItems(FXCollections.observableArrayList(lista));
+            listaClientes.setAll(lista);
+            if (listaFiltrada == null) {
+                listaFiltrada = new FilteredList<>(listaClientes, cliente -> true);
+                tabelaCliente.setItems(listaFiltrada);
+            }
         } catch (SQLException e) {
-            mostraAlerta("Erro ao carregar cliente: " +  e.getMessage());
+            mostraAlerta("Erro ao carregar cliente. Tente novamente");
         }
+    }
+    private void configurarBusca() {
+        listaFiltrada = new FilteredList<>(listaClientes, cliente -> true);
+        tabelaCliente.setItems(listaFiltrada);
+
+        campoBusca.textProperty().addListener((obs, antigo, novo) -> {
+            listaFiltrada.setPredicate(cliente -> {
+                if (novo == null || novo.trim().isEmpty()) {
+                    return true;
+                }
+                String filtro = novo.toLowerCase().trim();
+
+                return cliente.getNome().toLowerCase().contains(filtro)
+                        || cliente.getCpf().toLowerCase().contains(filtro)
+                        || cliente.getCnh().toLowerCase().contains(filtro)
+                        || cliente.getTelefone().toLowerCase().contains(filtro)
+                        || cliente.getEmail().toLowerCase().contains(filtro)
+                        || String.valueOf(cliente.isAtivo()).contains(filtro);
+            });
+        });
     }
     private void mostraAlerta(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

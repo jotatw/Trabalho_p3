@@ -36,14 +36,18 @@
 
             <HBox styleClass="linha-btn">
                 <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
-                <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar"/>
-                <Button fx:id="btnInativar" mnemonicParsing="false" onAction="#inativar" styleClass="btn-secundario" text="Inativar"/>
+                <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar" />
+                <Button fx:id="btnInativar" mnemonicParsing="false" onAction="#inativar" styleClass="btn-secundario" text="Inativar" />
                 <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
                 <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
             </HBox>
         </VBox>
 
         <VBox styleClass="bloco-tabela">
+            <HBox spacing="10">
+                <Label text="Buscar" />
+                <TextField fx:id="campoBusca" promptText="Nome, CPF, telefone ou e-mail" styleClass="campo-texto" />
+            </HBox>
             <TableView fx:id="tabelaCliente" prefHeight="260" styleClass="tabela-padrao">
                 <columns>
                     <TableColumn fx:id="colunaNome" text="Nome" />
@@ -51,7 +55,7 @@
                     <TableColumn fx:id="colunaCnh" text="cnh" />
                     <TableColumn fx:id="colunaTelefone" text="Telefone" />
                     <TableColumn fx:id="colunaEmail" text="Email" />
-                    <TableColumn fx:id="colunaAtivo" text="Ativo"/>
+                    <TableColumn fx:id="colunaAtivo" text="Ativo" />
                 </columns>
             </TableView>
         </VBox>
