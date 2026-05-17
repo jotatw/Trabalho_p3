@@ -28,6 +28,7 @@ public class ClienteController {
     @FXML private TextField campoCnh;
     @FXML private Button btnVoltar;
     @FXML private Button btnAtualizar;
+    @FXML private Button btnInativar;
 
     @FXML private TableView <Cliente> tabelaCliente;
     @FXML private TableColumn <Cliente, String> colunaNome;
@@ -35,6 +36,7 @@ public class ClienteController {
     @FXML private TableColumn <Cliente, String> colunaTelefone;
     @FXML private TableColumn <Cliente, String> colunaEmail;
     @FXML private TableColumn <Cliente, String> colunaCnh;
+    @FXML private TableColumn <Cliente, Boolean> colunaAtivo;
 
     @FXML
     public void initialize() {
@@ -49,6 +51,7 @@ public class ClienteController {
         colunaCnh.setCellValueFactory(new PropertyValueFactory<>("cnh"));
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colunaAtivo.setCellValueFactory(new PropertyValueFactory<>("ativo"));
 
         carregarTabela();
 
@@ -192,6 +195,37 @@ public class ClienteController {
             carregarTabela();
         } catch (SQLException e) {
             mostraAlerta("Erro ao atualizar cliente. Verifique se CPF, CNH ou e-mail já estão cadastrados.");
+        }
+    }
+    @FXML
+    private void inativar() {
+        if (clienteSelecionado == null) {
+            mostraAlerta("Selecione um cliente para inativar!");
+            return;
+        }
+        if (!clienteSelecionado.isAtivo()) {
+            mostraAlerta("Cliente ja esta inativo!");
+            return;
+        }
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setTitle("Confirmar inativação");
+        confirmacao.setHeaderText(null);
+        confirmacao.setContentText("Deseja realmente inativar o cliente " + clienteSelecionado.getNome() + "?");
+
+        ButtonType resutado = confirmacao.showAndWait().orElse(ButtonType.CANCEL);
+        if (resutado != ButtonType.OK) {
+            return;
+        }
+
+        try {
+           clienteSelecionado.setAtivo(false);
+           clienteService.atualizar(clienteSelecionado);
+
+           mostraSucesso("Cliente inativado com sucesso!");
+           limpar();
+           carregarTabela();
+        } catch (SQLException e) {
+            mostraAlerta("Erro ao inativar cliente. Tente novamente.");
         }
     }
     private void preecherFormulario(Cliente cliente) {
