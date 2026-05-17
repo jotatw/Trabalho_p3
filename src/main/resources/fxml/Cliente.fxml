@@ -3,59 +3,79 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" spacing="0" styleClass="pagina" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.ClienteController">
+<VBox alignment="TOP_CENTER"
+      spacing="0"
+      styleClass="pagina"
+      stylesheets="@../css/estilos.css"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.br.ifg.luziania.trabalho_p3.controller.ClienteController">
+
     <VBox styleClass="tela-formulario">
+
+        <!-- Cabeçalho da tela -->
+        <VBox styleClass="cabecalho-tela">
+            <Label text="Gerenciamento de Clientes" styleClass="titulo-tela" />
+            <Label text="Cadastre, atualize, inative e consulte clientes da locadora." styleClass="subtitulo-tela" />
+        </VBox>
+
+        <!-- Formulário de cadastro/edição -->
         <VBox styleClass="painel-formulario">
             <GridPane hgap="12" vgap="10">
                 <Label styleClass="rotulo-campo" text="Nome" />
-                <TextField fx:id="campoNome" styleClass="campo-texto" GridPane.columnIndex="1" />
+                <TextField fx:id="campoNome" promptText="Nome completo" styleClass="campo-texto" GridPane.columnIndex="1" />
 
                 <Label styleClass="rotulo-campo" text="CPF" GridPane.rowIndex="1" />
-                <TextField fx:id="campoCpf" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="campoCpf" promptText="000.000.000-00" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                 <Label styleClass="rotulo-campo" text="CNH" GridPane.rowIndex="2" />
-                <TextField fx:id="campoCnh" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="campoCnh" promptText="11 dígitos" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <Label styleClass="rotulo-campo" text="Telefone" GridPane.rowIndex="3" />
-                <TextField fx:id="campoTelefone" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <TextField fx:id="campoTelefone" promptText="(61) 99999-9999" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                 <Label styleClass="rotulo-campo" text="E-mail" GridPane.rowIndex="4" />
-                <TextField fx:id="campoEmail" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <columnConstraints>
-               <ColumnConstraints />
-               <ColumnConstraints />
-            </columnConstraints>
-            <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-            </rowConstraints>
+                <TextField fx:id="campoEmail" promptText="cliente@email.com" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                <columnConstraints>
+                    <ColumnConstraints minWidth="100" />
+                    <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
+
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
             </GridPane>
 
+            <!-- Botões principais da tela -->
             <HBox styleClass="linha-btn">
                 <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
                 <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar" />
-                <Button fx:id="btnInativar" mnemonicParsing="false" onAction="#inativar" styleClass="btn-secundario" text="Inativar" />
+                <Button fx:id="btnInativar" mnemonicParsing="false" onAction="#inativar" styleClass="btn-perigo" text="Inativar" />
                 <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
                 <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
             </HBox>
         </VBox>
 
-        <VBox styleClass="bloco-tabela">
-            <HBox spacing="10">
-                <Label text="Buscar" />
-                <TextField fx:id="campoBusca" promptText="Nome, CPF, telefone ou e-mail" styleClass="campo-texto" />
+        <!-- Área de busca e listagem -->
+        <VBox styleClass="bloco-tabela" spacing="10">
+            <HBox spacing="10" styleClass="linha-busca">
+                <Label text="Buscar:" styleClass="rotulo-busca" />
+                <TextField fx:id="campoBusca" promptText="Nome, CPF, CNH, telefone ou e-mail" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
             </HBox>
-            <TableView fx:id="tabelaCliente" prefHeight="260" styleClass="tabela-padrao">
+
+            <TableView fx:id="tabelaCliente" prefHeight="280" styleClass="tabela-padrao">
                 <columns>
-                    <TableColumn fx:id="colunaNome" text="Nome" />
-                    <TableColumn fx:id="colunaCpf" text="cpf" />
-                    <TableColumn fx:id="colunaCnh" text="cnh" />
-                    <TableColumn fx:id="colunaTelefone" text="Telefone" />
-                    <TableColumn fx:id="colunaEmail" text="Email" />
-                    <TableColumn fx:id="colunaAtivo" text="Ativo" />
+                    <TableColumn fx:id="colunaNome" text="Nome" prefWidth="160" />
+                    <TableColumn fx:id="colunaCpf" text="CPF" prefWidth="120" />
+                    <TableColumn fx:id="colunaCnh" text="CNH" prefWidth="110" />
+                    <TableColumn fx:id="colunaTelefone" text="Telefone" prefWidth="130" />
+                    <TableColumn fx:id="colunaEmail" text="E-mail" prefWidth="170" />
+                    <TableColumn fx:id="colunaAtivo" text="Ativo" prefWidth="70" />
                 </columns>
             </TableView>
         </VBox>

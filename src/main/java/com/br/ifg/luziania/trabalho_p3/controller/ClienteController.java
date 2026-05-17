@@ -19,10 +19,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+// Controla a tela de gerenciamento de clientes:
+// cadastro, atualização, inativação, busca e listagem.
 public class ClienteController {
+    // Service responsável pelas regras de negócio e acesso ao DAO.
     private final ClienteService clienteService = new ClienteService();
+    // Guarda o cliente selecionado na tabela para atualizar ou inativar.
     private Cliente clienteSelecionado;
+    // Lista principal carregada do banco e usada pela tabela.
     private ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
+    // Lista filtrada usada pelo campo de busca.
     private FilteredList<Cliente> listaFiltrada;
 
     @FXML private TextField campoNome;
@@ -43,6 +49,8 @@ public class ClienteController {
     @FXML private TableColumn <Cliente, String> colunaCnh;
     @FXML private TableColumn <Cliente, Boolean> colunaAtivo;
 
+    // Executado automaticamente ao abrir a tela.
+    // Configura máscaras, colunas, tabela, busca e seleção.
     @FXML
     public void initialize() {
         //aplica as mascaras no campo de entrada
@@ -68,7 +76,7 @@ public class ClienteController {
             }
         });
     }
-
+    // Cadastra um novo cliente após validar os campos do formulário.
     @FXML
     private void salvar() {
         String nome = campoNome.getText().trim();
@@ -106,7 +114,6 @@ public class ClienteController {
             mostraAlerta("Email invalido!");
             return;
         }
-
         //salva no banco de dados
         try {
             Cliente cliente = new Cliente();
@@ -124,7 +131,6 @@ public class ClienteController {
             mostraAlerta("Erro ao salvar: " + e.getMessage());
         }
     }
-
     @FXML
     private void limpar() {
         campoNome.clear();
@@ -206,6 +212,7 @@ public class ClienteController {
             mostraAlerta("Erro ao atualizar cliente. Verifique se CPF, CNH ou e-mail já estão cadastrados.");
         }
     }
+    // Inativa o cliente selecionado sem removê-lo fisicamente do banco.
     @FXML
     private void inativar() {
         if (clienteSelecionado == null) {
@@ -237,6 +244,7 @@ public class ClienteController {
             mostraAlerta("Erro ao inativar cliente. Tente novamente.");
         }
     }
+    // Preenche o formulário com os dados do cliente selecionado.
     private void preencherFormulario(Cliente cliente) {
         campoNome.setText(cliente.getNome());
         campoCpf.setText(cliente.getCpf());
@@ -244,7 +252,7 @@ public class ClienteController {
         campoTelefone.setText(cliente.getTelefone());
         campoEmail.setText(cliente.getEmail());
     }
-
+    // Busca os clientes no banco e atualiza a tabela.
     private void carregarTabela() {
         try {
             List<Cliente> lista = clienteService.listarTodos();
@@ -257,6 +265,7 @@ public class ClienteController {
             mostraAlerta("Erro ao carregar cliente. Tente novamente");
         }
     }
+    // Configura o filtro da tabela usando o texto digitado no campo de busca.
     private void configurarBusca() {
         listaFiltrada = new FilteredList<>(listaClientes, cliente -> true);
         tabelaCliente.setItems(listaFiltrada);
