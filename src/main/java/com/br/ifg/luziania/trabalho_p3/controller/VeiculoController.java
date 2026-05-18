@@ -18,7 +18,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
+// Controla a tela de gerenciamento de veículos:
+// cadastro, atualização, busca e listagem.
 public class VeiculoController {
     private final VeiculoService veiculoService = new VeiculoService();
     // Guarda o veículo selecionado na tabela para atualização.
@@ -43,7 +44,7 @@ public class VeiculoController {
     @FXML private TableColumn<Veiculo, String> colunaModelo;
     @FXML private TableColumn<Veiculo, String> colunaMarca;
     @FXML private TableColumn<Veiculo, String> colunaCategoria;
-    @FXML private TableColumn<Veiculo, String> colunaValor;
+    @FXML private TableColumn<Veiculo, Double> colunaValor;
     // Executado automaticamente ao abrir a tela.
     // Configura máscara, colunas, tabela, busca e seleção.
     @FXML
@@ -56,13 +57,14 @@ public class VeiculoController {
         colunaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
         colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         colunaValor.setCellValueFactory(new PropertyValueFactory<>("valorLocacao"));
+        colunaDisponivel.setCellValueFactory(new PropertyValueFactory<>("disponivel"));
         carregarTabela();
         configurarBusca();
 
         tabelaVeiculo.getSelectionModel().selectedItemProperty().addListener((obs, antigo, selecionado) -> {
             if (selecionado != null) {
                 veiculoSelecionado = selecionado;
-                preecherFormulario(selecionado);
+                preencherFormulario(selecionado);
             }
         });
     }
@@ -144,15 +146,17 @@ public class VeiculoController {
         }
         if(ValidacaoUtil.campoVazio(marca)) {
             mostraAlerta("Marca é obrigatória!");
+            return;
         }
         if(ValidacaoUtil.campoVazio(categoria)) {
             mostraAlerta("Categoria é obrigatória!");
+            return;
         }
         if(ValidacaoUtil.campoVazio(valorTexto)) {
             mostraAlerta("Informe o valor da diária!");
             return;
         }
-        double valorDiaria = 0;
+        double valorDiaria;
         try {
             valorDiaria = Double.parseDouble(valorTexto);
 
@@ -162,6 +166,7 @@ public class VeiculoController {
             }
         } catch (NumberFormatException e) {
             mostraAlerta("Valor inválido! Use apenas números. Exemplo: 89.90 ou 89,90");
+            return;
         }
         try {
             veiculoSelecionado.setPlaca(placa);
@@ -172,7 +177,7 @@ public class VeiculoController {
 
             veiculoService.atualizar(veiculoSelecionado);
 
-            mostraSucesso("Veículo cadastrado com sucesso!");
+            mostraSucesso("Veículo atualizado com sucesso!");
             limpar();
             carregarTabela();
         } catch (SQLException e) {
@@ -186,6 +191,7 @@ public class VeiculoController {
         campoMarca.clear();
         campoCategoria.clear();
         campoValor.clear();
+        campoBusca.clear();
 
         veiculoSelecionado = null;
         tabelaVeiculo.getSelectionModel().clearSelection();
@@ -201,11 +207,11 @@ public class VeiculoController {
             stage.setTitle("Locadora - Home");
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            mostraAlerta("Erro ao voltar para a tela inicial.");
         }
     }
     // Preenche o formulário com os dados do veículo selecionado.
-    private void preecherFormulario(Veiculo veiculo) {
+    private void preencherFormulario(Veiculo veiculo) {
         campoPlaca.setText(veiculo.getPlaca());
         campoModelo.setText(veiculo.getModelo());
         campoMarca.setText(veiculo.getMarca());
