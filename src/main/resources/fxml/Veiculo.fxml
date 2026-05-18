@@ -3,9 +3,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" spacing="0" styleClass="pagina" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.VeiculoController">
+<VBox alignment="TOP_CENTER"
+      spacing="0"
+      styleClass="pagina"
+      stylesheets="@../css/estilos.css"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.br.ifg.luziania.trabalho_p3.controller.VeiculoController">
 
     <VBox styleClass="tela-formulario">
+
+        <!-- Cabeçalho da tela -->
+        <VBox styleClass="cabecalho-tela">
+            <Label text="Gerenciamento de Veículos" styleClass="titulo-tela" />
+            <Label text="Cadastre, atualize e consulte os veículos da locadora." styleClass="subtitulo-tela" />
+        </VBox>
+
+        <!-- Formulário de cadastro/edição -->
         <VBox styleClass="painel-formulario">
             <GridPane hgap="12" vgap="10">
                 <columnConstraints>
@@ -14,44 +28,53 @@
                 </columnConstraints>
 
                 <Label styleClass="rotulo-campo" text="Placa" />
-                <TextField fx:id="campoPlaca" styleClass="campo-texto" GridPane.columnIndex="1" />
+                <TextField fx:id="campoPlaca" promptText="ABC1D23 ou ABC1234" styleClass="campo-texto" GridPane.columnIndex="1" />
 
                 <Label styleClass="rotulo-campo" text="Modelo" GridPane.rowIndex="1" />
-                <TextField fx:id="campoModelo" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="campoModelo" promptText="Ex: Onix, HB20, Corolla" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                 <Label styleClass="rotulo-campo" text="Marca" GridPane.rowIndex="2" />
-                <TextField fx:id="campoMarca" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="campoMarca" promptText="Ex: Chevrolet, Hyundai, Toyota" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <Label styleClass="rotulo-campo" text="Categoria" GridPane.rowIndex="3" />
-                <TextField fx:id="campoCategoria" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <TextField fx:id="campoCategoria" promptText="Ex: Econômico, SUV, Sedan" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                 <Label styleClass="rotulo-campo" text="Valor da diária" GridPane.rowIndex="4" />
-                <TextField fx:id="campoValor" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-            </rowConstraints>
+                <TextField fx:id="campoValor" promptText="Ex: 120,00" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
             </GridPane>
 
-            <HBox styleClass="linha-botoes">
+            <!-- Botões principais da tela -->
+            <HBox styleClass="linha-btn">
                 <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
+                <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar" />
                 <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
                 <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
             </HBox>
         </VBox>
 
-        <VBox styleClass="bloco-tabela">
-            <TableView fx:id="tabelaVeiculo" prefHeight="260" styleClass="tabela-padrao">
+        <!-- Área de busca e listagem -->
+        <VBox styleClass="bloco-tabela" spacing="10">
+            <HBox spacing="10" styleClass="linha-busca">
+                <Label text="Buscar:" styleClass="rotulo-busca" />
+                <TextField fx:id="campoBusca" promptText="Placa, modelo, marca ou categoria" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <TableView fx:id="tabelaVeiculo" prefHeight="280" styleClass="tabela-padrao">
                 <columns>
                     <TableColumn fx:id="colunaPlaca" prefWidth="110" text="Placa" />
-                    <TableColumn fx:id="colunaModelo" prefWidth="140" text="Modelo" />
+                    <TableColumn fx:id="colunaModelo" prefWidth="150" text="Modelo" />
                     <TableColumn fx:id="colunaMarca" prefWidth="130" text="Marca" />
                     <TableColumn fx:id="colunaCategoria" prefWidth="130" text="Categoria" />
-                    <TableColumn fx:id="colunaValor" prefWidth="180" text="Valor da Diária" />
+                    <TableColumn fx:id="colunaValor" prefWidth="140" text="Valor da diária" />
+                    <TableColumn fx:id="colunaDisponivel" prefWidth="90" text="Disponível" />
                 </columns>
             </TableView>
         </VBox>

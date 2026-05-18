@@ -5,6 +5,8 @@ import com.br.ifg.luziania.trabalho_p3.service.VeiculoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,13 +21,22 @@ import java.util.List;
 
 public class VeiculoController {
     private final VeiculoService veiculoService = new VeiculoService();
+    // Guarda o veículo selecionado na tabela para atualização.
+    private Veiculo veiculoSelecionado;
+    // Lista principal carregada do banco e usada pela tabela.
+    private ObservableList<Veiculo> listaVeiculos = FXCollections.observableArrayList();
+    // Lista filtrada usada pelo campo de busca.
+    private FilteredList<Veiculo> listaFiltrada;
 
     @FXML private TextField campoPlaca;
     @FXML private TextField campoModelo;
     @FXML private TextField campoMarca;
     @FXML private TextField campoCategoria;
     @FXML private TextField campoValor;
+    @FXML private TextField campoBusca;
+    @FXML private Button btnAtualizar;
     @FXML private Button btnVoltar;
+    @FXML private TableColumn <Veiculo, Boolean> colunaDisponivel;
 
     @FXML private TableView <Veiculo> tabelaVeiculo;
     @FXML private TableColumn<Veiculo, String> colunaPlaca;
@@ -33,7 +44,28 @@ public class VeiculoController {
     @FXML private TableColumn<Veiculo, String> colunaMarca;
     @FXML private TableColumn<Veiculo, String> colunaCategoria;
     @FXML private TableColumn<Veiculo, String> colunaValor;
+    // Executado automaticamente ao abrir a tela.
+    // Configura máscara, colunas, tabela, busca e seleção.
+    @FXML
+    public void initialize() {
+        //aplica a mascara de placa - aceita formato antigo e mercosul
+        MascaraUtil.placa(campoPlaca);
+        // Liga cada coluna da tabela ao atributo correspondente do model Veiculo.
+        colunaPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
+        colunaModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        colunaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
+        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
+        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valorLocacao"));
+        carregarTabela();
+        configurarBusca();
 
+        tabelaVeiculo.getSelectionModel().selectedItemProperty().addListener((obs, antigo, selecionado) -> {
+            if (selecionado != null) {
+                veiculoSelecionado = selecionado;
+                preecherFormulario(selecionado);
+            }
+        });
+    }
     @FXML
     private void salvar() {
         String  placa = campoPlaca.getText().trim().toUpperCase();
@@ -41,40 +73,38 @@ public class VeiculoController {
         String marca = campoMarca.getText().trim();
         String categoria = campoCategoria.getText().trim();
         String valorTexto = campoValor.getText().trim().replace(",",".");
-
         //validações
         if(!ValidacaoUtil.placaValido(placa)) {
-            mostraAlerta("Placa invalida! use o modelo Mercoosul ou a antigo: ABC1D23/ABC1234");
+            mostraAlerta("Placa inválida! Use o formato: ABC1D23 ou ABC1234");
             return;
         }
         if(ValidacaoUtil.campoVazio(modelo)) {
-            mostraAlerta("Modelo e obrigatorio!");
+            mostraAlerta("Modelo é obrigatório!");
             return;
         }
         if(ValidacaoUtil.campoVazio(marca)) {
-            mostraAlerta("Marca e obrigatoria!");
+            mostraAlerta("Marca é obrigatória!");
             return;
         }
         if(ValidacaoUtil.campoVazio(categoria)) {
-            mostraAlerta("Categoria e obrigatoria!");
+            mostraAlerta("Categoria é obrigatória!");
             return;
         }
         if(ValidacaoUtil.campoVazio(valorTexto)) {
-            mostraAlerta("Informe o valor da diaria");
+            mostraAlerta("Informe o valor da diária!");
             return;
         }
         double valorDiaria;
         try {
             valorDiaria = Double.parseDouble(valorTexto);
             if (!ValidacaoUtil.valorPositivo(valorDiaria)) {
-                mostraAlerta("O valor de diaria deve ser maior que zero");
+                mostraAlerta("O valor da diária deve ser maior que zero!");
                 return;
             }
         } catch (NumberFormatException e) {
             mostraAlerta("Valor inválido! Use apenas números. Exemplo: 89.90 ou 89,90");
             return;
         }
-
         //salva no banco de dados
         try {
             Veiculo veiculo = new Veiculo();
@@ -85,14 +115,70 @@ public class VeiculoController {
             veiculo.setValorLocacao(valorDiaria);
             veiculoService.salvar(veiculo);
 
-            mostraSucesso("Veiculo cadastrado com sucesso");
+            mostraSucesso("Veículo cadastrado com sucesso!");
             limpar();
             carregarTabela();
         } catch (SQLException e) {
-            mostraAlerta("Erro ao cadastrar veiculo: " + e.getMessage());
+            mostraAlerta("Erro ao cadastrar veículo. Verifique se a placa já está cadastrada.");
         }
     }
+    @FXML
+    private void atualizar() {
+        if (veiculoSelecionado == null) {
+            mostraAlerta("Selecione um veículo para atualizar!");
+            return;
+        }
+        String placa = campoPlaca.getText().trim().toUpperCase();
+        String modelo = campoModelo.getText().trim();
+        String marca = campoMarca.getText().trim();
+        String categoria = campoCategoria.getText().trim();
+        String valorTexto = campoValor.getText().trim().replace(",", ".");
 
+        if(!ValidacaoUtil.placaValido(placa)) {
+            mostraAlerta("Placa inválida! Use o formato: ABC1D23 ou ABC1234");
+            return;
+        }
+        if(ValidacaoUtil.campoVazio(modelo)) {
+            mostraAlerta("Modelo é obrigatório!");
+            return;
+        }
+        if(ValidacaoUtil.campoVazio(marca)) {
+            mostraAlerta("Marca é obrigatória!");
+        }
+        if(ValidacaoUtil.campoVazio(categoria)) {
+            mostraAlerta("Categoria é obrigatória!");
+        }
+        if(ValidacaoUtil.campoVazio(valorTexto)) {
+            mostraAlerta("Informe o valor da diária!");
+            return;
+        }
+        double valorDiaria = 0;
+        try {
+            valorDiaria = Double.parseDouble(valorTexto);
+
+            if (!ValidacaoUtil.valorPositivo(valorDiaria)) {
+                mostraAlerta("O valor da diária deve ser maior que zero!");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            mostraAlerta("Valor inválido! Use apenas números. Exemplo: 89.90 ou 89,90");
+        }
+        try {
+            veiculoSelecionado.setPlaca(placa);
+            veiculoSelecionado.setModelo(modelo);
+            veiculoSelecionado.setMarca(marca);
+            veiculoSelecionado.setCategoria(categoria);
+            veiculoSelecionado.setValorLocacao(valorDiaria);
+
+            veiculoService.atualizar(veiculoSelecionado);
+
+            mostraSucesso("Veículo cadastrado com sucesso!");
+            limpar();
+            carregarTabela();
+        } catch (SQLException e) {
+            mostraAlerta("Erro ao atualizar veículo. Verifique se a placa já está cadastrada.");
+        }
+    }
     @FXML
     private void limpar() {
         campoPlaca.clear();
@@ -100,6 +186,9 @@ public class VeiculoController {
         campoMarca.clear();
         campoCategoria.clear();
         campoValor.clear();
+
+        veiculoSelecionado = null;
+        tabelaVeiculo.getSelectionModel().clearSelection();
     }
     @FXML
     private void voltar() {
@@ -115,34 +204,59 @@ public class VeiculoController {
             e.printStackTrace();
         }
     }
-    @FXML
-    public void initialize() {
-        //aplica a mascara de placa - aceita formato antigo e mercosul
-        MascaraUtil.placa(campoPlaca);
+    // Preenche o formulário com os dados do veículo selecionado.
+    private void preecherFormulario(Veiculo veiculo) {
+        campoPlaca.setText(veiculo.getPlaca());
+        campoModelo.setText(veiculo.getModelo());
+        campoMarca.setText(veiculo.getMarca());
+        campoCategoria.setText(veiculo.getCategoria());
+        campoValor.setText(String.format("%.2f", veiculo.getValorLocacao()).replace(".", ","));
 
-        colunaPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
-        colunaModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-        colunaMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
-        colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-        colunaValor.setCellValueFactory(new PropertyValueFactory<>("valorLocacao"));
-        carregarTabela();
     }
+    // Busca os veículos no banco e atualiza a tabela.
     private void carregarTabela() {
         try {
             List<Veiculo> lista = veiculoService.listarTodos();
-            tabelaVeiculo.setItems(FXCollections.observableArrayList(lista));
+            listaVeiculos.setAll(lista);
+            if (listaFiltrada == null) {
+                listaFiltrada = new FilteredList<>(listaVeiculos, veiculo -> true);
+                tabelaVeiculo.setItems(listaFiltrada);
+            }
         } catch (SQLException e) {
-            mostraAlerta("Erro ao carregar veiculos: " + e.getMessage());
+            mostraAlerta("Erro ao carregar veículos. Tente novamente.");
         }
     }
+    // Configura o filtro da tabela usando o texto digitado no campo de busca.
+    private void configurarBusca() {
+        listaFiltrada = new FilteredList<>(listaVeiculos, veiculo -> true);
+        tabelaVeiculo.setItems(listaFiltrada);
+
+        campoBusca.textProperty().addListener((obs, antigo, novo) -> {
+            listaFiltrada.setPredicate(veiculo -> {
+                if (novo == null || novo.trim().isEmpty()) {
+                    return true;
+                }
+                String filtro = novo.toLowerCase().trim();
+                return veiculo.getPlaca().toLowerCase().contains(filtro)
+                        || veiculo.getModelo().toLowerCase().contains(filtro)
+                        || veiculo.getMarca().toLowerCase().contains(filtro)
+                        || veiculo.getCategoria().toLowerCase().contains(filtro)
+                        || String.valueOf(veiculo.getValorLocacao()).contains(filtro)
+                        || String.valueOf(veiculo.isDisponivel()).contains(filtro);
+
+            });
+        });
+    }
     private void mostraAlerta(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Atenção");
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
     }
     private void mostraSucesso(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sucesso");
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
