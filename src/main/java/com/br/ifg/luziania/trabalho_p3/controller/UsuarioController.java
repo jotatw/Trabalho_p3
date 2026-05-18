@@ -168,9 +168,7 @@ public class UsuarioController {
             return;
         }
         try {
-            usuarioSelecionado.setAtivo(false);
-            usuarioSelecionado.setSenha("");
-            usuarioService.atualizar(usuarioSelecionado);
+            usuarioService.inativar(usuarioSelecionado);
 
             mostraSucesso("Usuário inativado com sucesso!");
             limpar();

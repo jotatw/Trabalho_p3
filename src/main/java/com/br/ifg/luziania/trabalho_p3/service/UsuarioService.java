@@ -7,10 +7,10 @@ import com.br.ifg.luziania.trabalho_p3.util.SenhaUtil;
 
 import java.sql.SQLException;
 import java.util.List;
-
+// Controla as regras de negócio relacionadas aos usuários do sistema.
 public class UsuarioService {
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
-
+    // Cadastra usuário novo gerando hash BCrypt da senha.
     public void salvar(Usuario usuario) throws SQLException {
         String senhaHash = SenhaUtil.gerarHash(usuario.getSenha());
         usuario.setSenha(senhaHash);
@@ -23,6 +23,7 @@ public class UsuarioService {
     public Usuario buscarPorEmail(String email) throws SQLException {
         return  usuarioDAO.buscarPorEmail(email);
     }
+    // Atualiza usuário. A senha só é alterada se uma nova senha for informada.
     public void atualizar(Usuario usuario) throws SQLException {
         if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
             String senhaHash = SenhaUtil.gerarHash(usuario.getSenha());
@@ -31,8 +32,19 @@ public class UsuarioService {
         usuarioDAO.atualizar(usuario);
         LogUtil.registrarAcao("USUARIO_ATUALIZADO", "ID="  + usuario.getId() + ", EMAIL=" + usuario.getEmail());
     }
+    public void inativar(Usuario usuario) throws SQLException {
+        usuario.setAtivo(false);
+        usuario.setSenha("");
+
+        LogUtil.registrarAcao("USUARIO_INATIVADO",
+                "ID=" + usuario.getId() + ", EMAIL=" + usuario.getEmail());
+    }
     public void deletar(Usuario usuario) throws SQLException {
         usuarioDAO.deletar(usuario);
-        LogUtil.registrarAcao("USUARIO_DELETADO", "ID=" + usuario.getId() + ", EMAIL=" + usuario.getEmail());
+
+        LogUtil.registrarAcao(
+                "USUARIO_DELETADO",
+                "ID=" + usuario.getId() + ", EMAIL=" + usuario.getEmail()
+        );
     }
 }

@@ -91,6 +91,19 @@ public class ClienteDAO extends BaseDAO {
             throw e;
         }
     }
+    public void inativar (Cliente cliente) throws SQLException {
+        String sql = """
+                UPDATE cliente SET ativo = ? WHERE id = ?
+                """;
+        try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, cliente.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            registrarErro("ClienteDAO.inativar", e);
+            throw e;
+        }
+    }
     public void deletar(Cliente cliente) throws SQLException {
         String sql = """
                 DELETE FROM cliente WHERE id = ?

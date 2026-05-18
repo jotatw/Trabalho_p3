@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VeiculoDAO extends BaseDAO{
-    //salva um novo veiculo
+    // Salva um novo veículo no banco de dados.
     public void salvar(Veiculo veiculo) throws SQLException {
         String sql = """
             INSERT INTO veiculo (placa, modelo, marca, categoria, valor_diaria) VALUES (?, ?, ?, ?, ?)
@@ -31,7 +31,7 @@ public class VeiculoDAO extends BaseDAO{
             throw  e;
         }
     }
-    //busca um veiculo a partir da placa
+    // Busca um veículo pela placa.
     public Veiculo buscarPorPlaca(String placa) throws SQLException {
         String sql = """
             SELECT id, placa, modelo, marca, categoria, valor_diaria, disponivel FROM veiculo WHERE placa = ?
