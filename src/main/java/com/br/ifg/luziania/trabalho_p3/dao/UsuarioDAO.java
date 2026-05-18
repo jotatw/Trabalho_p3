@@ -70,19 +70,38 @@ public class UsuarioDAO extends BaseDAO {
         }
         return lista;
     }
-    public void atualizar (Usuario usuario) throws SQLException {
-        String sql = """
-                UPDATE usuario SET nome = ?, email = ?, senha_hash = ?, perfil = ?, ativo = ? WHERE id = ?
-                """;
+    public void atualizar(Usuario usuario) throws SQLException {
+        boolean atualizarSenha = usuario.getSenha() != null && !usuario.getSenha().isBlank();
+        String sql;
+        if (atualizarSenha) {
+            sql = """
+            UPDATE usuario
+            SET nome = ?, email = ?, senha_hash = ?, perfil = ?, ativo = ?
+            WHERE id = ?
+            """;
+        } else {
+            sql = """
+            UPDATE usuario
+            SET nome = ?, email = ?, perfil = ?, ativo = ?
+            WHERE id = ?
+            """;
+        }
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setString(1, usuario.getNomeCompleto());
             stmt.setString(2, usuario.getEmail());
-            stmt.setString(3, usuario.getSenha());
-            stmt.setString(4, usuario.getPerfil());
-            stmt.setBoolean(5, usuario.isAtivo());
-            stmt.setInt(6, usuario.getId());
+
+            if (atualizarSenha) {
+                stmt.setString(3, usuario.getSenha());
+                stmt.setString(4, usuario.getPerfil());
+                stmt.setBoolean(5, usuario.isAtivo());
+                stmt.setInt(6, usuario.getId());
+            } else {
+                stmt.setString(3, usuario.getPerfil());
+                stmt.setBoolean(4, usuario.isAtivo());
+                stmt.setInt(5, usuario.getId());
+            }
             stmt.executeUpdate();
         } catch (SQLException e) {
             registrarErro("UsuarioDAO.atualizar", e);

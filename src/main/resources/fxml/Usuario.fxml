@@ -3,43 +3,73 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox styleClass="pagina" spacing="0" alignment="TOP_CENTER"
-      stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.UsuarioController">
+<VBox alignment="TOP_CENTER"
+      spacing="0"
+      styleClass="pagina"
+      stylesheets="@../css/estilos.css"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.br.ifg.luziania.trabalho_p3.controller.UsuarioController">
+
     <VBox styleClass="tela-formulario">
+
+        <!-- Cabeçalho da tela -->
+        <VBox styleClass="cabecalho-tela">
+            <Label text="Gerenciamento de Usuários" styleClass="titulo-tela" />
+            <Label text="Cadastre, atualize, inative e consulte usuários do sistema." styleClass="subtitulo-tela" />
+        </VBox>
+
+        <!-- Formulário de cadastro/edição -->
         <VBox styleClass="painel-formulario">
             <GridPane hgap="12" vgap="10">
                 <columnConstraints>
-                    <ColumnConstraints minWidth="120" prefWidth="140"/>
-                    <ColumnConstraints minWidth="260" prefWidth="320" hgrow="ALWAYS"/>
+                    <ColumnConstraints minWidth="120" prefWidth="140" />
+                    <ColumnConstraints minWidth="260" prefWidth="320" hgrow="ALWAYS" />
                 </columnConstraints>
 
-                <Label text="Nome" styleClass="rotulo-campo"/>
-                <TextField fx:id="campoNome" GridPane.columnIndex="1" styleClass="campo-texto"/>
+                <Label text="Nome" styleClass="rotulo-campo" />
+                <TextField fx:id="campoNome" promptText="Nome completo" GridPane.columnIndex="1" styleClass="campo-texto" />
 
-                <Label text="E-mail" GridPane.rowIndex="1" styleClass="rotulo-campo"/>
-                <TextField fx:id="campoEmail" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="campo-texto"/>
+                <Label text="E-mail" GridPane.rowIndex="1" styleClass="rotulo-campo" />
+                <TextField fx:id="campoEmail" promptText="usuario@email.com" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="campo-texto" />
 
-                <Label text="Senha" GridPane.rowIndex="2" styleClass="rotulo-campo"/>
-                <PasswordField fx:id="campoSenha" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="campo-texto"/>
+                <Label text="Senha" GridPane.rowIndex="2" styleClass="rotulo-campo" />
+                <PasswordField fx:id="campoSenha" promptText="Mínimo 6 caracteres" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="campo-texto" />
 
-                <Label text="Perfil" GridPane.rowIndex="3" styleClass="rotulo-campo"/>
-                <ComboBox fx:id="cmbPerfil" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="campo-texto"/>
+                <Label text="Perfil" GridPane.rowIndex="3" styleClass="rotulo-campo" />
+                <ComboBox fx:id="cmbPerfil" prefWidth="320" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="campo-texto" />
+
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
             </GridPane>
 
+            <!-- Botões principais da tela -->
             <HBox styleClass="linha-btn">
                 <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
+                <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar" />
+                <Button fx:id="btnInativar" mnemonicParsing="false" onAction="#inativar" styleClass="btn-perigo" text="Inativar" />
                 <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
                 <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
             </HBox>
         </VBox>
 
-        <VBox styleClass="bloco-tabela">
-            <TableView fx:id="tabelaUsuario" prefHeight="260.0" styleClass="tabela-padrao" >
+        <!-- Área de busca e listagem -->
+        <VBox styleClass="bloco-tabela" spacing="10">
+            <HBox spacing="10" styleClass="linha-busca">
+                <Label text="Buscar:" styleClass="rotulo-busca" />
+                <TextField fx:id="campoBusca" promptText="Nome, e-mail, perfil ou status" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
+            </HBox>
+
+            <TableView fx:id="tabelaUsuario" prefHeight="280" styleClass="tabela-padrao">
                 <columns>
                     <TableColumn fx:id="tabelaNome" prefWidth="220" text="Nome" />
-                    <TableColumn fx:id="tabelaEmail" prefWidth="270" text="E-mail" />
-                    <TableColumn fx:id="tabelaPerfil" prefWidth="220" text="Perfil" />
+                    <TableColumn fx:id="tabelaEmail" prefWidth="260" text="E-mail" />
+                    <TableColumn fx:id="tabelaPerfil" prefWidth="160" text="Perfil" />
+                    <TableColumn fx:id="tabelaAtivo" prefWidth="90" text="Ativo" />
                 </columns>
             </TableView>
         </VBox>
