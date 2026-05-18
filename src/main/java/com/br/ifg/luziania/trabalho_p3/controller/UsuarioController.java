@@ -2,17 +2,14 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import com.br.ifg.luziania.trabalho_p3.service.UsuarioService;
+import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,7 +21,7 @@ public class UsuarioController {
     // Guarda o usuário selecionado na tabela para atualizar ou inativar.
     private Usuario usuarioSelecionado;
     // Lista principal carregada do banco e usada pela tabela.
-    private ObservableList<Usuario> listaUsuarios = FXCollections.observableArrayList();
+    private final ObservableList<Usuario> listaUsuarios = FXCollections.observableArrayList();
     // Lista filtrada usada pelo campo de busca.
     private FilteredList<Usuario> listaFiltrada;
 
@@ -196,13 +193,7 @@ public class UsuarioController {
     @FXML
     private void voltar() {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Home.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Home");
-            stage.show();
+            NavegacaoUtil.trocarTela(btnVoltar, "/fxml/Home.fxml", "Locadora - Home");
         } catch (IOException e) {
             mostraAlerta("Erro ao voltar para a tela inicial.");
         }

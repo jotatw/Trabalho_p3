@@ -4,11 +4,7 @@ import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import java.io.IOException;
 // Controla a tela inicial e a navegação para as principais funções do sistema.

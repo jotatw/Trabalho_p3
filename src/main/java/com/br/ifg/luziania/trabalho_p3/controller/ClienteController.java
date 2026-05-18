@@ -3,17 +3,14 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 import com.br.ifg.luziania.trabalho_p3.model.Cliente;
 import com.br.ifg.luziania.trabalho_p3.service.ClienteService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
+import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,7 +24,7 @@ public class ClienteController {
     // Guarda o cliente selecionado na tabela para atualizar ou inativar.
     private Cliente clienteSelecionado;
     // Lista principal carregada do banco e usada pela tabela.
-    private ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
+    private final ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
     // Lista filtrada usada pelo campo de busca.
     private FilteredList<Cliente> listaFiltrada;
 
@@ -146,15 +143,9 @@ public class ClienteController {
     @FXML
     private void voltar() {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Home.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Home");
-            stage.show();
+            NavegacaoUtil.trocarTela(btnVoltar, "/fxml/Home.fxml", "Locadora - Home");
         } catch (IOException e) {
-            e.printStackTrace();
+            mostraAlerta("Erro ao voltar para a tela inicial.");
         }
     }
     @FXML
