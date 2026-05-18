@@ -54,7 +54,7 @@ public class UsuarioController {
         tabelaPerfil.setCellValueFactory(new PropertyValueFactory<>("perfil"));
         tabelaAtivo.setCellValueFactory(new PropertyValueFactory<>("ativo"));
         carregarTabela();
-        configurarBussca();
+        configurarBusca();
 
         tabelaUsuario.getSelectionModel().selectedItemProperty().addListener((obs, antigo, selecionado) -> {
             if (selecionado != null) {
@@ -187,6 +187,7 @@ public class UsuarioController {
         campoNome.clear();
         campoEmail.clear();
         campoSenha.clear();
+        campoBusca.clear();
         cmbPerfil.setValue(null);
 
         usuarioSelecionado = null;
@@ -203,7 +204,7 @@ public class UsuarioController {
             stage.setTitle("Locadora - Home");
             stage.show();
         } catch (IOException e) {
-            mostraAlerta("Erro ao voltar para a tela inicial.");;
+            mostraAlerta("Erro ao voltar para a tela inicial.");
         }
     }
     private void carregarTabela() {
@@ -227,7 +228,7 @@ public class UsuarioController {
         campoSenha.clear();
     }
     // Configura o filtro da tabela usando o texto digitado no campo de busca.
-    private void configurarBussca() {
+    private void configurarBusca() {
         listaFiltrada = new FilteredList<>(listaUsuarios, usuario -> true);
         tabelaUsuario.setItems(listaFiltrada);
 

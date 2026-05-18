@@ -7,6 +7,7 @@ import com.br.ifg.luziania.trabalho_p3.service.ClienteService;
 import com.br.ifg.luziania.trabalho_p3.service.LocacaoService;
 import com.br.ifg.luziania.trabalho_p3.service.VeiculoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
+import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.fxml.FXML;
@@ -52,7 +53,7 @@ public class LocacaoController {
         String cpf = campoCpf.getText();
 
         if (!ValidacaoUtil.cpfValido(cpf)) {
-            mostrarAlerta("CPF invalido! Use o formato: 000.000.000-00");
+            mostrarAlerta("CPF inválido! Use o formato: 000.000.000-00");
             return;
         }
         try {
@@ -101,7 +102,7 @@ public class LocacaoController {
 
         //validação basica
         if (cpf.isEmpty() || placa.isEmpty() || retirada == null || devolucao == null) {
-            mostrarAlerta("Prencha todos os campos");
+            mostrarAlerta("Preencha todos os campos.");
             return;
         }
         if (!ValidacaoUtil.cpfValido(cpf)) {
@@ -125,13 +126,7 @@ public class LocacaoController {
     @FXML
     private void voltar() {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Home.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Home");
-            stage.show();
+            NavegacaoUtil.trocarTela(btnVoltar, "/fxml/Home.fxml", "Locadora - Home");
         } catch (IOException e) {
             mostrarAlerta("Erro ao voltar para a tela inicial.");
         }
@@ -147,7 +142,7 @@ public class LocacaoController {
         }
         long dias = ChronoUnit.DAYS.between(retirada, devolucao);
         if (dias <= 0) {
-            labelValor.setText("Data invalida!");
+            labelValor.setText("Data inválida!!");
             return;
         }
         try {

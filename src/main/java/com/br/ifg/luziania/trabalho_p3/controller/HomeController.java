@@ -1,14 +1,17 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
+import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
+import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import java.io.IOException;
-
+// Controla a tela inicial e a navegação para as principais funções do sistema.
 public class HomeController {
     @FXML private Button btnClientes;
     @FXML private Button btnVeiculos;
@@ -19,88 +22,44 @@ public class HomeController {
 
     @FXML
     private void abrirVeiculos() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Veiculo.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVeiculos.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Veiculo");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        abrirTela(btnVeiculos, "/fxml/Veiculo.fxml", "Locadora - Veiculo");
     }
     @FXML
     private void abrirClientes() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Cliente.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnClientes.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Cliente");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        abrirTela(btnClientes, "/fxml/Cliente.fxml", "Locadora - Cliente");
     }
     @FXML
     private void abrirLocacao() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Locacao.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnLocacao.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Locacao");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        abrirTela(btnLocacao, "/fxml/Locacao.fxml", "Locadora - Locacao");
     }
     @FXML
     private void abrirDevolucao() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Devolucao.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnDevolucao.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Devolucao");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        abrirTela(btnDevolucao, "/fxml/Devolucao.fxml", "Locadora - Devolucao");
     }
     @FXML
     private void abrirUsuarios() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Usuario.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnUsuarios.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Usuario");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        abrirTela(btnUsuarios, "/fxml/Usuario.fxml", "Locadora - Usuario");
     }
+    // Encerra a sessão atual e retorna para a tela de login.
     @FXML
     private void sair() {
-        Sessao.encerrar(); //faz logout no usuario ativo
+        LogUtil.registrarAcao("LOGOUT");
+        Sessao.encerrar();
+        abrirTela(btnSair, "/fxml/Login.fxml", "Locadora - Login");
+    }
+    // Método auxiliar para reduzir repetição na navegação.
+    private void abrirTela(Button botaoOrigem, String caminhoFxml, String titulo) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Login.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnSair.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Login");
-            stage.show();
+            NavegacaoUtil.trocarTela(botaoOrigem, caminhoFxml, titulo);
         } catch (IOException e) {
-            e.printStackTrace();
+            mostrarAlerta("Erro ao abrir a tela solicitada.");
         }
     }
-
+    private void mostrarAlerta(String msg) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Atenção");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 }

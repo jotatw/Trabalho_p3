@@ -12,6 +12,7 @@ module com.br.ifg.luziania.trabalho_p3 {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires jbcrypt;
+    requires java.naming;
 
     opens com.br.ifg.luziania.trabalho_p3 to javafx.graphics, javafx.fxml;
     opens com.br.ifg.luziania.trabalho_p3.controller to javafx.fxml;

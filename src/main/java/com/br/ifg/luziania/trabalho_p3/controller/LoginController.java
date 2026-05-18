@@ -2,6 +2,7 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import com.br.ifg.luziania.trabalho_p3.service.AuthService;
+import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +14,13 @@ import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
-
+// Controla a autenticação do usuário no sistema.
 public class LoginController {
+    private final AuthService authService = new AuthService();
 
     @FXML private TextField campoemail;
     @FXML private PasswordField campoSenha;
-
-
-    private final AuthService authService = new AuthService();
-
+    // Valida os campos e tenta autenticar o usuário.
     @FXML
     private void fazerLogin() {
         String email = campoemail.getText().trim();
@@ -32,25 +31,18 @@ public class LoginController {
             mostrarAlerta("prencher e-mail e senha!");
             return;
         }
-
         try {
             Usuario usuario = authService.login(email, senha);
-            if(usuario != null) {
-                //quando logar ira para o home
-                Sessao.inicia(usuario);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Home.fxml"));
-                Parent root = loader.load();
-                Stage stage = (Stage) campoemail.getScene().getWindow();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Locadora - Home");
-                stage.show();
-            } else {
-                mostrarAlerta("E-mail ou senha invalidos");
+            if(usuario == null) {
+                mostrarAlerta("E-mail ou senha inválidos.");
+                return;
             }
+            Sessao.inicia(usuario);
+            NavegacaoUtil.trocarTela(campoemail, "/fxml/Home.fxml", "Locadora - Home");
         } catch (SQLException e){
             mostrarAlerta("Não foi possível acessar o banco de dados. Tente novamente. " );
         } catch (IOException e) {
-            mostrarAlerta("Erro ao carregar a tela de login");
+            mostrarAlerta("Erro ao abrir a tela inicial.");
         }
     }
     private void mostrarAlerta(String mensagem) {

@@ -3,6 +3,7 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.service.DevolucaoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
+import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
+// Controla a tela de devolução de veículos:
+// busca locação ativa, calcula multa e confirma devolução.
 public class DevolucaoController {
     private final DevolucaoService devolucaoService = new DevolucaoService();
     private Locacao locacaoAtual; //guarda a locação encontrada
@@ -71,7 +73,7 @@ public class DevolucaoController {
                 double valorDiaria = locacaoAtual.getValorTotal() / diasLocacao;
                 double multa = diasAtraso * valorDiaria * 0.20;
 
-                labelAtraso.setText(diasAtraso + "dias");
+                labelAtraso.setText(diasAtraso + " dias");
                 labelMulta.setText("R$ " + String.format("%.2f", multa));
                 labelValorFinal.setText("R$ " + String.format("%.2f", locacaoAtual.getValorTotal() + multa));
             } else {
@@ -117,13 +119,7 @@ public class DevolucaoController {
     @FXML
     private void voltar() {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/Home.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Locadora - Home");
-            stage.show();
+            NavegacaoUtil.trocarTela(btnVoltar, "/fxml/Home.fxml", "Locadora - Home");
         } catch (IOException e) {
             mostrarAlerta("Erro ao voltar para a tela inicial.");
         }
