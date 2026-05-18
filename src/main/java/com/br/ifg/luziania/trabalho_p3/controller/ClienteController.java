@@ -50,7 +50,7 @@ public class ClienteController {
     @FXML private TableColumn <Cliente, Boolean> colunaAtivo;
 
     // Executado automaticamente ao abrir a tela.
-    // Configura máscaras, colunas, tabela, busca e seleção.
+    // Aplica máscaras nos campos de CPF, CNH e telefone.
     @FXML
     public void initialize() {
         //aplica as mascaras no campo de entrada
@@ -170,11 +170,11 @@ public class ClienteController {
         String email = campoEmail.getText().trim();
 
         if (ValidacaoUtil.campoVazio(nome)) {
-            mostraAlerta("Nome e obrigatorio!");
+            mostraAlerta("Nome é obrigatório!");
             return;
         }
         if (!ValidacaoUtil.cpfValido(cpf)) {
-            mostraAlerta(("CPF invalido!  use o formato: 000.000.000-00"));
+            mostraAlerta(("CPF inválido! Use o formato: 000.000.000-00"));
             return;
         }
         if (!ValidacaoUtil.cnhValido(cnh)) {
@@ -194,7 +194,7 @@ public class ClienteController {
             return;
         }
         if (!ValidacaoUtil.emailValido(email)) {
-            mostraAlerta("Email invalido!");
+            mostraAlerta("E-mail inválido!");
             return;
         }
         try {
@@ -220,7 +220,7 @@ public class ClienteController {
             return;
         }
         if (!clienteSelecionado.isAtivo()) {
-            mostraAlerta("Cliente ja esta inativo!");
+            mostraAlerta("Cliente já está inativo!");
             return;
         }
         Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
@@ -228,8 +228,8 @@ public class ClienteController {
         confirmacao.setHeaderText(null);
         confirmacao.setContentText("Deseja realmente inativar o cliente " + clienteSelecionado.getNome() + "?");
 
-        ButtonType resutado = confirmacao.showAndWait().orElse(ButtonType.CANCEL);
-        if (resutado != ButtonType.OK) {
+        ButtonType resultado = confirmacao.showAndWait().orElse(ButtonType.CANCEL);
+        if (resultado != ButtonType.OK) {
             return;
         }
 
@@ -287,13 +287,15 @@ public class ClienteController {
         });
     }
     private void mostraAlerta(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Atenção");
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
     }
     private void mostraSucesso(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Sucesso");
         alert.setHeaderText(null);
         alert.setContentText(msg);
         alert.showAndWait();
