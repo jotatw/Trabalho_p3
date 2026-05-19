@@ -118,8 +118,8 @@
 .home-conteudo {
     -fx-background-color: #F8FAFC;
     -fx-background-radius: 14;
-    -fx-padding: 34;
-    -fx-spacing: 24;
+    -fx-padding: 28;
+    -fx-spacing: 20;
 }
 
 .home-cabecalho {
@@ -153,13 +153,14 @@
     -fx-border-color: #E2E8F0;
     -fx-border-radius: 14;
     -fx-padding: 18;
-    -fx-pref-width: 190;
-    -fx-min-height: 90;
+    -fx-pref-width: 210;
+    -fx-min-width: 190;
+    -fx-min-height: 96;
     -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.10), 12, 0.18, 0, 4);
 }
 
 .card-home-titulo {
-    -fx-font-size: 18;
+    -fx-font-size: 15;
     -fx-font-weight: 800;
     -fx-text-fill: #0F172A;
 }
@@ -188,7 +189,8 @@
     -fx-background-radius: 14;
     -fx-border-color: #BFDBFE;
     -fx-border-radius: 14;
-    -fx-padding: 18;
+    -fx-padding: 16;
+    -fx-max-width: Infinity;
 }
 
 .home-texto {

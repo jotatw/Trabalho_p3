@@ -190,6 +190,7 @@ public class HomeController {
         });
 
         tabelaLocacoesAtivas.setItems(locacoesAtivas);
+        tabelaLocacoesAtivas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     private void carregaLocacoesAtivas() {
         try {

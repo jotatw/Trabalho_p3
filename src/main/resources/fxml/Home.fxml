@@ -42,20 +42,20 @@
             </VBox>
 
             <!-- Cards visuais temporários -->
-            <HBox spacing="16" styleClass="home-cards">
-               <VBox styleClass="card-home">
+            <HBox spacing="14" styleClass="home-cards" >
+               <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                   <Label text="Clientes ativos" styleClass="card-home-titulo" />
                   <Label fx:id="labelClientesAtivos" text="0" styleClass="card-home-numero" />
                   <Label text="cadastrados no sistema" styleClass="card-home-subtitulo" />
                </VBox>
 
-               <VBox styleClass="card-home">
+               <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                   <Label text="Veículos disponíveis" styleClass="card-home-titulo" />
                   <Label fx:id="labelVeiculosDisponiveis" text="0" styleClass="card-home-numero" />
                   <Label text="prontos para locação" styleClass="card-home-subtitulo" />
                </VBox>
 
-               <VBox styleClass="card-home">
+               <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                   <Label text="Locações ativas" styleClass="card-home-titulo" />
                   <Label fx:id="labelLocacoesAtivas" text="0" styleClass="card-home-numero" />
                   <Label text="em andamento" styleClass="card-home-subtitulo" />
@@ -66,7 +66,7 @@
             <VBox spacing="12" styleClass="home-secao">
                <Label text="Ações rápidas" styleClass="home-secao-titulo" />
 
-               <HBox spacing="12">
+               <FlowPane hgap="12" vgap="10">
                   <Button fx:id="btnAtalhoLocacao"
                           text="Nova Locação"
                           onAction="#abrirLocacao"
@@ -86,7 +86,7 @@
                           text="Cadastrar Veículo"
                           onAction="#abrirVeiculos"
                           styleClass="btn-secundario" />
-               </HBox>
+               </FlowPane>
             </VBox>
 
             <!-- Locações ativas -->
@@ -95,12 +95,13 @@
 
                <TableView fx:id="tabelaLocacoesAtivas"
                           prefHeight="170"
+                          maxWidth="-Infinity"
                           styleClass="tabela-padrao">
                   <columns>
-                     <TableColumn fx:id="colunaClienteLocacao" text="Cliente" prefWidth="200" />
-                     <TableColumn fx:id="colunaVeiculoLocacao" text="Veículo" prefWidth="160" />
-                     <TableColumn fx:id="colunaPlacaLocacao" text="Placa" prefWidth="120" />
-                     <TableColumn fx:id="colunaDevolucaoLocacao" text="Devolução prevista" prefWidth="180" />
+                     <TableColumn fx:id="colunaClienteLocacao" text="Cliente" prefWidth="190" />
+                     <TableColumn fx:id="colunaVeiculoLocacao" text="Veículo" prefWidth="140" />
+                     <TableColumn fx:id="colunaPlacaLocacao" text="Placa" prefWidth="110" />
+                     <TableColumn fx:id="colunaDevolucaoLocacao" text="Devolução prevista" prefWidth="160" />
                   </columns>
                </TableView>
             </VBox>
