@@ -25,11 +25,18 @@ public class VeiculoController {
     private final ObservableList<Veiculo> listaVeiculos = FXCollections.observableArrayList();
     // Lista filtrada usada pelo campo de busca.
     private FilteredList<Veiculo> listaFiltrada;
+    private final ObservableList<String> categorias = FXCollections.observableArrayList("Econômico",
+            "Hatch",
+            "Sedan",
+            "SUV",
+            "Picape",
+            "Luxo",
+            "Van");
 
     @FXML private TextField campoPlaca;
     @FXML private TextField campoModelo;
     @FXML private TextField campoMarca;
-    @FXML private TextField campoCategoria;
+    @FXML private ComboBox<String> comboCategoria;
     @FXML private TextField campoValor;
     @FXML private TextField campoBusca;
     @FXML private Button btnAtualizar;
@@ -48,6 +55,7 @@ public class VeiculoController {
     public void initialize() {
         //aplica a mascara de placa - aceita formato antigo e mercosul
         MascaraUtil.placa(campoPlaca);
+        comboCategoria.setItems(categorias);
         // Liga cada coluna da tabela ao atributo correspondente do model Veiculo.
         colunaPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
         colunaModelo.setCellValueFactory(new PropertyValueFactory<>("modelo"));
@@ -70,7 +78,7 @@ public class VeiculoController {
         String  placa = campoPlaca.getText().trim().toUpperCase();
         String modelo = campoModelo.getText().trim();
         String marca = campoMarca.getText().trim();
-        String categoria = campoCategoria.getText().trim();
+        String categoria = comboCategoria.getValue();
         String valorTexto = campoValor.getText().trim().replace(",",".");
         //validações
         if(!ValidacaoUtil.placaValido(placa)) {
@@ -85,8 +93,8 @@ public class VeiculoController {
             mostraAlerta("Marca é obrigatória!");
             return;
         }
-        if(ValidacaoUtil.campoVazio(categoria)) {
-            mostraAlerta("Categoria é obrigatória!");
+        if(categoria == null || categoria.isBlank()) {
+            mostraAlerta("Selecione uma categoria!");
             return;
         }
         if(ValidacaoUtil.campoVazio(valorTexto)) {
@@ -130,7 +138,7 @@ public class VeiculoController {
         String placa = campoPlaca.getText().trim().toUpperCase();
         String modelo = campoModelo.getText().trim();
         String marca = campoMarca.getText().trim();
-        String categoria = campoCategoria.getText().trim();
+        String categoria = comboCategoria.getValue();
         String valorTexto = campoValor.getText().trim().replace(",", ".");
 
         if(!ValidacaoUtil.placaValido(placa)) {
@@ -145,8 +153,8 @@ public class VeiculoController {
             mostraAlerta("Marca é obrigatória!");
             return;
         }
-        if(ValidacaoUtil.campoVazio(categoria)) {
-            mostraAlerta("Categoria é obrigatória!");
+        if(categoria == null || categoria.isBlank()) {
+            mostraAlerta("Selecione uma categoria!");
             return;
         }
         if(ValidacaoUtil.campoVazio(valorTexto)) {
@@ -186,7 +194,7 @@ public class VeiculoController {
         campoPlaca.clear();
         campoModelo.clear();
         campoMarca.clear();
-        campoCategoria.clear();
+        comboCategoria.getSelectionModel().clearSelection();
         campoValor.clear();
         campoBusca.clear();
 
@@ -206,7 +214,7 @@ public class VeiculoController {
         campoPlaca.setText(veiculo.getPlaca());
         campoModelo.setText(veiculo.getModelo());
         campoMarca.setText(veiculo.getMarca());
-        campoCategoria.setText(veiculo.getCategoria());
+        comboCategoria.setValue(veiculo.getCategoria());
         campoValor.setText(String.format("%.2f", veiculo.getValorLocacao()).replace(".", ","));
 
     }

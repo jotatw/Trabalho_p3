@@ -39,7 +39,12 @@
                 <TextField fx:id="campoMarca" promptText="Ex: Chevrolet, Hyundai, Toyota" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <Label styleClass="rotulo-campo" text="Categoria" GridPane.rowIndex="3" />
-                <TextField fx:id="campoCategoria" promptText="Ex: Econômico, SUV, Sedan" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <ComboBox fx:id="comboCategoria"
+                          promptText="Selecione a categoria"
+                          styleClass="campo-texto"
+                          maxWidth="Infinity"
+                          GridPane.columnIndex="1"
+                          GridPane.rowIndex="3" />
 
                 <Label styleClass="rotulo-campo" text="Valor da diária" GridPane.rowIndex="4" />
                 <TextField fx:id="campoValor" promptText="Ex: 120,00" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="4" />
