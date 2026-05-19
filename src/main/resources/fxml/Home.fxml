@@ -3,7 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane styleClass="pagina" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
+<BorderPane prefWidth="1100"
+            prefHeight="720"
+            styleClass="pagina"
+            stylesheets="@../css/estilos.css"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
    <left>
       <VBox prefWidth="220" spacing="8" styleClass="sidebar">
          <children>

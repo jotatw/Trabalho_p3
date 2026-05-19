@@ -3,7 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="TOP_CENTER" spacing="0" styleClass="pagina" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+<VBox alignment="TOP_CENTER"
+      spacing="0"
+      prefWidth="1100"
+      prefHeight="720"
+      styleClass="pagina"
+      stylesheets="@../css/estilos.css"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.br.ifg.luziania.trabalho_p3.controller.DevolucaoController">
     <VBox styleClass="tela-formulario">
         <VBox styleClass="painel-formulario">

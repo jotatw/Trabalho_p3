@@ -5,6 +5,8 @@
 
 <VBox alignment="TOP_CENTER"
       spacing="0"
+      prefWidth="1100"
+      prefHeight="720"
       styleClass="pagina"
       stylesheets="@../css/estilos.css"
       xmlns="http://javafx.com/javafx/17.0.12"
