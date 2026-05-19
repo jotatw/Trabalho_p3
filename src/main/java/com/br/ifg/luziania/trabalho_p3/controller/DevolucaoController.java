@@ -53,10 +53,10 @@ public class DevolucaoController {
                 return;
             }
             //prencher os label com os detelhes da locação
+            labelCliente.setText(locacaoAtual.getCliente().getNome());
             labelRetirada.setText(locacaoAtual.getDataRetirada().toString());
             labelDevolucao.setText(locacaoAtual.getDataDevolucaoPrevista().toString());
             labelValor.setText("R$ " + String.format("%.2f",locacaoAtual.getValorTotal()));
-
             //calcula atraso e multas para exibir
             long diasAtraso = ChronoUnit.DAYS.between(locacaoAtual.getDataDevolucaoPrevista(), LocalDate.now());
 

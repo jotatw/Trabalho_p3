@@ -55,9 +55,12 @@ public class LocacaoDAO extends BaseDAO {
     public Locacao buscarLocacaoAtivaPorPlaca(String placa) throws SQLException {
         // Busca uma locação ativa usando a placa do veículo.
         String sql = """
-        SELECT l.id,
+                SELECT l.id,
                l.cliente_id,
+               c.nome AS cliente_nome,
                l.veiculo_id,
+               v.placa AS veiculo_placa,
+               v.modelo AS veiculo_modelo,
                l.usuario_id,
                l.dt_retirada,
                l.dt_devolucao_prevista,
@@ -65,10 +68,11 @@ public class LocacaoDAO extends BaseDAO {
                l.valor_total,
                l.multas,
                l.status
-        FROM locacao l
-        JOIN veiculo v ON l.veiculo_id = v.id
-        WHERE v.placa = ?
-          AND l.status = 'ATIVA'
+            FROM locacao l
+            JOIN cliente c ON l.cliente_id = c.id
+            JOIN veiculo v ON l.veiculo_id = v.id
+            WHERE v.placa = ?
+            AND l.status = 'ATIVA'
         """;
 
         try (Connection conn = getConnection();
@@ -91,6 +95,8 @@ public class LocacaoDAO extends BaseDAO {
 
         Cliente cliente = new Cliente();
         cliente.setId(rs.getInt("cliente_id"));
+        cliente.setNome(rs.getString("cliente_nome"));
+        locacao.setCliente(cliente);
 
         Veiculo veiculo = new Veiculo();
         veiculo.setId(rs.getInt("veiculo_id"));
