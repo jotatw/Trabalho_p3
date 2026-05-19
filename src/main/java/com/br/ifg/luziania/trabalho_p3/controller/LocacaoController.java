@@ -10,18 +10,23 @@ import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
 import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class LocacaoController {
     private final LocacaoService locacaoService = new LocacaoService();
     private final ClienteService clienteService = new ClienteService();
     private final VeiculoService veiculoService = new VeiculoService();
+    private final ObservableList<Veiculo> veiculosDisponiveis = FXCollections.observableArrayList();
 
     @FXML private TextField campoCpf;
     @FXML private TextField campoPlaca;
@@ -31,19 +36,34 @@ public class LocacaoController {
     @FXML private Label labelVeiculo;
     @FXML private Label labelValor;
     @FXML private Button btnVoltar;
+    @FXML private ComboBox<Veiculo> comboVeiculosDisponiveis;
 
     @FXML
     public void initialize() {
-        //aplica validação nos campos de busca
         MascaraUtil.cpf(campoCpf);
         MascaraUtil.placa(campoPlaca);
 
+        configurarComboVeiculos();
+        carregarVeiculosDisponiveis();
+
         dataRetirada.valueProperty().addListener((observable, oldValue, newValue) -> atualizarValorTotal());
         dataDevolucao.valueProperty().addListener((observable, oldValue, newValue) -> atualizarValorTotal());
-
         campoPlaca.textProperty().addListener((observable, oldValue, newValue) -> atualizarValorTotal());
+        comboVeiculosDisponiveis.valueProperty().addListener((observable, antigo, veiculo) -> {
+            if (veiculo != null) {
+                campoPlaca.setText(veiculo.getPlaca());
+                labelVeiculo.setText(
+                        veiculo.getModelo() +
+                                " - " +
+                                veiculo.getCategoria() +
+                                " - R$ " +
+                                String.format("%.2f", veiculo.getValorLocacao()) +
+                                "/dia"
+                );
+                atualizarValorTotal();
+            }
+        });
     }
-
     @FXML
     private void buscarCliente() {
         String cpf = campoCpf.getText();
@@ -68,7 +88,7 @@ public class LocacaoController {
         String placa = campoPlaca.getText();
 
         if (ValidacaoUtil.campoVazio(placa)) {
-            mostrarAlerta("Informe a Placa!");
+            mostrarAlerta("Informe a placa ou selecione um veículo disponível!");
             return;
         }
         if (!ValidacaoUtil.placaValido(placa.toUpperCase())) {
@@ -77,15 +97,28 @@ public class LocacaoController {
         }
         try {
             Veiculo veiculo = veiculoService.buscarPorPlaca(placa);
-            if (veiculo != null) {
-                labelVeiculo.setText(veiculo.getModelo() + " - R$" + veiculo.getValorLocacao() + "/dia");
-                atualizarValorTotal();
-            } else {
-                labelVeiculo.setText("Veiculo não encontrado!");
-                labelValor.setText("R$: 0,00");
+            if (veiculo == null) {
+                labelVeiculo.setText("Veículo não encontrado!");
+                labelValor.setText("R$ 0,00");
+                return;
             }
+            if (!veiculo.isDisponivel()) {
+                labelVeiculo.setText("Veículo indisponível!");
+                labelValor.setText("R$ 0,00");
+                mostrarAlerta("Este veículo não está disponível para locação.");
+                return;
+            }
+            labelVeiculo.setText(
+                    veiculo.getModelo()
+                            + " - "
+                            + veiculo.getCategoria()
+                            + " - R$ "
+                            + String.format("%.2f", veiculo.getValorLocacao())
+                            + "/dia"
+            );
+            atualizarValorTotal();
         } catch (SQLException e) {
-            mostrarAlerta("Erro ao buscar veiculo: " + e.getMessage());
+            mostrarAlerta("Erro ao buscar veículo. Tente novamente.");
         }
 
     }
@@ -113,6 +146,9 @@ public class LocacaoController {
             //pega o usuario logado e depois conecta a sessão
             Locacao locacao = locacaoService.realizarLocacao(cpf, placa, retirada, devolucao, Sessao.getUsuarioLogado());
             mostrarSucesso("Locacao realizada! Valor: R$ " + String.format("%.2f", locacao.getValorTotal()));
+
+            limparCampo();
+            carregarVeiculosDisponiveis();
         } catch (IllegalArgumentException e) {
             mostrarAlerta(e.getMessage());
         } catch (SQLException e){
@@ -128,30 +164,74 @@ public class LocacaoController {
         }
     }
     private void atualizarValorTotal() {
-        String placa = campoPlaca.getText();
+        String placa = campoPlaca.getText().trim().toUpperCase();
         LocalDate retirada = dataRetirada.getValue();
         LocalDate devolucao = dataDevolucao.getValue();
 
-        if (placa == null || placa.isBlank() || retirada == null || devolucao == null) {
-            labelValor.setText("R$: ");
+        if (placa.isBlank() || retirada == null || devolucao == null) {
+            labelValor.setText("R$ 0,00");
             return;
         }
+
         long dias = ChronoUnit.DAYS.between(retirada, devolucao);
+
         if (dias <= 0) {
-            labelValor.setText("Data inválida!!");
+            labelValor.setText("Data inválida!");
             return;
         }
+
         try {
             Veiculo veiculo = veiculoService.buscarPorPlaca(placa);
+
             if (veiculo == null) {
-                labelValor.setText("Veiculo não encontrado!");
+                labelValor.setText("Veículo não encontrado!");
                 return;
             }
+
             double valorTotal = dias * veiculo.getValorLocacao();
-            labelValor.setText("R$: " + String.format("%.2f", valorTotal));
+            labelValor.setText("R$ " + String.format("%.2f", valorTotal));
+
         } catch (SQLException e) {
-            mostrarAlerta("Erro ao calcular valor");
+            mostrarAlerta("Erro ao calcular valor.");
         }
+    }
+    private void configurarComboVeiculos() {
+        comboVeiculosDisponiveis.setItems(veiculosDisponiveis);
+        comboVeiculosDisponiveis.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Veiculo veiculo) {
+                if (veiculo == null) {
+                    return "";
+                }
+                return veiculo.getPlaca()
+                        + " - " + veiculo.getModelo()
+                        + " - " + veiculo.getCategoria()
+                        + " - R$ " + String.format("%.2f", veiculo.getValorLocacao()) + "/dia";
+            }
+            @Override
+            public Veiculo fromString(String string) {
+                return null;
+            }
+        });
+    }
+    private void carregarVeiculosDisponiveis() {
+        try {
+            List<Veiculo> lista = veiculoService.listarDisponiveis();
+            veiculosDisponiveis.setAll(lista);
+        } catch (SQLException e) {
+            mostrarAlerta("Erro ao carregar veículos disponíveis.");
+        }
+    }
+    private void limparCampo() {
+        campoCpf.clear();
+        campoPlaca.clear();
+        dataRetirada.setValue(null);
+        dataDevolucao.setValue(null);
+        labelCliente.setText("-");
+        labelVeiculo.setText("-");
+        labelValor.setText("R$ 0,00");
+
+        comboVeiculosDisponiveis.getSelectionModel().clearSelection();
     }
     private void mostrarAlerta(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);

@@ -27,10 +27,32 @@
                 <Button fx:id="btnBuscarCliente" mnemonicParsing="false" onAction="#buscarCliente" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" />
                 <Label fx:id="labelCliente" styleClass="rotulo-resultado" text="-" GridPane.columnIndex="3" />
 
-                <Label styleClass="rotulo-campo" text="Placa" GridPane.rowIndex="1" />
-                <TextField fx:id="campoPlaca" styleClass="campo-texto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Button fx:id="btnBuscarVeiculo" mnemonicParsing="false" onAction="#buscarVeiculo" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Label fx:id="labelVeiculo" styleClass="rotulo-resultado" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <Label styleClass="rotulo-campo" text="Veículo" GridPane.rowIndex="1" />
+
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <ComboBox fx:id="comboVeiculosDisponiveis"
+                              promptText="Selecione um veículo disponível"
+                              styleClass="campo-texto"
+                              maxWidth="Infinity" />
+
+                    <TextField fx:id="campoPlaca"
+                               promptText="Ou digite a placa manualmente"
+                               styleClass="campo-texto" />
+                </VBox>
+
+                <Button fx:id="btnBuscarVeiculo"
+                        mnemonicParsing="false"
+                        onAction="#buscarVeiculo"
+                        styleClass="btn-secundario"
+                        text="Buscar"
+                        GridPane.columnIndex="2"
+                        GridPane.rowIndex="1" />
+
+                <Label fx:id="labelVeiculo"
+                       styleClass="rotulo-resultado"
+                       text="-"
+                       GridPane.columnIndex="3"
+                       GridPane.rowIndex="1" />
 
                 <Label styleClass="rotulo-campo" text="Retirada" GridPane.rowIndex="2" />
                 <DatePicker fx:id="dataRetirada" GridPane.columnIndex="1" GridPane.rowIndex="2" />
