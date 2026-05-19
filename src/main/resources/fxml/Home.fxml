@@ -89,11 +89,20 @@
                </HBox>
             </VBox>
 
-            <!-- Área informativa -->
-            <VBox spacing="8" styleClass="home-info">
-               <Label text="Resumo do sistema" styleClass="home-secao-titulo" />
-               <Label text="Use o menu lateral ou os atalhos acima para acessar as principais funções da locadora."
-                      styleClass="home-texto" />
+            <!-- Locações ativas -->
+            <VBox spacing="10" styleClass="home-info">
+               <Label text="Locações ativas" styleClass="home-secao-titulo" />
+
+               <TableView fx:id="tabelaLocacoesAtivas"
+                          prefHeight="170"
+                          styleClass="tabela-padrao">
+                  <columns>
+                     <TableColumn fx:id="colunaClienteLocacao" text="Cliente" prefWidth="200" />
+                     <TableColumn fx:id="colunaVeiculoLocacao" text="Veículo" prefWidth="160" />
+                     <TableColumn fx:id="colunaPlacaLocacao" text="Placa" prefWidth="120" />
+                     <TableColumn fx:id="colunaDevolucaoLocacao" text="Devolução prevista" prefWidth="180" />
+                  </columns>
+               </TableView>
             </VBox>
 
          </VBox>

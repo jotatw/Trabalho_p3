@@ -40,7 +40,7 @@ public class MascaraUtil {
         campo.textProperty().addListener((obs, antigo, novo) -> {
             String digito = novo.replaceAll("[^0-9]", "");
 
-            //limita a 11digitos (DDD + 9 digitos)
+            //limita a 11 digitos (DDD + 9 digitos)
             if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
             }

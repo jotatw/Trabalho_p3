@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="TOP_CENTER"
-      spacing="0"
-      prefWidth="1100"
       prefHeight="720"
+      prefWidth="1100"
+      spacing="0"
       styleClass="pagina"
       stylesheets="@../css/estilos.css"
       xmlns="http://javafx.com/javafx/17.0.12"
@@ -15,10 +15,10 @@
 
     <VBox styleClass="tela-formulario">
 
-        <!-- Cabeçalho da tela -->
+        <!-- Caballero da tela -->
         <VBox styleClass="cabecalho-tela">
-            <Label text="Gerenciamento de Clientes" styleClass="titulo-tela" />
-            <Label text="Cadastre, atualize, inative e consulte clientes da locadora." styleClass="subtitulo-tela" />
+            <Label styleClass="titulo-tela" text="Gerenciamento de Clientes" />
+            <Label styleClass="subtitulo-tela" text="Cadastre, atualize, inative e consulte clientes da locadora." />
         </VBox>
 
         <!-- Formulário de cadastro/edição -->
@@ -53,7 +53,7 @@
                 </rowConstraints>
             </GridPane>
 
-            <!-- Botões principais da tela -->
+            <!-- Botões principals da tela -->
             <HBox styleClass="linha-btn">
                 <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
                 <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar" />
@@ -63,21 +63,21 @@
             </HBox>
         </VBox>
 
-        <!-- Área de busca e listagem -->
-        <VBox styleClass="bloco-tabela" spacing="10">
+        <!-- Área de busca e staged -->
+        <VBox spacing="10" styleClass="bloco-tabela">
             <HBox spacing="10" styleClass="linha-busca">
-                <Label text="Buscar:" styleClass="rotulo-busca" />
+                <Label styleClass="rotulo-busca" text="Buscar:" />
                 <TextField fx:id="campoBusca" promptText="Nome, CPF, CNH, telefone ou e-mail" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
             </HBox>
 
             <TableView fx:id="tabelaCliente" prefHeight="280" styleClass="tabela-padrao">
                 <columns>
-                    <TableColumn fx:id="colunaNome" text="Nome" prefWidth="160" />
-                    <TableColumn fx:id="colunaCpf" text="CPF" prefWidth="120" />
-                    <TableColumn fx:id="colunaCnh" text="CNH" prefWidth="110" />
-                    <TableColumn fx:id="colunaTelefone" text="Telefone" prefWidth="130" />
-                    <TableColumn fx:id="colunaEmail" text="E-mail" prefWidth="170" />
-                    <TableColumn fx:id="colunaAtivo" text="Ativo" prefWidth="70" />
+                    <TableColumn fx:id="colunaNome" prefWidth="160" text="Nome" />
+                    <TableColumn fx:id="colunaCpf" prefWidth="120" text="CPF" />
+                    <TableColumn fx:id="colunaCnh" prefWidth="110" text="CNH" />
+                    <TableColumn fx:id="colunaTelefone" prefWidth="130" text="Telefone" />
+                    <TableColumn fx:id="colunaEmail" prefWidth="170" text="E-mail" />
+                    <TableColumn fx:id="colunaAtivo" prefWidth="153.0" text="Ativo" />
                 </columns>
             </TableView>
         </VBox>

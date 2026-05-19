@@ -10,6 +10,7 @@ import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class LocacaoService {
 
@@ -19,6 +20,10 @@ public class LocacaoService {
 
     public int contarAtivas() throws SQLException {
         return locacaoDAO.contarAtivas();
+    }
+
+    public List<Locacao> listarAtivasResumo() throws SQLException {
+        return locacaoDAO.listarAtivasResumo();
     }
 
     public Locacao realizarLocacao(

@@ -6,6 +6,7 @@ import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import com.br.ifg.luziania.trabalho_p3.model.Veiculo;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LocacaoDAO extends BaseDAO {
@@ -131,6 +132,44 @@ public class LocacaoDAO extends BaseDAO {
             throw e;
         }
         return 0;
+    }
+    public List<Locacao> listarAtivasResumo() throws SQLException {
+        String sql = """
+        SELECT l.id,
+               l.cliente_id,
+               c.nome AS cliente_nome,
+               l.veiculo_id,
+               v.placa AS veiculo_placa,
+               v.modelo AS veiculo_modelo,
+               l.usuario_id,
+               l.dt_retirada,
+               l.dt_devolucao_prevista,
+               l.dt_devolucao_real,
+               l.valor_total,
+               l.multas,
+               l.status
+        FROM locacao l
+        JOIN cliente c ON l.cliente_id = c.id
+        JOIN veiculo v ON l.veiculo_id = v.id
+        WHERE l.status = 'ATIVA'
+        ORDER BY l.dt_devolucao_prevista
+        LIMIT 5
+        """;
+
+        List<Locacao> locacoes = new ArrayList<>();
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()
+        ) {
+            while (rs.next()) {
+                locacoes.add(mapearLocacao(rs));
+            }
+        } catch (SQLException e) {
+            registrarErro("LocacaoDAO.listarAtivasResumo", e);
+            throw e;
+        }
+        return locacoes;
     }
     private Locacao mapearLocacao(ResultSet rs) throws SQLException {
         Locacao locacao = new Locacao();
