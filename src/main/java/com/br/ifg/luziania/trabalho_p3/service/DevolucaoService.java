@@ -7,6 +7,8 @@ import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+
 // Controla as regras de negócio relacionadas à devolução de veículos.
 public class DevolucaoService {
 
@@ -15,6 +17,9 @@ public class DevolucaoService {
 
     public Locacao buscarLocacaoAtivaPorPlaca(String placa) throws SQLException {
         return locacaoDAO.buscarLocacaoAtivaPorPlaca(placa);
+    }
+    public List<String> listarPlacasComLocacaoAtiva() throws SQLException {
+        return locacaoDAO.listaPlacasComLocacaoAtiva();
     }
     // Registra a devolução, calcula multa se houver atraso e libera o veículo.
     public Locacao registrarDevolucao(String placa) throws SQLException {

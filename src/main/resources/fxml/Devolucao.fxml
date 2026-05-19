@@ -22,8 +22,24 @@
                 </columnConstraints>
 
                 <Label text="Placa" styleClass="rotulo-campo"/>
-                <TextField fx:id="campoPlaca" styleClass="campo-texto" GridPane.columnIndex="1" />
-                <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarVeiculo" styleClass="btn-secundario" text="Buscar" GridPane.columnIndex="2" />
+
+                <VBox spacing="6" GridPane.columnIndex="1">
+                    <ComboBox fx:id="comboPlacasAtivas"
+                              promptText="Selecione uma placa ativa"
+                              styleClass="campo-texto"
+                              maxWidth="Infinity" />
+
+                    <TextField fx:id="campoPlaca"
+                               promptText="Ou digite a placa manualmente"
+                               styleClass="campo-texto" />
+                </VBox>
+
+                <Button fx:id="btnBuscar"
+                        mnemonicParsing="false"
+                        onAction="#buscarVeiculo"
+                        styleClass="btn-secundario"
+                        text="Buscar"
+                        GridPane.columnIndex="2" />
 
                 <Label text="Cliente" GridPane.rowIndex="2" styleClass="rotulo-campo"/>
                 <Label fx:id="labelCliente" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="rotulo-resultado"/>
