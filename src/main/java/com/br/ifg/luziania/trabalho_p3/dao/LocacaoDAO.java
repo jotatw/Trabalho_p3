@@ -96,11 +96,11 @@ public class LocacaoDAO extends BaseDAO {
         Cliente cliente = new Cliente();
         cliente.setId(rs.getInt("cliente_id"));
         cliente.setNome(rs.getString("cliente_nome"));
-        locacao.setCliente(cliente);
 
         Veiculo veiculo = new Veiculo();
         veiculo.setId(rs.getInt("veiculo_id"));
-        locacao.setVeiculo(veiculo);
+        veiculo.setPlaca(rs.getString("veiculo_placa"));
+        veiculo.setModelo(rs.getString("veiculo_modelo"));
 
         Usuario usuario = new Usuario();
         usuario.setId(rs.getInt("usuario_id"));
