@@ -29,11 +29,6 @@ public class LocadoraApplication extends Application {
         stage.setMinHeight(ALTURA_MINIMA);
         // Permite redimensionar manualmente.
         stage.setResizable(true);
-        // NÃO usar setFullScreen(true), pois pode travar a experiência de janela.
-        stage.setFullScreen(false);
-        // Também não força maximizado.
-        // O usuário pode maximizar manualmente pelo botão da janela.
-        stage.setMaximized(false);
         stage.centerOnScreen();
         stage.show();
     }

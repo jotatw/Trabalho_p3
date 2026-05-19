@@ -11,6 +11,8 @@ import java.io.IOException;
 // Centraliza a troca de telas da aplicação.
 public class NavegacaoUtil {
 
+    private static final double LARGURA_INICIAL = 1100;
+    private static final double ALTURA_INICIAL = 720;
     private static final double LARGURA_MINIMA = 950;
     private static final double ALTURA_MINIMA = 650;
 
@@ -24,27 +26,21 @@ public class NavegacaoUtil {
 
         Stage stage = (Stage) componente.getScene().getWindow();
 
-        double larguraAtual = stage.getWidth();
-        double alturaAtual = stage.getHeight();
-
-        if (larguraAtual < LARGURA_MINIMA) {
-            larguraAtual = LARGURA_MINIMA;
-        }
-
-        if (alturaAtual < ALTURA_MINIMA) {
-            alturaAtual = ALTURA_MINIMA;
-        }
-
-        Scene scene = new Scene(root, larguraAtual, alturaAtual);
-
-        stage.setScene(scene);
         stage.setTitle(titulo);
         stage.setMinWidth(LARGURA_MINIMA);
         stage.setMinHeight(ALTURA_MINIMA);
         stage.setResizable(true);
 
-        // Garante que a navegação não force tela cheia.
-        stage.setFullScreen(false);
+        // Se estiver em modo tela cheia real, sai do modo tela cheia.
+        if (stage.isFullScreen()) {
+            stage.setFullScreen(false);
+        }
+
+        if (stage.getScene() == null) {
+            stage.setScene(new Scene(root, LARGURA_INICIAL, ALTURA_INICIAL));
+        } else {
+            stage.getScene().setRoot(root);
+        }
 
         stage.show();
     }
