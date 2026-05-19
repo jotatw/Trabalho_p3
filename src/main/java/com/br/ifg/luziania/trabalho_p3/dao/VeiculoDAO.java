@@ -139,6 +139,25 @@ public class VeiculoDAO extends BaseDAO{
             throw e;
         }
     }
+    public int contarDisponiveis() throws SQLException {
+        String sql = """
+        SELECT COUNT(*) AS total
+        FROM veiculo
+        WHERE disponivel = true
+        """;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()
+        ) {
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            registrarErro("VeiculoDAO.contarDisponiveis", e);
+            throw e;
+        }
+        return 0;
+    }
     private Veiculo mapearVeiculo(ResultSet rs) throws SQLException {
         Veiculo veiculo = new Veiculo();
         veiculo.setId(rs.getInt("id"));

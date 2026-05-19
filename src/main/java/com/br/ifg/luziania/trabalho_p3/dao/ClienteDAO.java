@@ -118,6 +118,25 @@ public class ClienteDAO extends BaseDAO {
             throw e;
         }
     }
+    public int contarAtivos()throws SQLException {
+        String sql = """
+        SELECT COUNT(*) AS total
+        FROM cliente
+        WHERE ativo = true
+        """;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()
+        ) {
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            registrarErro("ClienteDAO.contarAtivos", e);
+            throw e;
+        }
+        return 0;
+    }
     private Cliente mapearCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
         cliente.setId(rs.getInt("id"));

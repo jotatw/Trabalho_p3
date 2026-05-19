@@ -113,6 +113,25 @@ public class LocacaoDAO extends BaseDAO {
         }
         return placas;
     }
+    public int contarAtivas() throws SQLException {
+        String sql = """
+        SELECT COUNT(*) AS total
+        FROM locacao
+        WHERE status = 'ATIVA'
+        """;
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()
+        ) {
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            registrarErro("LocacaoDAO.contarAtivas", e);
+            throw e;
+        }
+        return 0;
+    }
     private Locacao mapearLocacao(ResultSet rs) throws SQLException {
         Locacao locacao = new Locacao();
 

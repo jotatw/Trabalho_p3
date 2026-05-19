@@ -25,6 +25,10 @@ public class ClienteService {
         return clienteDAO.listarTodos();
     }
 
+    public int contarAtivos() throws SQLException {
+        return clienteDAO.contarAtivos();
+    }
+
     public Cliente buscarPorCpf(String cpf) throws SQLException {
         return clienteDAO.buscarPorCpf(cpf);
     }

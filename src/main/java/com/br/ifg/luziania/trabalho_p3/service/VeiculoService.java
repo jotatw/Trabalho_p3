@@ -28,6 +28,10 @@ public class VeiculoService {
     public List<Veiculo> listarDisponiveis() throws SQLException {
         return veiculoDAO.listarDisponiveis();
     }
+    
+    public int contarDisponiveis() throws SQLException {
+        return veiculoDAO.contarDisponiveis();
+    }
 
     public Veiculo buscarPorPlaca(String placa) throws SQLException {
         return veiculoDAO.buscarPorPlaca(placa);

@@ -17,6 +17,10 @@ public class LocacaoService {
     private final VeiculoService veiculoService = new VeiculoService();
     private final LocacaoDAO locacaoDAO = new LocacaoDAO();
 
+    public int contarAtivas() throws SQLException {
+        return locacaoDAO.contarAtivas();
+    }
+
     public Locacao realizarLocacao(
             String cpf,
             String placa,

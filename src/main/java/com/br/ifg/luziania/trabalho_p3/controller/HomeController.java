@@ -1,6 +1,9 @@
 package com.br.ifg.luziania.trabalho_p3.controller;
 
 import com.br.ifg.luziania.trabalho_p3.model.Usuario;
+import com.br.ifg.luziania.trabalho_p3.service.ClienteService;
+import com.br.ifg.luziania.trabalho_p3.service.LocacaoService;
+import com.br.ifg.luziania.trabalho_p3.service.VeiculoService;
 import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
@@ -10,9 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 // Controla a tela inicial e a navegação para as principais funções do sistema.
 public class HomeController {
+    private final ClienteService clienteService = new ClienteService();
+    private final VeiculoService veiculoService = new VeiculoService();
+    private final LocacaoService locacaoService = new LocacaoService();
 
     @FXML private Button btnClientes;
     @FXML private Button btnVeiculos;
@@ -27,11 +34,15 @@ public class HomeController {
 
     @FXML private Label labelBoasVindas;
     @FXML private Label labelPerfil;
+    @FXML private Label labelClientesAtivos;
+    @FXML private Label labelVeiculosDisponiveis;
+    @FXML private Label labelLocacoesAtivas;
 
     @FXML
     public void initialize() {
         carregarUsuarioLogado();
         aplicarPermissoes();
+        carregarResumoSistema();
     }
 
     private void carregarUsuarioLogado() {
@@ -114,7 +125,19 @@ public class HomeController {
             mostrarAlerta("Erro ao abrir a tela solicitada.");
         }
     }
+    private void carregarResumoSistema() {
+        try {
+            labelClientesAtivos.setText(String.valueOf(clienteService.contarAtivos()));
+            labelVeiculosDisponiveis.setText(String.valueOf(veiculoService.contarDisponiveis()));
+            labelLocacoesAtivas.setText(String.valueOf(locacaoService.contarAtivas()));
+        } catch (SQLException e) {
+            labelClientesAtivos.setText("-");
+            labelVeiculosDisponiveis.setText("-");
+            labelLocacoesAtivas.setText("-");
 
+            mostrarAlerta("Erro ao carregar resumo do sistema.");
+        }
+    }
     private void mostrarAlerta(String msg) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Atenção");

@@ -44,18 +44,21 @@
             <!-- Cards visuais temporários -->
             <HBox spacing="16" styleClass="home-cards">
                <VBox styleClass="card-home">
-                  <Label text="Clientes" styleClass="card-home-titulo" />
-                  <Label text="Ativos" styleClass="card-home-subtitulo" />
+                  <Label text="Clientes ativos" styleClass="card-home-titulo" />
+                  <Label fx:id="labelClientesAtivos" text="0" styleClass="card-home-numero" />
+                  <Label text="cadastrados no sistema" styleClass="card-home-subtitulo" />
                </VBox>
 
                <VBox styleClass="card-home">
-                  <Label text="Veículos" styleClass="card-home-titulo" />
-                  <Label text="Disponíveis" styleClass="card-home-subtitulo" />
+                  <Label text="Veículos disponíveis" styleClass="card-home-titulo" />
+                  <Label fx:id="labelVeiculosDisponiveis" text="0" styleClass="card-home-numero" />
+                  <Label text="prontos para locação" styleClass="card-home-subtitulo" />
                </VBox>
 
                <VBox styleClass="card-home">
-                  <Label text="Locações" styleClass="card-home-titulo" />
-                  <Label text="Em andamento" styleClass="card-home-subtitulo" />
+                  <Label text="Locações ativas" styleClass="card-home-titulo" />
+                  <Label fx:id="labelLocacoesAtivas" text="0" styleClass="card-home-numero" />
+                  <Label text="em andamento" styleClass="card-home-subtitulo" />
                </VBox>
             </HBox>
 
