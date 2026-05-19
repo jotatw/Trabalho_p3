@@ -56,71 +56,71 @@ Clone o projeto:
 git clone https://github.com/jotatw/Trabalho_p3.git
 
 Entre na pasta do projeto:
-````
+```md
 cd Trabalho_p3
-````
+```
 
 Crie o banco no PostgreSQL:
 
-````
+```md
 CREATE DATABASE locadora_db;
-````
+```
 
 Execute o script:
-````
+```
 database.sql
-````
+```
 
 Rode o projeto com Maven:
-````
+```
 mvn clean javafx:run
-````
+```
 
 ## Estrutura do projeto
 
-````
+```
 src/main/java
 ├── controller
 ├── service
 ├── dao
 ├── model
 └── util
-````
+```
 
 ## Arquitetura
 
 O projeto segue a divisão em camadas:
-````
+```
 Controller → Service → DAO → Banco de Dados
-````
+```
 
 ## Logs
 
 O sistema gera arquivos de log na pasta:
-````
+```
 logs
-````
+```
 
 Arquivos principais:
-````
+```
 uso.log
 erros.log
-````
+```
 
 ## Usuários de teste
 
 Após executar o script do banco, utilize:
-````
+```
 E-mail: admin@locadora.com
 Senha: admin123
 Perfil: ADMIN
-````
+```
 
-````
+```
 E-mail: atendente@locadora.com
 Senha: atendente123
 Perfil: ATENDENTE
-````
+```
 ## Autor
 
-jota _tw
+jotatw
