@@ -115,6 +115,86 @@
     -fx-padding: 8 10 14 10;
 }
 
+.home-conteudo {
+    -fx-background-color: #F8FAFC;
+    -fx-background-radius: 14;
+    -fx-padding: 34;
+    -fx-spacing: 24;
+}
+
+.home-cabecalho {
+    -fx-padding: 0 0 8 0;
+}
+
+.home-titulo {
+    -fx-font-size: 28;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0F172A;
+}
+
+.home-subtitulo {
+    -fx-font-size: 15;
+    -fx-text-fill: #64748B;
+}
+
+.home-perfil {
+    -fx-font-size: 14;
+    -fx-font-weight: 700;
+    -fx-text-fill: #1565C0;
+}
+
+.home-cards {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.card-home {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 14;
+    -fx-padding: 18;
+    -fx-pref-width: 190;
+    -fx-min-height: 90;
+    -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.10), 12, 0.18, 0, 4);
+}
+
+.card-home-titulo {
+    -fx-font-size: 18;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0F172A;
+}
+
+.card-home-subtitulo {
+    -fx-font-size: 13;
+    -fx-text-fill: #64748B;
+}
+
+.home-secao {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 14;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 14;
+    -fx-padding: 18;
+}
+
+.home-secao-titulo {
+    -fx-font-size: 17;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0F172A;
+}
+
+.home-info {
+    -fx-background-color: #EEF6FF;
+    -fx-background-radius: 14;
+    -fx-border-color: #BFDBFE;
+    -fx-border-radius: 14;
+    -fx-padding: 18;
+}
+
+.home-texto {
+    -fx-font-size: 14;
+    -fx-text-fill: #475569;
+}
 
 /* =========================================================
    5. CABEÇALHOS E TEXTOS

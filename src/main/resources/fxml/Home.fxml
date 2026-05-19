@@ -26,23 +26,73 @@
    </left>
    <center>
       <StackPane styleClass="area-home">
-         <VBox alignment="CENTER" spacing="14" styleClass="area-central">
-            <children>
-               <Label style="-fx-font-size: 56px;" text="🚗" />
+         <VBox spacing="24" styleClass="home-conteudo">
 
-               <Label styleClass="titulo-home" text="Locadora de Veículos" />
+            <!-- Cabeçalho da Home -->
+            <VBox spacing="6" styleClass="home-cabecalho">
+               <Label text="Painel Inicial" styleClass="home-titulo" />
 
                <Label fx:id="labelBoasVindas"
-                      styleClass="subtitulo-home"
-                      text="Bem-vindo ao sistema" />
+                      text="Bem-vindo ao sistema"
+                      styleClass="home-subtitulo" />
 
                <Label fx:id="labelPerfil"
-                      styleClass="texto-destaque"
-                      text="Perfil: -" />
+                      text="Perfil: -"
+                      styleClass="home-perfil" />
+            </VBox>
 
-               <Label styleClass="subtitulo-home"
-                      text="Selecione uma opção no menu lateral para começar." />
-            </children>
+            <!-- Cards visuais temporários -->
+            <HBox spacing="16" styleClass="home-cards">
+               <VBox styleClass="card-home">
+                  <Label text="Clientes" styleClass="card-home-titulo" />
+                  <Label text="Ativos" styleClass="card-home-subtitulo" />
+               </VBox>
+
+               <VBox styleClass="card-home">
+                  <Label text="Veículos" styleClass="card-home-titulo" />
+                  <Label text="Disponíveis" styleClass="card-home-subtitulo" />
+               </VBox>
+
+               <VBox styleClass="card-home">
+                  <Label text="Locações" styleClass="card-home-titulo" />
+                  <Label text="Em andamento" styleClass="card-home-subtitulo" />
+               </VBox>
+            </HBox>
+
+            <!-- Ações rápidas -->
+            <VBox spacing="12" styleClass="home-secao">
+               <Label text="Ações rápidas" styleClass="home-secao-titulo" />
+
+               <HBox spacing="12">
+                  <Button fx:id="btnAtalhoLocacao"
+                          text="Nova Locação"
+                          onAction="#abrirLocacao"
+                          styleClass="btn-primario" />
+
+                  <Button fx:id="btnAtalhoDevolucao"
+                          text="Registrar Devolução"
+                          onAction="#abrirDevolucao"
+                          styleClass="btn-secundario" />
+
+                  <Button fx:id="btnAtalhoCliente"
+                          text="Cadastrar Cliente"
+                          onAction="#abrirClientes"
+                          styleClass="btn-secundario" />
+
+                  <Button fx:id="btnAtalhoVeiculo"
+                          text="Cadastrar Veículo"
+                          onAction="#abrirVeiculos"
+                          styleClass="btn-secundario" />
+               </HBox>
+            </VBox>
+
+            <!-- Área informativa -->
+            <VBox spacing="8" styleClass="home-info">
+               <Label text="Resumo do sistema" styleClass="home-secao-titulo" />
+               <Label text="Use o menu lateral ou os atalhos acima para acessar as principais funções da locadora."
+                      styleClass="home-texto" />
+            </VBox>
+
          </VBox>
       </StackPane>
    </center>

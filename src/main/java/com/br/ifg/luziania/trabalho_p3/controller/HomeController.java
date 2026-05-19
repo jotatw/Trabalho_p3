@@ -20,6 +20,10 @@ public class HomeController {
     @FXML private Button btnLocacao;
     @FXML private Button btnDevolucao;
     @FXML private Button btnSair;
+    @FXML private Button btnAtalhoLocacao;
+    @FXML private Button btnAtalhoDevolucao;
+    @FXML private Button btnAtalhoCliente;
+    @FXML private Button btnAtalhoVeiculo;
 
     @FXML private Label labelBoasVindas;
     @FXML private Label labelPerfil;
