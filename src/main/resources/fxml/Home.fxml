@@ -26,11 +26,22 @@
    </left>
    <center>
       <StackPane styleClass="area-home">
-         <VBox alignment="CENTER" spacing="10" styleClass="area-central">
+         <VBox alignment="CENTER" spacing="14" styleClass="area-central">
             <children>
                <Label style="-fx-font-size: 56px;" text="🚗" />
-               <Label styleClass="titulo-home" text="Locadora de Veiculos" />
-               <Label styleClass="subtitulo-home" text="Selecione uma opção no menu lateral" />
+
+               <Label styleClass="titulo-home" text="Locadora de Veículos" />
+
+               <Label fx:id="labelBoasVindas"
+                      styleClass="subtitulo-home"
+                      text="Bem-vindo ao sistema" />
+
+               <Label fx:id="labelPerfil"
+                      styleClass="texto-destaque"
+                      text="Perfil: -" />
+
+               <Label styleClass="subtitulo-home"
+                      text="Selecione uma opção no menu lateral para começar." />
             </children>
          </VBox>
       </StackPane>
