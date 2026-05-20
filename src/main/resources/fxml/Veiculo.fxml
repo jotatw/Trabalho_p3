@@ -74,7 +74,7 @@
                 <TextField fx:id="campoBusca" promptText="Placa, modelo, marca ou categoria" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
             </HBox>
 
-            <TableView fx:id="tabelaVeiculo" prefHeight="280" styleClass="tabela-padrao">
+            <TableView fx:id="tabelaVeiculo" prefHeight="240" maxWidth="-Infinity" styleClass="tabela-padrao">
                 <columns>
                     <TableColumn fx:id="colunaPlaca" prefWidth="110" text="Placa" />
                     <TableColumn fx:id="colunaModelo" prefWidth="150" text="Modelo" />

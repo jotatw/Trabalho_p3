@@ -13,8 +13,13 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.br.ifg.luziania.trabalho_p3.controller.DevolucaoController">
     <VBox styleClass="tela-formulario">
-        <VBox styleClass="painel-formulario">
-            <GridPane vgap="10" hgap="12">
+        <!-- Cabeçalho da tela -->
+        <VBox styleClass="cabecalho-tela">
+            <Label text="Devolução de Veículo" styleClass="titulo-tela" />
+            <Label text="Selecione uma placa ativa, confira os valores e confirme a devolução." styleClass="subtitulo-tela" />
+        </VBox>
+        <VBox styleClass="painel-operacao">
+            <GridPane vgap="10" hgap="12" styleClass="grid-operacao">
                 <columnConstraints>
                     <ColumnConstraints minWidth="150" prefWidth="170"/>
                     <ColumnConstraints minWidth="230" prefWidth="300"/>
@@ -23,7 +28,7 @@
 
                 <Label text="Placa" styleClass="rotulo-campo"/>
 
-                <VBox spacing="6" GridPane.columnIndex="1">
+                <VBox spacing="6" GridPane.columnIndex="1" styleClass="campo-duplo">
                     <ComboBox fx:id="comboPlacasAtivas"
                               promptText="Selecione uma placa ativa"
                               styleClass="campo-texto"
@@ -42,29 +47,29 @@
                         GridPane.columnIndex="2" />
 
                 <Label text="Cliente" GridPane.rowIndex="2" styleClass="rotulo-campo"/>
-                <Label fx:id="labelCliente" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="rotulo-resultado"/>
+                <Label fx:id="labelCliente" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="resultado-operacao"/>
 
                 <Label text="Retirada" GridPane.rowIndex="3" styleClass="rotulo-campo"/>
-                <Label fx:id="labelRetirada" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="rotulo-resultado"/>
+                <Label fx:id="labelRetirada" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="resultado-operacao"/>
 
-                <Label text="Devolucao Prevista" GridPane.rowIndex="4" styleClass="rotulo-campo"/>
-                <Label fx:id="labelDevolucao" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="rotulo-resultado"/>
+                <Label text="Devolução Prevista" GridPane.rowIndex="4" styleClass="rotulo-campo"/>
+                <Label fx:id="labelDevolucao" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="resultado-operacao"/>
 
-                <Label text="Valor Original" GridPane.rowIndex="5" styleClass="rotulo-campo"/>
-                <Label fx:id="labelValor" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="5" styleClass="rotulo-resultado"/>
+                <Label text="Valor original" GridPane.rowIndex="5" styleClass="rotulo-campo"/>
+                <Label fx:id="labelValor" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="5" styleClass="resultado-operacao"/>
 
-                <Label text="Dias de Atraso" GridPane.rowIndex="6" styleClass="rotulo-campo"/>
-                <Label fx:id="labelAtraso" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="rotulo-resultado"/>
+                <Label text="Dias de atraso" GridPane.rowIndex="6" styleClass="rotulo-campo"/>
+                <Label fx:id="labelAtraso" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="resultado-operacao"/>
 
                 <Label text="Multa" GridPane.rowIndex="7" styleClass="rotulo-campo"/>
-                <Label fx:id="labelMulta" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="7" styleClass="rotulo-resultado"/>
+                <Label fx:id="labelMulta" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="7" styleClass="resultado-operacao"/>
 
-                <Label text="Valor Final" GridPane.rowIndex="8" styleClass="rotulo-campo"/>
-                <Label fx:id="labelValorFinal" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="8" styleClass="rotulo-resultado"/>
+                <Label text="Valor final" GridPane.rowIndex="8" styleClass="rotulo-campo"/>
+                <Label fx:id="labelValorFinal" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="8" styleClass="resultado-operacao"/>
             </GridPane>
 
-            <HBox styleClass="linha-btn">
-                <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#confirmarDevolucao" styleClass="btn-primario" text="Confirmar Devolucao" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <HBox styleClass="linha-btn-operacao">
+                <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#confirmarDevolucao" styleClass="btn-primario" text="Confirmar Devolução" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                 <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
             </HBox>
         </VBox>

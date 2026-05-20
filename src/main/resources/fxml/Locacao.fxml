@@ -13,8 +13,13 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LocacaoController">
     <VBox styleClass="tela-formulario">
-        <VBox styleClass="painel-formulario">
-            <GridPane hgap="12" vgap="10">
+        <!-- Cabeçalho da tela -->
+        <VBox styleClass="cabecalho-tela">
+            <Label text="Nova Locação" styleClass="titulo-tela" />
+            <Label text="Busque o cliente, selecione o veículo e informe o período da locação." styleClass="subtitulo-tela" />
+        </VBox>
+        <VBox styleClass="painel-operacao">
+            <GridPane hgap="12" vgap="10" styleClass="grid-operacao">
                 <columnConstraints>
                     <ColumnConstraints minWidth="120" prefWidth="140" />
                     <ColumnConstraints minWidth="220" prefWidth="280" />
@@ -29,7 +34,7 @@
 
                 <Label styleClass="rotulo-campo" text="Veículo" GridPane.rowIndex="1" />
 
-                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="campo-duplo">
                     <ComboBox fx:id="comboVeiculosDisponiveis"
                               promptText="Selecione um veículo disponível"
                               styleClass="campo-texto"
@@ -57,11 +62,11 @@
                 <Label styleClass="rotulo-campo" text="Retirada" GridPane.rowIndex="2" />
                 <DatePicker fx:id="dataRetirada" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <Label styleClass="rotulo-campo" text="Devolucao" GridPane.rowIndex="3" />
+                <Label styleClass="rotulo-campo" text="Devolução" GridPane.rowIndex="3" />
                 <DatePicker fx:id="dataDevolucao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                 <Label styleClass="rotulo-campo" text="Valor total" GridPane.rowIndex="4" />
-                <Label fx:id="labelValor" styleClass="rotulo-resultado" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label fx:id="labelValor" styleClass="resultado-operacao" text="R$ 0,00" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <rowConstraints>
                <RowConstraints />
                <RowConstraints />
@@ -71,8 +76,8 @@
             </rowConstraints>
             </GridPane>
 
-            <HBox styleClass="linha-btn">
-                <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#confirmarLocacao" styleClass="btn-primario" text="Confirmar Locacao" />
+            <HBox styleClass="linha-btn-operacao">
+                <Button fx:id="btnConfirmar" mnemonicParsing="false" onAction="#confirmarLocacao" styleClass="btn-primario" text="Confirmar Locação" />
                 <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
             </HBox>
         </VBox>

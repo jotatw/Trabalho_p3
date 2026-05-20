@@ -50,6 +50,8 @@ public class UsuarioController {
         tabelaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tabelaPerfil.setCellValueFactory(new PropertyValueFactory<>("perfil"));
         tabelaAtivo.setCellValueFactory(new PropertyValueFactory<>("ativo"));
+
+        tabelaUsuario.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         carregarTabela();
         configurarBusca();
 

@@ -62,6 +62,7 @@ public class ClienteController {
         colunaTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         colunaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaAtivo.setCellValueFactory(new PropertyValueFactory<>("ativo"));
+        tabelaCliente.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         carregarTabela();
         configurarBusca();

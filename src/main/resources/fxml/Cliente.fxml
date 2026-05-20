@@ -70,7 +70,7 @@
                 <TextField fx:id="campoBusca" promptText="Nome, CPF, CNH, telefone ou e-mail" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
             </HBox>
 
-            <TableView fx:id="tabelaCliente" prefHeight="280" styleClass="tabela-padrao">
+            <TableView fx:id="tabelaCliente" prefHeight="240" maxWidth="-Infinity" styleClass="tabela-padrao">
                 <columns>
                     <TableColumn fx:id="colunaNome" prefWidth="160" text="Nome" />
                     <TableColumn fx:id="colunaCpf" prefWidth="120" text="CPF" />

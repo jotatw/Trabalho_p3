@@ -63,6 +63,8 @@ public class VeiculoController {
         colunaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
         colunaValor.setCellValueFactory(new PropertyValueFactory<>("valorLocacao"));
         colunaDisponivel.setCellValueFactory(new PropertyValueFactory<>("disponivel"));
+
+        tabelaVeiculo.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         carregarTabela();
         configurarBusca();
 

@@ -32,7 +32,7 @@
 .tela-formulario {
     -fx-pref-width: 860;
     -fx-min-width: 720;
-    -fx-max-width: 1100;
+    -fx-max-width: 980;
     -fx-background-radius: 16;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.22), 18, 0.20, 0, 8);
 }
@@ -55,6 +55,37 @@
     -fx-alignment: CENTER_LEFT;
 }
 
+/* Painel usado nas telas operacionais, como Locação e Devolução */
+.painel-operacao {
+    -fx-background-color: linear-gradient(to right, #0B1A3A, #13294B);
+    -fx-background-radius: 0 0 16 16;
+    -fx-padding: 22;
+    -fx-spacing: 14;
+}
+
+/* Agrupa campos de operação para evitar conteúdo grudado nas bordas */
+.grid-operacao {
+    -fx-padding: 4 0 8 0;
+}
+
+/* Deixa labels de resultado mais legíveis em telas escuras */
+.resultado-operacao {
+    -fx-text-fill: #BFDBFE;
+    -fx-font-size: 14;
+    -fx-font-weight: 700;
+}
+
+/* Container para campos duplos, como ComboBox + TextField */
+.campo-duplo {
+    -fx-spacing: 6;
+}
+
+/* Área de botões nas telas operacionais */
+.linha-btn-operacao {
+    -fx-spacing: 10;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 6 0 0 0;
+}
 
 /* =========================================================
    3. LOGIN
@@ -67,8 +98,8 @@
 }
 
 .titulo-login {
-    -fx-font-size: 30;
-    -fx-font-weight: 300;
+    -fx-font-size: 28;
+    -fx-font-weight: 700;
     -fx-text-fill: #1E3A8A;
 }
 
