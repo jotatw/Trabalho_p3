@@ -85,31 +85,31 @@ public class ClienteController {
 
         //validações
         if (ValidacaoUtil.campoVazio(nome)) {
-            mostraAlerta("Nome e obrigatorio!");
+            mostraAlerta("Nome é obrigatório!");
             return;
         }
         if (!ValidacaoUtil.cpfValido(cpf)) {
-            mostraAlerta(("CPF invalido!  use o formato: 000.000.000-00"));
+            mostraAlerta(("CPF inválido! use o formato: 000.000.000-00"));
             return;
         }
         if (!ValidacaoUtil.cnhValido(cnh)) {
-            mostraAlerta("CNH invalida! informe 11 digitos numericos");
+            mostraAlerta("CNH inválida! informe 11 digitos numéricos");
             return;
         }
         if (ValidacaoUtil.campoVazio(telefone)) {
-            mostraAlerta("Telefone e obrigatorio!");
+            mostraAlerta("Telefone é obrigatório!");
             return;
         }
         if (!ValidacaoUtil.telefoneValido(telefone)) {
-            mostraAlerta("Telefone invalido! Use o formato: (00) 99999-9999 ou (00) 1111-2222");
+            mostraAlerta("Telefone inválido! Use o formato: (00) 99999-9999 ou (00) 1111-2222");
             return;
         }
         if (ValidacaoUtil.campoVazio(email)) {
-            mostraAlerta("Email e obrigatorio!");
+            mostraAlerta("Email é obrigatório!");
             return;
         }
         if (!ValidacaoUtil.emailValido(email)) {
-            mostraAlerta("Email invalido!");
+            mostraAlerta("Email inválido!");
             return;
         }
         //salva no banco de dados
@@ -182,7 +182,7 @@ public class ClienteController {
             return;
         }
         if (ValidacaoUtil.campoVazio(email)) {
-            mostraAlerta("Email e obrigatorio!");
+            mostraAlerta("Email é obrigatorio!");
             return;
         }
         if (!ValidacaoUtil.emailValido(email)) {
@@ -254,7 +254,7 @@ public class ClienteController {
                 tabelaCliente.setItems(listaFiltrada);
             }
         } catch (SQLException e) {
-            mostraAlerta("Erro ao carregar cliente. Tente novamente");
+            mostraAlerta("Erro ao carregar clientes. Tente novamente");
         }
     }
     // Configura o filtro da tabela usando o texto digitado no campo de busca.

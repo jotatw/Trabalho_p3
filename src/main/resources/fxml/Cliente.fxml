@@ -15,7 +15,7 @@
 
     <VBox styleClass="tela-formulario">
 
-        <!-- Caballero da tela -->
+        <!-- Cabeçalho da tela -->
         <VBox styleClass="cabecalho-tela">
             <Label styleClass="titulo-tela" text="Gerenciamento de Clientes" />
             <Label styleClass="subtitulo-tela" text="Cadastre, atualize, inative e consulte clientes da locadora." />
@@ -53,7 +53,7 @@
                 </rowConstraints>
             </GridPane>
 
-            <!-- Botões principals da tela -->
+            <!-- Botões principais da tela -->
             <HBox styleClass="linha-btn">
                 <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
                 <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar" />
@@ -63,14 +63,14 @@
             </HBox>
         </VBox>
 
-        <!-- Área de busca e staged -->
-        <VBox spacing="10" styleClass="bloco-tabela">
+        <!-- Área de busca e listagem -->
+        <VBox spacing="10" styleClass="bloco-tabela" VBox.vgrow="ALWAYS">
             <HBox spacing="10" styleClass="linha-busca">
                 <Label styleClass="rotulo-busca" text="Buscar:" />
                 <TextField fx:id="campoBusca" promptText="Nome, CPF, CNH, telefone ou e-mail" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
             </HBox>
 
-            <TableView fx:id="tabelaCliente" prefHeight="240" maxWidth="-Infinity" styleClass="tabela-padrao">
+            <TableView fx:id="tabelaCliente" prefHeight="240" maxWidth="-Infinity" VBox.vgrow="ALWAYS" styleClass="tabela-padrao">
                 <columns>
                     <TableColumn fx:id="colunaNome" prefWidth="170" text="Nome" />
                     <TableColumn fx:id="colunaCpf" prefWidth="115" text="CPF" />
