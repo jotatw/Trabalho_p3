@@ -4,6 +4,7 @@ import com.br.ifg.luziania.trabalho_p3.model.Usuario;
 import com.br.ifg.luziania.trabalho_p3.service.AuthService;
 import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
+import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -15,17 +16,21 @@ import java.sql.SQLException;
 public class LoginController {
     private final AuthService authService = new AuthService();
 
-    @FXML private TextField campoemail;
+    @FXML private TextField campoEmail;
     @FXML private PasswordField campoSenha;
     // Valida os campos e tenta autenticar o usuário.
     @FXML
     private void fazerLogin() {
-        String email = campoemail.getText().trim();
+        String email = campoEmail.getText().trim();
         String senha = campoSenha.getText().trim();
 
         //validar os campos vazios
         if(email.isEmpty() || senha.isEmpty()) {
             mostrarAlerta("prencher e-mail e senha!");
+            return;
+        }
+        if (!ValidacaoUtil.emailValido(email)) {
+            mostrarAlerta("Informe um e-mail válido!");
             return;
         }
         try {
@@ -35,7 +40,7 @@ public class LoginController {
                 return;
             }
             Sessao.inicia(usuario);
-            NavegacaoUtil.trocarTela(campoemail, "/fxml/Home.fxml", "Locadora - Home");
+            NavegacaoUtil.trocarTela(campoEmail, "/fxml/Home.fxml", "Locadora - Home");
         } catch (SQLException e){
             mostrarAlerta("Não foi possível acessar o banco de dados. Tente novamente. " );
         } catch (IOException e) {
@@ -44,7 +49,7 @@ public class LoginController {
     }
     private void mostrarAlerta(String mensagem) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("ATENÇÂO!");
+        alert.setTitle("atenção!");
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
