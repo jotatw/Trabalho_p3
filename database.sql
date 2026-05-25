@@ -98,14 +98,14 @@ INSERT INTO usuario (nome, email, senha_hash, perfil, ativo) VALUES
                                                                  (
                                                                      'Administrador',
                                                                      'admin@locadora.com',
-                                                                     '$2a$10$vI8aWBnUVL6nXTYjGkEYYeY.M5DyJ3pYz5m1Z8aF1Z7T8FJ6E2z3e',
+                                                                     '$2a$10$JCFaGvHbCWfcNePhC6ufi.pVOZM9KxzMO9dSJOfmAwrNWA63vz4Fu',
                                                                      'ADMIN',
                                                                      TRUE
                                                                  ),
                                                                  (
                                                                      'Atendente',
                                                                      'atendente@locadora.com',
-                                                                     '$2a$10$vI8aWBnUVL6nXTYjGkEYYeY.M5DyJ3pYz5m1Z8aF1Z7T8FJ6E2z3e',
+                                                                     '$2a$10$1Dc3339GTRipp6hGBpZMtOd.WBs327oI0c8Yfw7Eicz.Zkny7GSl6',
                                                                      'ATENDENTE',
                                                                      TRUE
                                                                  );
