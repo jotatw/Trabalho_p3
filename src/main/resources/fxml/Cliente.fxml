@@ -72,12 +72,12 @@
 
             <TableView fx:id="tabelaCliente" prefHeight="240" maxWidth="-Infinity" styleClass="tabela-padrao">
                 <columns>
-                    <TableColumn fx:id="colunaNome" prefWidth="160" text="Nome" />
-                    <TableColumn fx:id="colunaCpf" prefWidth="120" text="CPF" />
+                    <TableColumn fx:id="colunaNome" prefWidth="170" text="Nome" />
+                    <TableColumn fx:id="colunaCpf" prefWidth="115" text="CPF" />
                     <TableColumn fx:id="colunaCnh" prefWidth="110" text="CNH" />
                     <TableColumn fx:id="colunaTelefone" prefWidth="130" text="Telefone" />
-                    <TableColumn fx:id="colunaEmail" prefWidth="170" text="E-mail" />
-                    <TableColumn fx:id="colunaAtivo" prefWidth="153.0" text="Ativo" />
+                    <TableColumn fx:id="colunaEmail" prefWidth="190" text="E-mail" />
+                    <TableColumn fx:id="colunaAtivo" prefWidth="80" text="Ativo" />
                 </columns>
             </TableView>
         </VBox>
