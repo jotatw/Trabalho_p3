@@ -39,7 +39,12 @@
                 <PasswordField fx:id="campoSenha" promptText="Mínimo 6 caracteres" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="campo-texto" />
 
                 <Label text="Perfil" GridPane.rowIndex="3" styleClass="rotulo-campo" />
-                <ComboBox fx:id="cmbPerfil" prefWidth="320" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="campo-texto" />
+                <ComboBox fx:id="cmbPerfil"
+                          promptText="Selecione o perfil"
+                          maxWidth="-Infinity"
+                          GridPane.columnIndex="1"
+                          GridPane.rowIndex="3"
+                          styleClass="campo-texto" />
 
                 <rowConstraints>
                     <RowConstraints />
@@ -60,18 +65,18 @@
         </VBox>
 
         <!-- Área de busca e listagem -->
-        <VBox styleClass="bloco-tabela" spacing="10">
+        <VBox styleClass="bloco-tabela" spacing="10" VBox.vgrow="ALWAYS">
             <HBox spacing="10" styleClass="linha-busca">
                 <Label text="Buscar:" styleClass="rotulo-busca" />
                 <TextField fx:id="campoBusca" promptText="Nome, e-mail, perfil ou status" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
             </HBox>
 
-            <TableView fx:id="tabelaUsuario" prefHeight="240" maxWidth="-Infinity" styleClass="tabela-padrao">
+            <TableView fx:id="tabelaUsuario" prefHeight="240" maxWidth="-Infinity" VBox.vgrow="ALWAYS" styleClass="tabela-padrao">
                 <columns>
-                    <TableColumn fx:id="tabelaNome" prefWidth="220" text="Nome" />
-                    <TableColumn fx:id="tabelaEmail" prefWidth="260" text="E-mail" />
-                    <TableColumn fx:id="tabelaPerfil" prefWidth="160" text="Perfil" />
-                    <TableColumn fx:id="tabelaAtivo" prefWidth="90" text="Ativo" />
+                    <TableColumn fx:id="tabelaNome" prefWidth="240" text="Nome" />
+                    <TableColumn fx:id="tabelaEmail" prefWidth="270" text="E-mail" />
+                    <TableColumn fx:id="tabelaPerfil" prefWidth="140" text="Perfil" />
+                    <TableColumn fx:id="tabelaAtivo" prefWidth="100" text="Ativo" />
                 </columns>
             </TableView>
         </VBox>

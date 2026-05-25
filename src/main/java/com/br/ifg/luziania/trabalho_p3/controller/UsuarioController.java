@@ -83,7 +83,7 @@ public class UsuarioController {
             mostraAlerta("Senha obrigatória e deve ter pelo menos 6 caracteres!");
             return;
         }
-        if (perfil == null) {
+        if (perfil == null || perfil.isBlank()) {
             mostraAlerta("Selecione o perfil do usuário!");
             return;
         }
@@ -97,7 +97,7 @@ public class UsuarioController {
             usuario.setAtivo(true);
 
             usuarioService.salvar(usuario);
-            mostraSucesso("Usuario salvo com sucesso!");
+            mostraSucesso("Usuário  salvo com sucesso!");
             limpar();
             carregarTabela();
         } catch (SQLException e) {
@@ -129,7 +129,7 @@ public class UsuarioController {
             mostraAlerta("A nova senha deve ter pelo menos 6 caracteres!");
             return;
         }
-        if (perfil == null) {
+        if (perfil == null || perfil.isBlank()) {
             mostraAlerta("Selecione o perfil do usuário!");
             return;
         }
