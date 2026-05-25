@@ -25,13 +25,15 @@ public class VeiculoController {
     private final ObservableList<Veiculo> listaVeiculos = FXCollections.observableArrayList();
     // Lista filtrada usada pelo campo de busca.
     private FilteredList<Veiculo> listaFiltrada;
-    private final ObservableList<String> categorias = FXCollections.observableArrayList("Econômico",
+    private final ObservableList<String> categorias = FXCollections.observableArrayList(
+            "Econômico",
             "Hatch",
             "Sedan",
             "SUV",
             "Picape",
             "Luxo",
-            "Van");
+            "Van")
+            ;
 
     @FXML private TextField campoPlaca;
     @FXML private TextField campoModelo;

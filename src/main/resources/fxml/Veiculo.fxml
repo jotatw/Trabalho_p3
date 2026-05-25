@@ -68,20 +68,20 @@
         </VBox>
 
         <!-- Área de busca e listagem -->
-        <VBox styleClass="bloco-tabela" spacing="10">
+        <VBox styleClass="bloco-tabela" spacing="10" VBox.vgrow="ALWAYS">
             <HBox spacing="10" styleClass="linha-busca">
                 <Label text="Buscar:" styleClass="rotulo-busca" />
                 <TextField fx:id="campoBusca" promptText="Placa, modelo, marca ou categoria" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
             </HBox>
 
-            <TableView fx:id="tabelaVeiculo" prefHeight="240" maxWidth="-Infinity" styleClass="tabela-padrao">
+            <TableView fx:id="tabelaVeiculo" prefHeight="240" maxWidth="-Infinity" VBox.vgrow="ALWAYS" styleClass="tabela-padrao">
                 <columns>
                     <TableColumn fx:id="colunaPlaca" prefWidth="110" text="Placa" />
                     <TableColumn fx:id="colunaModelo" prefWidth="150" text="Modelo" />
                     <TableColumn fx:id="colunaMarca" prefWidth="130" text="Marca" />
                     <TableColumn fx:id="colunaCategoria" prefWidth="130" text="Categoria" />
-                    <TableColumn fx:id="colunaValor" prefWidth="140" text="Valor da diária" />
-                    <TableColumn fx:id="colunaDisponivel" prefWidth="90" text="Disponível" />
+                    <TableColumn fx:id="colunaValor" prefWidth="130" text="Valor da diária" />
+                    <TableColumn fx:id="colunaDisponivel" prefWidth="100" text="Disponível" />
                 </columns>
             </TableView>
         </VBox>
