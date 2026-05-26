@@ -41,6 +41,16 @@ public class ClienteService {
                 "ID=" + cliente.getId() + ", CPF=" + cliente.getCpf()
         );
     }
+    public void inativar(Cliente cliente) throws SQLException {
+        cliente.setAtivo(false);
+
+        clienteDAO.atualizar(cliente);
+
+        LogUtil.registrarAcao(
+                "CLIENTE_INATIVADO",
+                "ID=" + cliente.getId() + ", CPF=" + cliente.getCpf()
+        );
+    }
 
     public void deletar(Cliente cliente) throws SQLException {
         clienteDAO.deletar(cliente);

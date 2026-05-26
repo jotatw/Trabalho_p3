@@ -226,8 +226,7 @@ public class ClienteController {
         }
 
         try {
-           clienteSelecionado.setAtivo(false);
-           clienteService.atualizar(clienteSelecionado);
+           clienteService.inativar(clienteSelecionado);
 
            mostraSucesso("Cliente inativado com sucesso!");
            limpar();

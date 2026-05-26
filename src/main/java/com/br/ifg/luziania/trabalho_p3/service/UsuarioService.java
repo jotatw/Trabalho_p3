@@ -10,6 +10,7 @@ import java.util.List;
 // Controla as regras de negócio relacionadas aos usuários do sistema.
 public class UsuarioService {
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
+
     // Cadastra usuário novo gerando hash BCrypt da senha.
     public void salvar(Usuario usuario) throws SQLException {
         String senhaHash = SenhaUtil.gerarHash(usuario.getSenha());
@@ -23,6 +24,7 @@ public class UsuarioService {
     public Usuario buscarPorEmail(String email) throws SQLException {
         return  usuarioDAO.buscarPorEmail(email);
     }
+
     // Atualiza usuário. A senha só é alterada se uma nova senha for informada.
     public void atualizar(Usuario usuario) throws SQLException {
         if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
@@ -35,6 +37,8 @@ public class UsuarioService {
     public void inativar(Usuario usuario) throws SQLException {
         usuario.setAtivo(false);
         usuario.setSenha("");
+
+        usuarioDAO.atualizar(usuario);
 
         LogUtil.registrarAcao("USUARIO_INATIVADO",
                 "ID=" + usuario.getId() + ", EMAIL=" + usuario.getEmail());

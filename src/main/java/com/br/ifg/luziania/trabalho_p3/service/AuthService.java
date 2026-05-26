@@ -12,10 +12,10 @@ public class AuthService {
 
     public Usuario login(String email, String senha) throws SQLException {
         //busco usuario pelo email
-        String emailTratado = email != null ? email.trim() : "";
+        String emailTratado = email != null ? email.trim().toLowerCase() : "";
         String senhaTratada = senha != null ? senha.trim() : "";
 
-        Usuario usuario = usuarioDAO.buscarPorEmail(email);
+        Usuario usuario = usuarioDAO.buscarPorEmail(emailTratado);
 
         //se não for encontrado retorna null
         if (usuario == null) {

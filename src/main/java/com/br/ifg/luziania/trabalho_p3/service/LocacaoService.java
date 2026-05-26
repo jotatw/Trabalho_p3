@@ -34,14 +34,31 @@ public class LocacaoService {
             Usuario usuarioLogado
     ) throws SQLException {
 
+        if (usuarioLogado == null) {
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    null,
+                    "Tentativa de locação sem usuário autenticado."
+            );
+            throw new IllegalArgumentException("É necessário estar autenticado para realizar uma locação.");
+        }
+
         Cliente cliente = clienteService.buscarPorCpf(cpf);
-        if (cliente == null) {
+        if (usuarioLogado == null) {
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    null,
+                    "Tentativa de locação sem usuário autenticado."
+            );
+            throw new IllegalArgumentException("É necessário estar autenticado para realizar uma locação.");
+        }
+        if (!cliente.isAtivo()) {
             LogUtil.registrar(
                     "LOCACAO_FALHOU",
                     usuarioLogado,
-                    "Cliente não encontrado. CPF=" + cpf
+                    "Cliente inativo. CPF=" + cpf
             );
-            throw new IllegalArgumentException("Cliente não encontrado para o CPF informado.");
+            throw new IllegalArgumentException("Cliente inativo não pode realizar locação.");
         }
 
         Veiculo veiculo = veiculoService.buscarPorPlaca(placa);
