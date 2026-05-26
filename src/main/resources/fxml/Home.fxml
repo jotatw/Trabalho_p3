@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefWidth="1100"
-            prefHeight="720"
+            prefHeight="800"
             styleClass="pagina"
             stylesheets="@../css/estilos.css"
             xmlns="http://javafx.com/javafx/17.0.12"
