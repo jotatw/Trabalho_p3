@@ -34,14 +34,6 @@ public class LocacaoService {
             Usuario usuarioLogado
     ) throws SQLException {
 
-        if (usuarioLogado == null) {
-            LogUtil.registrar(
-                    "LOCACAO_FALHOU",
-                    null,
-                    "Tentativa de locação sem usuário autenticado."
-            );
-            throw new IllegalArgumentException("É necessário estar autenticado para realizar uma locação.");
-        }
 
         Cliente cliente = clienteService.buscarPorCpf(cpf);
         if (usuarioLogado == null) {
