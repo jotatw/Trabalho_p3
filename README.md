@@ -37,15 +37,16 @@ Ele permite cadastrar clientes, veículos e usuários, além de realizar locaç�
 
 O sistema utiliza PostgreSQL.
 
-Configuração usada no projeto:
+### Configuração do Banco de Dados (🛡️ Sentinel)
 
-```text
-Banco: locadora_db
-Usuário: postgres
-Senha: 123456
-Host: localhost
-Porta: 5432
-````
+Por razões de segurança, o sistema agora exige que as credenciais do banco de dados sejam fornecidas via variáveis de ambiente. Não existem mais credenciais padrão no código-fonte.
+
+Defina as seguintes variáveis:
+
+- `DB_URL`: URL de conexão JDBC (Ex: `jdbc:postgresql://localhost:5432/locadora_db`)
+- `DB_USER`: Usuário do banco de dados
+- `DB_PASSWORD`: Senha do banco de dados
+
 Para criar as tabelas e dados iniciais, execute o arquivo:
 database.sql
 
