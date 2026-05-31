@@ -37,14 +37,12 @@ Ele permite cadastrar clientes, veículos e usuários, além de realizar locaç�
 
 O sistema utiliza PostgreSQL.
 
-Configuração usada no projeto:
+Configuração usada no projeto via variáveis de ambiente:
 
-```text
-Banco: locadora_db
-Usuário: postgres
-Senha: 123456
-Host: localhost
-Porta: 5432
+```bash
+export DB_URL=jdbc:postgresql://localhost:5432/locadora_db
+export DB_USER=postgres
+export DB_PASSWORD=123456
 ````
 Para criar as tabelas e dados iniciais, execute o arquivo:
 database.sql
