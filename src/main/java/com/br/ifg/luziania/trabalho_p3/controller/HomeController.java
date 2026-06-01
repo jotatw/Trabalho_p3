@@ -6,20 +6,18 @@ import com.br.ifg.luziania.trabalho_p3.service.ClienteService;
 import com.br.ifg.luziania.trabalho_p3.service.LocacaoService;
 import com.br.ifg.luziania.trabalho_p3.service.VeiculoService;
 import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
-import com.br.ifg.luziania.trabalho_p3.util.NavegacaoUtil;
 import com.br.ifg.luziania.trabalho_p3.util.Sessao;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
-// Controla a tela inicial e a navegação para as principais funções do sistema.
-public class HomeController {
+public class HomeController extends BaseController {
     private final ClienteService clienteService = new ClienteService();
     private final VeiculoService veiculoService = new VeiculoService();
     private final LocacaoService locacaoService = new LocacaoService();
@@ -27,16 +25,13 @@ public class HomeController {
     private final ObservableList<Locacao> locacoesAtivas = FXCollections.observableArrayList();
     private final DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    @FXML private Button btnClientes;
+    @FXML private VBox sidebar;
     @FXML private Button btnVeiculos;
-    @FXML private Button btnUsuarios;
+    @FXML private Button btnClientes;
     @FXML private Button btnLocacao;
     @FXML private Button btnDevolucao;
+    @FXML private Button btnUsuarios;
     @FXML private Button btnSair;
-    @FXML private Button btnAtalhoLocacao;
-    @FXML private Button btnAtalhoDevolucao;
-    @FXML private Button btnAtalhoCliente;
-    @FXML private Button btnAtalhoVeiculo;
 
     @FXML private Label labelBoasVindas;
     @FXML private Label labelPerfil;
@@ -50,6 +45,8 @@ public class HomeController {
     @FXML private TableColumn<Locacao, String> colunaPlacaLocacao;
     @FXML private TableColumn<Locacao, String> colunaDevolucaoLocacao;
 
+    private boolean sidebarExpandida = true;
+
     @FXML
     public void initialize() {
         carregarUsuarioLogado();
@@ -61,150 +58,72 @@ public class HomeController {
 
     private void carregarUsuarioLogado() {
         Usuario usuario = Sessao.getUsuarioLogado();
-
         if (usuario == null) {
             labelBoasVindas.setText("Bem-vindo ao sistema");
             labelPerfil.setText("Perfil: -");
             return;
         }
-
-        labelBoasVindas.setText("Bem-vindo, " + usuario.getNomeCompleto());
-        labelPerfil.setText("Perfil: " + usuario.getPerfil());
+        labelBoasVindas.setText("Olá, " + usuario.getNomeCompleto());
+        labelPerfil.setText(usuario.getPerfil());
     }
 
     private void aplicarPermissoes() {
         Usuario usuario = Sessao.getUsuarioLogado();
-
-        if (usuario == null) {
-            btnUsuarios.setDisable(true);
-            btnUsuarios.setVisible(false);
-            btnUsuarios.setManaged(false);
-            return;
-        }
-
-        boolean admin = "ADMIN".equalsIgnoreCase(usuario.getPerfil());
-
-        if (!admin) {
-            btnUsuarios.setDisable(true);
-            btnUsuarios.setVisible(false);
-            btnUsuarios.setManaged(false);
-        }
+        boolean admin = usuario != null && "ADMIN".equalsIgnoreCase(usuario.getPerfil());
+        btnUsuarios.setVisible(admin);
+        btnUsuarios.setManaged(admin);
     }
 
-    @FXML
-    private void abrirVeiculos() {
-        abrirTela(btnVeiculos, "/fxml/Veiculo.fxml", "Locadora - Veículos");
-    }
+    @FXML private void abrirVeiculos() { abrirTela(btnVeiculos, "/fxml/Veiculo.fxml", "Locadora - Veículos"); }
+    @FXML private void abrirClientes() { abrirTela(btnClientes, "/fxml/Cliente.fxml", "Locadora - Clientes"); }
+    @FXML private void abrirLocacao() { abrirTela(btnLocacao, "/fxml/Locacao.fxml", "Locadora - Locação"); }
+    @FXML private void abrirDevolucao() { abrirTela(btnDevolucao, "/fxml/Devolucao.fxml", "Locadora - Devolução"); }
+    @FXML private void abrirUsuarios() { abrirTela(btnUsuarios, "/fxml/Usuario.fxml", "Locadora - Usuários"); }
 
-    @FXML
-    private void abrirClientes() {
-        abrirTela(btnClientes, "/fxml/Cliente.fxml", "Locadora - Clientes");
-    }
-
-    @FXML
-    private void abrirLocacao() {
-        abrirTela(btnLocacao, "/fxml/Locacao.fxml", "Locadora - Locação");
-    }
-
-    @FXML
-    private void abrirDevolucao() {
-        abrirTela(btnDevolucao, "/fxml/Devolucao.fxml", "Locadora - Devolução");
-    }
-
-    @FXML
-    private void abrirUsuarios() {
-        Usuario usuario = Sessao.getUsuarioLogado();
-
-        if (usuario == null || !"ADMIN".equalsIgnoreCase(usuario.getPerfil())) {
-            mostrarAlerta("Acesso permitido apenas para usuários ADMIN.");
-            return;
-        }
-
-        abrirTela(btnUsuarios, "/fxml/Usuario.fxml", "Locadora - Usuários");
-    }
-
-    // Encerra a sessão atual e retorna para a tela de login.
     @FXML
     private void sair() {
-        LogUtil.registrarAcao("LOGOUT");
-        Sessao.encerrar();
-        abrirTela(btnSair, "/fxml/Login.fxml", "Locadora - Login");
-    }
-
-    // Método auxiliar para reduzir repetição na navegação.
-    private void abrirTela(Button botaoOrigem, String caminhoFxml, String titulo) {
-        try {
-            NavegacaoUtil.trocarTela(botaoOrigem, caminhoFxml, titulo);
-        } catch (IOException e) {
-            mostrarAlerta("Erro ao abrir a tela solicitada.");
+        if (confirmarAcao("Sair", "Deseja realmente encerrar a sessão?")) {
+            LogUtil.registrarAcao("LOGOUT");
+            Sessao.encerrar();
+            abrirTela(btnSair, "/fxml/Login.fxml", "Locadora - Login");
         }
     }
+
+    @FXML
+    private void toggleSidebar() {
+        sidebarExpandida = !sidebarExpandida;
+        if (sidebarExpandida) {
+            sidebar.setPrefWidth(240);
+            sidebar.getStyleClass().remove("sidebar-collapsed");
+        } else {
+            sidebar.setPrefWidth(70);
+            sidebar.getStyleClass().add("sidebar-collapsed");
+        }
+    }
+
     private void carregarResumoSistema() {
         try {
             labelClientesAtivos.setText(String.valueOf(clienteService.contarAtivos()));
             labelVeiculosDisponiveis.setText(String.valueOf(veiculoService.contarDisponiveis()));
             labelLocacoesAtivas.setText(String.valueOf(locacaoService.contarAtivas()));
         } catch (SQLException e) {
-            labelClientesAtivos.setText("-");
-            labelVeiculosDisponiveis.setText("-");
-            labelLocacoesAtivas.setText("-");
-
             mostrarAlerta("Erro ao carregar resumo do sistema.");
         }
     }
+
     private void configurarTabelaLocacoes() {
-        colunaClienteLocacao.setCellValueFactory(cellData -> {
-            Locacao locacao = cellData.getValue();
-
-            String nomeCliente = locacao.getCliente() != null
-                    ? locacao.getCliente().getNome()
-                    : "-";
-            return new SimpleStringProperty(nomeCliente);
-        });
-
-        colunaVeiculoLocacao.setCellValueFactory(cellData -> {
-            Locacao locacao = cellData.getValue();
-
-            String modelo = locacao.getVeiculo() != null
-                    ? locacao.getVeiculo().getModelo()
-                    : "-";
-            return new SimpleStringProperty(modelo);
-        });
-
-        colunaPlacaLocacao.setCellValueFactory(cellData -> {
-            Locacao locacao = cellData.getValue();
-
-            String placa = locacao.getVeiculo() != null
-                    ? locacao.getVeiculo().getPlaca()
-                    : "-";
-            return new SimpleStringProperty(placa);
-        });
-
-        colunaDevolucaoLocacao.setCellValueFactory(cellData -> {
-            Locacao locacao = cellData.getValue();
-
-            String data = locacao.getDataDevolucaoPrevista() != null
-                    ? locacao.getDataDevolucaoPrevista().format(formatadorData)
-                    : "-";
-            return new SimpleStringProperty(data);
-        });
-
+        colunaClienteLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getCliente().getNome()));
+        colunaVeiculoLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getVeiculo().getModelo()));
+        colunaPlacaLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getVeiculo().getPlaca()));
+        colunaDevolucaoLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getDataDevolucaoPrevista().format(formatadorData)));
         tabelaLocacoesAtivas.setItems(locacoesAtivas);
-        tabelaLocacoesAtivas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
+
     private void carregaLocacoesAtivas() {
         try {
             locacoesAtivas.setAll(locacaoService.listarAtivasResumo());
         } catch (SQLException e) {
-            locacoesAtivas.clear();
             mostrarAlerta("Erro ao carregar locações ativas.");
         }
-    }
-    private void mostrarAlerta(String msg) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Atenção");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 }

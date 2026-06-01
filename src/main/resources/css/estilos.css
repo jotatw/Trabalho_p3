@@ -1,499 +1,284 @@
 /* =========================================================
-   1. ESTILO GLOBAL
+   1. CONFIGURAÇÕES GLOBAIS E PALETA DE CORES (MODERNA AZUL)
 ========================================================= */
 
 .root {
-    -fx-font-family: "Segoe UI", "Inter", "Roboto", sans-serif;
+    -primary-color: #1E40AF;       /* Azul Principal */
+    -primary-dark: #1E3A8A;        /* Azul Escuro */
+    -primary-light: #3B82F6;       /* Azul Vibrante */
+    -bg-sidebar: #0F172A;          /* Azul Profundo (Sidebar) */
+    -bg-main: #F8FAFC;             /* Cinza Azulado Claríssimo (Fundo) */
+    -bg-card: #FFFFFF;             /* Branco */
+    -text-main: #0F172A;           /* Texto Escuro */
+    -text-muted: #64748B;          /* Texto Secundário */
+    -border-color: #E2E8F0;        /* Cor de Borda */
+    -success-color: #10B981;       /* Verde Sucesso */
+    -danger-color: #EF4444;        /* Vermelho Perigo */
+
+    -fx-font-family: "Segoe UI", "Inter", sans-serif;
     -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E293B);
 }
 
+/* =========================================================
+   2. LAYOUTS E ESTRUTURA
+========================================================= */
+
 .pagina {
-    -fx-padding: 14;
+    -fx-padding: 0;
 }
-
-
-/* =========================================================
-   2. LAYOUTS PRINCIPAIS
-========================================================= */
-
-.area-central {
-    -fx-background-color: #F5F7FA;
-    -fx-padding: 40;
-}
-
-.cartao {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 16;
-    -fx-border-radius: 16;
-    -fx-padding: 28;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.16), 18, 0.20, 0, 0);
-}
-
-.tela-formulario {
-    -fx-pref-width: 860;
-    -fx-min-width: 720;
-    -fx-max-width: 980;
-    -fx-background-radius: 16;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.22), 18, 0.20, 0, 8);
-}
-
-.painel-formulario {
-    -fx-background-color: linear-gradient(to right, #0B1A3A, #13294B);
-    -fx-background-radius: 16 16 0 0;
-    -fx-padding: 18;
-    -fx-spacing: 12;
-}
-
-.bloco-tabela {
-    -fx-background-color: #F8FAFC;
-    -fx-background-radius: 0 0 16 16;
-    -fx-padding: 12;
-}
-
-.linha-btn {
-    -fx-spacing: 10;
-    -fx-alignment: CENTER_LEFT;
-}
-
-/* Painel usado nas telas operacionais, como Locação e Devolução */
-.painel-operacao {
-    -fx-background-color: linear-gradient(to right, #0B1A3A, #13294B);
-    -fx-background-radius: 0 0 16 16;
-    -fx-padding: 22;
-    -fx-spacing: 14;
-}
-
-/* Agrupa campos de operação para evitar conteúdo grudado nas bordas */
-.grid-operacao {
-    -fx-padding: 4 0 8 0;
-}
-
-/* Deixa labels de resultado mais legíveis em telas escuras */
-.resultado-operacao {
-    -fx-text-fill: #BFDBFE;
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
-}
-
-/* Container para campos duplos, como ComboBox + TextField */
-.campo-duplo {
-    -fx-spacing: 6;
-}
-
-/* Área de botões nas telas operacionais */
-.linha-btn-operacao {
-    -fx-spacing: 10;
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 6 0 0 0;
-}
-
-/* =========================================================
-   3. LOGIN
-========================================================= */
-
-.cartao-login {
-    -fx-max-width: 420;
-    -fx-max-height: 420;
-    -fx-spacing: 14;
-}
-
-.titulo-login {
-    -fx-font-size: 28;
-    -fx-font-weight: 700;
-    -fx-text-fill: #1E3A8A;
-}
-
-.subtitulo-login {
-    -fx-font-size: 14;
-    -fx-text-fill: #64748B;
-}
-
-
-/* =========================================================
-   4. HOME / MENU LATERAL
-========================================================= */
 
 .area-home {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 16;
-    -fx-padding: 24;
-    -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.14), 16, 0.20, 0, 6);
-}
-
-.titulo-home {
-    -fx-font-size: 24;
-    -fx-font-weight: 800;
-    -fx-text-fill: #1565C0;
-}
-
-.subtitulo-home {
-    -fx-font-size: 14;
-    -fx-text-fill: #90A4AE;
-}
-
-.sidebar {
-    -fx-background-color: linear-gradient(to bottom, #1565C0, #0D47A1);
-    -fx-background-radius: 16;
-    -fx-padding: 16 12 16 12;
-    -fx-pref-width: 220;
-    -fx-spacing: 8;
-}
-
-.sidebar-titulo {
-    -fx-text-fill: rgba(255, 255, 255, 0.85);
-    -fx-font-size: 13;
-    -fx-font-weight: 700;
-    -fx-padding: 8 10 14 10;
+    -fx-background-color: -bg-main;
 }
 
 .home-conteudo {
-    -fx-background-color: #F8FAFC;
-    -fx-background-radius: 14;
-    -fx-padding: 28;
-    -fx-spacing: 20;
+    -fx-padding: 30;
+    -fx-spacing: 25;
 }
 
-.home-cabecalho {
-    -fx-padding: 0 0 8 0;
+/* Sidebar Moderna */
+.sidebar {
+    -fx-background-color: #0F172A;
+    -fx-padding: 20 10;
+    -fx-spacing: 10;
+    -fx-pref-width: 240;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 0);
 }
 
-.home-titulo {
-    -fx-font-size: 28;
+.sidebar-collapsed {
+    -fx-pref-width: 70;
+}
+
+.sidebar-logo-container {
+    -fx-padding: 0 0 30 0;
+    -fx-alignment: CENTER;
+}
+
+.sidebar-titulo {
+    -fx-text-fill: white;
+    -fx-font-size: 18;
     -fx-font-weight: 800;
-    -fx-text-fill: #0F172A;
 }
 
-.home-subtitulo {
+/* Botões da Sidebar */
+.nav-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #94A3B8;
     -fx-font-size: 15;
-    -fx-text-fill: #64748B;
-}
-
-.home-perfil {
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
-    -fx-text-fill: #1565C0;
-}
-
-.home-cards {
+    -fx-font-weight: 600;
     -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 15;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+    -fx-spacing: 12;
 }
 
-.card-home {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 14;
-    -fx-border-color: #E2E8F0;
-    -fx-border-radius: 14;
-    -fx-padding: 18;
-    -fx-pref-width: 210;
-    -fx-min-width: 190;
-    -fx-min-height: 96;
-    -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.10), 12, 0.18, 0, 4);
+.nav-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.05);
+    -fx-text-fill: white;
 }
 
-.card-home-titulo {
-    -fx-font-size: 15;
-    -fx-font-weight: 800;
-    -fx-text-fill: #0F172A;
+.nav-btn.ativo {
+    -fx-background-color: #1E40AF;
+    -fx-text-fill: white;
 }
 
-.card-home-subtitulo {
-    -fx-font-size: 13;
-    -fx-text-fill: #64748B;
+.nav-btn .ikonli-font-icon {
+    -fx-icon-color: #94A3B8;
+    -fx-icon-size: 18;
 }
 
-.home-secao {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 14;
-    -fx-border-color: #E2E8F0;
-    -fx-border-radius: 14;
-    -fx-padding: 18;
+.nav-btn:hover .ikonli-font-icon, .nav-btn.ativo .ikonli-font-icon {
+    -fx-icon-color: white;
 }
 
-.home-secao-titulo {
-    -fx-font-size: 17;
-    -fx-font-weight: 800;
-    -fx-text-fill: #0F172A;
+.nav-btn-sair {
+    -fx-background-color: rgba(239, 68, 68, 0.1);
+    -fx-text-fill: #FCA5A5;
+    -fx-font-weight: 700;
+    -fx-background-radius: 8;
 }
 
-.home-info {
-    -fx-background-color: #EEF6FF;
-    -fx-background-radius: 14;
-    -fx-border-color: #BFDBFE;
-    -fx-border-radius: 14;
-    -fx-padding: 16;
-    -fx-max-width: Infinity;
-}
-
-.home-texto {
-    -fx-font-size: 14;
-    -fx-text-fill: #475569;
-}
-
-.card-home-numero {
-    -fx-font-size: 30;
-    -fx-font-weight: 900;
-    -fx-text-fill: #1565C0;
+.nav-btn-sair:hover {
+    -fx-background-color: #EF4444;
+    -fx-text-fill: white;
 }
 
 /* =========================================================
-   5. CABEÇALHOS E TEXTOS
+   3. COMPONENTES VISUAIS (CARDS, TABELAS)
 ========================================================= */
 
+.card-home {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 4);
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 12;
+}
+
+.card-home-titulo {
+    -fx-font-size: 14;
+    -fx-font-weight: 700;
+    -fx-text-fill: #64748B;
+}
+
+.card-home-numero {
+    -fx-font-size: 32;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1E40AF;
+    -fx-padding: 5 0;
+}
+
+/* Tabelas Modernas */
+.tabela-padrao {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 8;
+}
+
+.tabela-padrao .column-header-background {
+    -fx-background-color: #F1F5F9;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.tabela-padrao .column-header {
+    -fx-background-color: transparent;
+    -fx-text-fill: #475569;
+    -fx-font-weight: 700;
+    -fx-padding: 12;
+}
+
+.tabela-padrao .table-row-cell {
+    -fx-cell-size: 45;
+}
+
+.tabela-padrao .table-row-cell:odd { -fx-background-color: white; }
+.tabela-padrao .table-row-cell:even { -fx-background-color: #F8FAFC; }
+
+.tabela-padrao .table-row-cell:selected {
+    -fx-background-color: #DBEAFE;
+    -fx-text-fill: #1E40AF;
+}
+
+/* =========================================================
+   4. FORMULÁRIOS E BOTÕES
+========================================================= */
+
+.campo-texto {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 15;
+    -fx-font-size: 14;
+}
+
+.campo-texto:focused {
+    -fx-border-color: #3B82F6;
+}
+
+.btn-primario {
+    -fx-background-color: #1E40AF;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-padding: 10 25;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-primario:hover { -fx-background-color: #1E3A8A; }
+
+.btn-secundario {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-text-fill: #475569;
+    -fx-font-weight: 700;
+    -fx-padding: 10 25;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-secundario:hover { -fx-background-color: #F1F5F9; }
+
+.btn-perigo {
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: #B91C1C;
+    -fx-font-weight: 700;
+    -fx-padding: 10 25;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-perigo:hover { -fx-background-color: #FECACA; }
+
+/* =========================================================
+   5. TELA DE LOGIN
+========================================================= */
+
+.login-root {
+    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E3A8A);
+}
+
+.cartao-login {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 30, 0, 0, 10);
+    -fx-min-width: 380;
+}
+
+.titulo-login {
+    -fx-font-size: 26;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1E293B;
+}
+
+/* =========================================================
+   6. TELAS DE FORMULÁRIO (CLIENTES, VEICULOS, ETC)
+========================================================= */
+
+.tela-formulario {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 5);
+}
+
 .cabecalho-tela {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 16 16 0 0;
-    -fx-padding: 18 22 14 22;
-    -fx-spacing: 4;
+    -fx-padding: 25;
+    -fx-border-color: transparent transparent #E2E8F0 transparent;
 }
 
 .titulo-tela {
     -fx-font-size: 22;
     -fx-font-weight: 800;
-    -fx-text-fill: #0F172A;
+    -fx-text-fill: #1E293B;
 }
 
-.subtitulo-tela {
-    -fx-font-size: 13;
-    -fx-text-fill: #64748B;
-}
-
-.label-campo {
-    -fx-font-size: 13;
-    -fx-text-fill: #616161;
+.painel-formulario {
+    -fx-padding: 25;
+    -fx-background-color: white;
 }
 
 .rotulo-campo {
-    -fx-text-fill: #E2E8F0;
     -fx-font-size: 14;
     -fx-font-weight: 600;
+    -fx-text-fill: #475569;
 }
 
-.rotulo-resultado {
-    -fx-text-fill: #93C5FD;
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
+.bloco-tabela {
+    -fx-padding: 25;
 }
 
-
-/* =========================================================
-   6. CAMPOS DE FORMULÁRIO
-========================================================= */
-
-.campo-texto {
-    -fx-background-color: white;
-    -fx-text-fill: #0F172A;
-    -fx-prompt-text-fill: #94A3B8;
-    -fx-border-color: #CBD5E1;
-    -fx-border-width: 1.2;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-padding: 10 12 10 12;
-    -fx-font-size: 14;
-    -fx-pref-height: 40;
-}
-
-.campo-texto:focused {
-    -fx-border-color: #1565C0;
-    -fx-border-width: 1.5;
-    -fx-effect: dropshadow(gaussian, rgba(21, 101, 192, 0.18), 10, 0.15, 0, 0);
-}
-
-.date-picker {
-    -fx-background-color: white;
-    -fx-border-color: #CBD5E1;
-    -fx-border-width: 1.2;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-}
-
-.date-picker:focused {
-    -fx-border-color: #1565C0;
-}
-
-.combo-box {
-    -fx-background-color: white;
-    -fx-border-color: #CBD5E1;
-    -fx-border-width: 1.2;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-    -fx-pref-height: 40;
-    -fx-font-size: 14;
-}
-
-.combo-box:focused {
-    -fx-border-color: #1565C0;
-    -fx-border-width: 1.5;
-}
-
-.combo-box .list-cell {
-    -fx-text-fill: #0F172A;
-    -fx-padding: 8 12 8 12;
-}
-
-
-/* =========================================================
-   7. BOTÕES
-========================================================= */
-
-.btn-primario {
-    -fx-background-color: #1565C0;
-    -fx-text-fill: white;
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
-    -fx-padding: 10 20 10 20;
-    -fx-background-radius: 10;
-    -fx-cursor: hand;
-}
-
-.btn-primario:hover {
-    -fx-background-color: #0D47A1;
-}
-
-.btn-secundario {
-    -fx-background-color: transparent;
-    -fx-border-color: #1565C0;
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
-    -fx-border-width: 1.3;
-    -fx-border-radius: 10;
-    -fx-text-fill: #1565C0;
-    -fx-padding: 10 20 10 20;
-    -fx-cursor: hand;
-}
-
-.btn-secundario:hover {
-    -fx-background-color: rgba(21, 101, 192, 0.08);
-}
-
-.btn-perigo {
-    -fx-background-color: transparent;
-    -fx-border-color: #DC2626;
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
-    -fx-border-width: 1.3;
-    -fx-border-radius: 10;
-    -fx-text-fill: #DC2626;
-    -fx-padding: 10 20 10 20;
-    -fx-cursor: hand;
-}
-
-.btn-perigo:hover {
-    -fx-background-color: rgba(220, 38, 38, 0.08);
-}
-
-.nav-btn {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-size: 14;
-    -fx-font-weight: 600;
+/* DASHBOARD SPECIFIC */
+.dashboard-header {
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 11 12 11 12;
-    -fx-cursor: hand;
-    -fx-pref-width: 196;
-    -fx-background-radius: 10;
-    -fx-border-width: 0;
 }
 
-.nav-btn:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.14);
-}
-
-.nav-btn.ativo {
-    -fx-background-color: rgba(255, 255, 255, 0.24);
-    -fx-text-fill: white;
-}
-
-.nav-btn-sair {
-    -fx-background-color: rgba(255, 255, 255, 0.10);
-    -fx-text-fill: #FFCDD2;
-    -fx-font-weight: 700;
-    -fx-background-radius: 10;
-    -fx-cursor: hand;
-}
-
-.nav-btn-sair:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.18);
-    -fx-text-fill: #FF6B6B;
-}
-
-
-/* =========================================================
-   8. TABELAS
-========================================================= */
-
-.tabela-padrao {
-    -fx-background-color: white;
-    -fx-border-color: #E2E8F0;
-    -fx-border-width: 1;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-}
-
-.tabela-padrao .column-header-background {
-    -fx-background-color: #EAF2FD;
-    -fx-background-radius: 10 10 0 0;
-}
-
-.tabela-padrao .column-header {
-    -fx-background-color: transparent;
-    -fx-font-weight: 700;
-    -fx-text-fill: #0D47A1;
-    -fx-padding: 10;
-}
-
-.tabela-padrao .table-row-cell:odd {
-    -fx-background-color: #FAFAFA;
-}
-
-.tabela-padrao .table-row-cell:even {
-    -fx-background-color: #FFFFFF;
-}
-
-.tabela-padrao .table-row-cell:selected {
-    -fx-background-color: #BBDEFB;
-}
-
-.tabela-padrao .table-cell {
-    -fx-text-fill: #212121;
+.user-profile-mini {
+    -fx-background-color: #E2E8F0;
+    -fx-background-radius: 50;
     -fx-padding: 8;
-}
-
-.tabela-padrao .table-cell:selected {
-    -fx-text-fill: #212121;
-}
-
-
-/* =========================================================
-   9. BUSCA
-========================================================= */
-
-.linha-busca {
-    -fx-alignment: CENTER_LEFT;
-    -fx-padding: 12 12 0 12;
-}
-
-.rotulo-busca {
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
-    -fx-text-fill: #0F172A;
-}
-
-
-/* =========================================================
-   10. UTILITÁRIOS VISUAIS
-========================================================= */
-
-.texto-destaque {
-    -fx-font-weight: 700;
-    -fx-text-fill: #1565C0;
-}
-
-.texto-sucesso {
-    -fx-font-weight: 700;
-    -fx-text-fill: #15803D;
-}
-
-.texto-alerta {
-    -fx-font-weight: 700;
-    -fx-text-fill: #DC2626;
 }

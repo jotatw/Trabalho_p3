@@ -2,82 +2,82 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-<VBox alignment="TOP_CENTER"
-      spacing="0"
-      prefWidth="1100"
-      prefHeight="720"
-      styleClass="pagina"
-      stylesheets="@../css/estilos.css"
-      xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox alignment="TOP_CENTER" spacing="20" styleClass="home-conteudo" stylesheets="@../css/estilos.css"
+      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.br.ifg.luziania.trabalho_p3.controller.UsuarioController">
 
     <VBox styleClass="tela-formulario">
+        <HBox alignment="CENTER_LEFT" styleClass="cabecalho-tela">
+            <VBox HBox.hgrow="ALWAYS">
+                <Label styleClass="titulo-tela" text="Gestão de Usuários" />
+                <Label styleClass="subtitulo-tela" text="Controle quem pode acessar as funcionalidades do sistema." />
+            </VBox>
+            <Button fx:id="btnVoltar" onAction="#voltarAction" styleClass="btn-secundario" text="Voltar">
+                <graphic><FontIcon iconLiteral="fas-arrow-left"/></graphic>
+            </Button>
+        </HBox>
 
-        <!-- Cabeçalho da tela -->
-        <VBox styleClass="cabecalho-tela">
-            <Label text="Gerenciamento de Usuários" styleClass="titulo-tela" />
-            <Label text="Cadastre, atualize, inative e consulte usuários do sistema." styleClass="subtitulo-tela" />
-        </VBox>
-
-        <!-- Formulário de cadastro/edição -->
-        <VBox styleClass="painel-formulario">
-            <GridPane hgap="12" vgap="10">
+        <VBox spacing="20" styleClass="painel-formulario">
+            <GridPane hgap="20" vgap="15">
                 <columnConstraints>
-                    <ColumnConstraints minWidth="120" prefWidth="140" />
-                    <ColumnConstraints minWidth="260" prefWidth="320" hgrow="ALWAYS" />
+                    <ColumnConstraints percentWidth="50" />
+                    <ColumnConstraints percentWidth="50" />
                 </columnConstraints>
 
-                <Label text="Nome" styleClass="rotulo-campo" />
-                <TextField fx:id="campoNome" promptText="Nome completo" GridPane.columnIndex="1" styleClass="campo-texto" />
+                <VBox spacing="5">
+                    <Label styleClass="rotulo-campo" text="Nome Completo" />
+                    <TextField fx:id="campoNome" promptText="Nome do funcionário" styleClass="campo-texto" />
+                </VBox>
 
-                <Label text="E-mail" GridPane.rowIndex="1" styleClass="rotulo-campo" />
-                <TextField fx:id="campoEmail" promptText="usuario@email.com" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="campo-texto" />
+                <VBox spacing="5" GridPane.columnIndex="1">
+                    <Label styleClass="rotulo-campo" text="E-mail" />
+                    <TextField fx:id="campoEmail" promptText="usuario@locadora.com" styleClass="campo-texto" />
+                </VBox>
 
-                <Label text="Senha" GridPane.rowIndex="2" styleClass="rotulo-campo" />
-                <PasswordField fx:id="campoSenha" promptText="Mínimo 6 caracteres" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="campo-texto" />
+                <VBox spacing="5" GridPane.rowIndex="1">
+                    <Label styleClass="rotulo-campo" text="Senha" />
+                    <PasswordField fx:id="campoSenha" promptText="Mínimo 6 caracteres" styleClass="campo-texto" />
+                </VBox>
 
-                <Label text="Perfil" GridPane.rowIndex="3" styleClass="rotulo-campo" />
-                <ComboBox fx:id="cmbPerfil"
-                          promptText="Selecione o perfil"
-                          maxWidth="-Infinity"
-                          GridPane.columnIndex="1"
-                          GridPane.rowIndex="3"
-                          styleClass="campo-texto" />
-
-                <rowConstraints>
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
-                </rowConstraints>
+                <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label styleClass="rotulo-campo" text="Perfil de Acesso" />
+                    <ComboBox fx:id="cmbPerfil" maxWidth="Infinity" promptText="Selecione o nível" styleClass="combo-box" />
+                </VBox>
             </GridPane>
 
-            <!-- Botões principais da tela -->
-            <HBox styleClass="linha-btn">
-                <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#salvar" styleClass="btn-primario" text="Salvar" />
-                <Button fx:id="btnAtualizar" mnemonicParsing="false" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar" />
-                <Button fx:id="btnInativar" mnemonicParsing="false" onAction="#inativar" styleClass="btn-perigo" text="Inativar" />
-                <Button fx:id="btnLimpar" mnemonicParsing="false" onAction="#limpar" styleClass="btn-secundario" text="Limpar" />
-                <Button fx:id="btnVoltar" mnemonicParsing="false" onAction="#voltar" styleClass="btn-secundario" text="Voltar" />
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Button fx:id="btnSalvar" onAction="#salvar" styleClass="btn-primario" text="Criar Usuário">
+                    <graphic><FontIcon iconLiteral="fas-user-plus" iconColor="white"/></graphic>
+                </Button>
+                <Button fx:id="btnAtualizar" onAction="#atualizar" styleClass="btn-secundario" text="Atualizar">
+                    <graphic><FontIcon iconLiteral="fas-user-edit"/></graphic>
+                </Button>
+                <Button fx:id="btnInativar" onAction="#inativar" styleClass="btn-perigo" text="Desativar">
+                    <graphic><FontIcon iconLiteral="fas-user-lock"/></graphic>
+                </Button>
             </HBox>
         </VBox>
 
-        <!-- Área de busca e listagem -->
-        <VBox styleClass="bloco-tabela" spacing="10" VBox.vgrow="ALWAYS">
-            <HBox spacing="10" styleClass="linha-busca">
-                <Label text="Buscar:" styleClass="rotulo-busca" />
-                <TextField fx:id="campoBusca" promptText="Nome, e-mail, perfil ou status" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
+        <VBox spacing="15" styleClass="bloco-tabela">
+             <HBox alignment="CENTER_LEFT" spacing="15">
+                <VBox HBox.hgrow="ALWAYS" spacing="5">
+                    <Label styleClass="rotulo-busca" text="Buscar Usuário" />
+                    <TextField fx:id="campoBusca" promptText="Filtrar por nome ou e-mail..." styleClass="campo-texto" />
+                </VBox>
             </HBox>
 
-            <TableView fx:id="tabelaUsuario" prefHeight="240" maxWidth="-Infinity" VBox.vgrow="ALWAYS" styleClass="tabela-padrao">
+            <TableView fx:id="tabelaUsuario" prefHeight="300" styleClass="tabela-padrao">
                 <columns>
-                    <TableColumn fx:id="tabelaNome" prefWidth="240" text="Nome" />
-                    <TableColumn fx:id="tabelaEmail" prefWidth="270" text="E-mail" />
-                    <TableColumn fx:id="tabelaPerfil" prefWidth="140" text="Perfil" />
+                    <TableColumn fx:id="tabelaNome" prefWidth="250" text="Nome" />
+                    <TableColumn fx:id="tabelaEmail" prefWidth="250" text="E-mail" />
+                    <TableColumn fx:id="tabelaPerfil" prefWidth="150" text="Perfil" />
                     <TableColumn fx:id="tabelaAtivo" prefWidth="100" text="Ativo" />
                 </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
             </TableView>
         </VBox>
     </VBox>
