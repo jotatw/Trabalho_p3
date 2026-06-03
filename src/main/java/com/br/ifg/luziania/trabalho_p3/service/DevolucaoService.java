@@ -1,10 +1,12 @@
 package com.br.ifg.luziania.trabalho_p3.service;
 
 import com.br.ifg.luziania.trabalho_p3.dao.LocacaoDAO;
+import com.br.ifg.luziania.trabalho_p3.dao.VeiculoDAO;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
-import com.br.ifg.luziania.trabalho_p3.model.Usuario;
+import com.br.ifg.luziania.trabalho_p3.util.DBConnection;
 import com.br.ifg.luziania.trabalho_p3.util.LogUtil;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -15,6 +17,7 @@ public class DevolucaoService {
 
     private final LocacaoDAO locacaoDAO = new LocacaoDAO();
     private final VeiculoService veiculoService = new VeiculoService();
+    private final VeiculoDAO veiculoDAO = new VeiculoDAO();
 
     public Locacao buscarLocacaoAtivaPorPlaca(String placa) throws SQLException {
         return locacaoDAO.buscarLocacaoAtivaPorPlaca(placa);
@@ -67,8 +70,22 @@ public class DevolucaoService {
         locacao.setMultas(multa);
         locacao.setStatus("ENCERRADA");
 
-        locacaoDAO.atualizarDevolucao(locacao);
-        veiculoService.atualizarDisponivel(true, locacao.getVeiculo().getId());
+        try (Connection conn = DBConnection.getConexao()) {
+            try {
+                conn.setAutoCommit(false);
+
+                locacaoDAO.atualizarDevolucao(conn, locacao);
+                veiculoDAO.atualizarDisponivel(conn, true, locacao.getVeiculo().getId());
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                LogUtil.registrarErro("DevolucaoService.registrarDevolucao.transacao", null, e);
+                throw e;
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        }
 
         LogUtil.registrarAcao(
                 "DEVOLUCAO_REALIZADA",

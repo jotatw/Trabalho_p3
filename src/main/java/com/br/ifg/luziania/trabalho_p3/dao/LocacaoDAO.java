@@ -33,6 +33,37 @@ public class LocacaoDAO extends BaseDAO {
             throw e;
         }
     }
+    public void salvar(Connection conn, Locacao locacao) throws SQLException {
+        String sql = """
+        INSERT INTO locacao (
+            cliente_id,
+            veiculo_id,
+            usuario_id,
+            dt_retirada,
+            dt_devolucao_prevista,
+            valor_total,
+            multas,
+            status
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, locacao.getCliente().getId());
+            stmt.setInt(2, locacao.getVeiculo().getId());
+            stmt.setInt(3, locacao.getUsuario().getId());
+            stmt.setDate(4, Date.valueOf(locacao.getDataRetirada()));
+            stmt.setDate(5, Date.valueOf(locacao.getDataDevolucaoPrevista()));
+            stmt.setDouble(6, locacao.getValorTotal());
+            stmt.setDouble(7, locacao.getMultas());
+            stmt.setString(8, locacao.getStatus());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            registrarErro("LocacaoDAO.salvarTransacao", e);
+            throw e;
+        }
+    }
 
     public void atualizarDevolucao(Locacao locacao) throws SQLException {
         String sql = """
@@ -50,6 +81,25 @@ public class LocacaoDAO extends BaseDAO {
 
         } catch (SQLException e) {
             registrarErro("LocacaoDAO.atualizarDevolucao", e);
+            throw e;
+        }
+    }
+    public void atualizarDevolucao(Connection conn, Locacao locacao) throws SQLException {
+        String sql = """
+        UPDATE locacao
+        SET dt_devolucao_real = ?, multas = ?, status = ?
+        WHERE id = ?
+        """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setDate(1, Date.valueOf(locacao.getDataDevolucaoReal()));
+            stmt.setDouble(2, locacao.getMultas());
+            stmt.setString(3, locacao.getStatus());
+            stmt.setInt(4, locacao.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            registrarErro("LocacaoDAO.atualizarDevolucaoTransacao", e);
             throw e;
         }
     }

@@ -106,6 +106,22 @@ public class VeiculoDAO extends BaseDAO{
             throw e;
         }
     }
+    public void atualizarDisponivel(Connection conn, boolean disponivel, int id) throws SQLException {
+        String sql = """
+        UPDATE veiculo
+        SET disponivel = ?
+        WHERE id = ?
+        """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setBoolean(1, disponivel);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            registrarErro("VeiculoDAO.atualizarDisponivelTransacao", e);
+            throw e;
+        }
+    }
     public void atualizar(Veiculo veiculo) throws SQLException {
         String sql = """
                 UPDATE veiculo SET placa = ?, modelo = ?, marca = ?, categoria = ?, valor_diaria = ? WHERE id = ?
