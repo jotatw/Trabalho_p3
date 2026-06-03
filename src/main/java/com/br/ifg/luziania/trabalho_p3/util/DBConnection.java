@@ -39,7 +39,8 @@ public class DBConnection {
 
         if (valor == null || valor.isBlank()) {
             throw new IllegalStateException(
-                    "Variável de ambiente obrigatória não configurada: " + nome
+                    "Variável de ambiente obrigatória não configurada: " + nome +
+                            ". Configure LOCADORA_DB_USUARIO e LOCADORA_DB_SENHA antes de executar o sistema."
             );
         }
 

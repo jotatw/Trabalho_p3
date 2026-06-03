@@ -22,7 +22,13 @@ CREATE TABLE usuario (
                          email VARCHAR(120) NOT NULL UNIQUE,
                          senha_hash VARCHAR(255) NOT NULL,
                          perfil VARCHAR(30) NOT NULL,
-                         ativo BOOLEAN NOT NULL DEFAULT TRUE
+                         ativo BOOLEAN NOT NULL DEFAULT TRUE,
+
+                         CONSTRAINT chk_usuario_perfil
+                             CHECK (perfil IN ('ADMIN', 'ATENDENTE')),
+
+                         CONSTRAINT chk_usuario_email_minusculo
+                             CHECK (email = LOWER(email))
 );
 
 -- =========================================================
@@ -36,7 +42,10 @@ CREATE TABLE cliente (
                          cnh VARCHAR(20) NOT NULL UNIQUE,
                          telefone VARCHAR(20) NOT NULL,
                          email VARCHAR(120) NOT NULL UNIQUE,
-                         ativo BOOLEAN NOT NULL DEFAULT TRUE
+                         ativo BOOLEAN NOT NULL DEFAULT TRUE,
+
+                         CONSTRAINT chk_cliente_email_minusculo
+                             CHECK (email = LOWER(email))
 );
 
 -- =========================================================
@@ -51,15 +60,28 @@ CREATE TABLE veiculo (
                          marca VARCHAR(80) NOT NULL,
                          categoria VARCHAR(50) NOT NULL,
                          valor_diaria NUMERIC(10, 2) NOT NULL,
-                         disponivel BOOLEAN NOT NULL DEFAULT TRUE
+                         disponivel BOOLEAN NOT NULL DEFAULT TRUE,
+
+                         CONSTRAINT chk_veiculo_valor_diaria
+                             CHECK (valor_diaria > 0),
+
+                         CONSTRAINT chk_veiculo_categoria
+                             CHECK (categoria IN (
+                                                  'Econômico',
+                                                  'Hatch',
+                                                  'Sedan',
+                                                  'SUV',
+                                                  'Picape',
+                                                  'Luxo',
+                                                  'Van'
+                                 ))
 );
 
 -- =========================================================
 -- TABELA: locacao
 -- Armazena as locações realizadas.
--- Status esperado:
--- ATIVA
--- ENCERRADA
+-- Uma locação ATIVA indica veículo em uso.
+-- Uma locação ENCERRADA indica veículo devolvido.
 -- =========================================================
 CREATE TABLE locacao (
                          id SERIAL PRIMARY KEY,
@@ -83,7 +105,25 @@ CREATE TABLE locacao (
 
                          CONSTRAINT fk_locacao_usuario
                              FOREIGN KEY (usuario_id)
-                                 REFERENCES usuario(id)
+                                 REFERENCES usuario(id),
+
+                         CONSTRAINT chk_locacao_status
+                             CHECK (status IN ('ATIVA', 'ENCERRADA')),
+
+                         CONSTRAINT chk_locacao_datas
+                             CHECK (dt_devolucao_prevista > dt_retirada),
+
+                         CONSTRAINT chk_locacao_valor_total
+                             CHECK (valor_total > 0),
+
+                         CONSTRAINT chk_locacao_multas
+                             CHECK (multas >= 0),
+
+                         CONSTRAINT chk_locacao_devolucao_real
+                             CHECK (
+                                 dt_devolucao_real IS NULL
+                                     OR dt_devolucao_real >= dt_retirada
+                                 )
 );
 
 -- =========================================================
@@ -97,32 +137,27 @@ CREATE TABLE locacao (
 INSERT INTO usuario (nome, email, senha_hash, perfil, ativo) VALUES
                                                                  (
                                                                      'Administrador',
-                                                                     'admin@locadora.com',
+                                                                     LOWER('admin@locadora.com'),
                                                                      '$2a$10$JCFaGvHbCWfcNePhC6ufi.pVOZM9KxzMO9dSJOfmAwrNWA63vz4Fu',
                                                                      'ADMIN',
                                                                      TRUE
                                                                  ),
                                                                  (
                                                                      'Atendente',
-                                                                     'atendente@locadora.com',
+                                                                     LOWER('atendente@locadora.com'),
                                                                      '$2a$10$1Dc3339GTRipp6hGBpZMtOd.WBs327oI0c8Yfw7Eicz.Zkny7GSl6',
                                                                      'ATENDENTE',
                                                                      TRUE
                                                                  );
 
--- Observação:
--- Se preferir garantir as senhas pelo próprio sistema,
--- cadastre os usuários pela tela de usuários.
--- Assim o BCrypt será gerado diretamente pelo UsuarioService.
-
 -- =========================================================
 -- DADOS INICIAIS - CLIENTES
 -- =========================================================
 INSERT INTO cliente (nome, cpf, cnh, telefone, email, ativo) VALUES
-                                                                 ('João Silva', '111.111.111-11', '11111111111', '(61) 99999-1111', 'joao.silva@email.com', TRUE),
-                                                                 ('Maria Oliveira', '222.222.222-22', '22222222222', '(61) 99999-2222', 'maria.oliveira@email.com', TRUE),
-                                                                 ('Carlos Souza', '333.333.333-33', '33333333333', '(61) 99999-3333', 'carlos.souza@email.com', TRUE),
-                                                                 ('Ana Pereira', '444.444.444-44', '44444444444', '(61) 99999-4444', 'ana.pereira@email.com', TRUE);
+                                                                 ('João Silva', '111.111.111-11', '11111111111', '(61) 99999-1111', LOWER('joao.silva@email.com'), TRUE),
+                                                                 ('Maria Oliveira', '222.222.222-22', '22222222222', '(61) 99999-2222', LOWER('maria.oliveira@email.com'), TRUE),
+                                                                 ('Carlos Souza', '333.333.333-33', '33333333333', '(61) 99999-3333', LOWER('carlos.souza@email.com'), TRUE),
+                                                                 ('Ana Pereira', '444.444.444-44', '44444444444', '(61) 99999-4444', LOWER('ana.pereira@email.com'), TRUE);
 
 -- =========================================================
 -- DADOS INICIAIS - VEÍCULOS
@@ -168,8 +203,10 @@ WHERE id = 1;
 
 -- =========================================================
 -- CONSULTAS DE CONFERÊNCIA
--- =========================================================
-SELECT * FROM usuario;
-SELECT * FROM cliente;
-SELECT * FROM veiculo;
-SELECT * FROM locacao;
+-- Execute manualmente no psql se quiser verificar os dados:
+--
+-- SELECT * FROM usuario;
+-- SELECT * FROM cliente;
+-- SELECT * FROM veiculo;
+-- SELECT * FROM locacao;
+-- =========================================================SELECT * FROM locacao;

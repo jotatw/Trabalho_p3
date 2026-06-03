@@ -16,7 +16,6 @@ import java.util.List;
 public class DevolucaoService {
 
     private final LocacaoDAO locacaoDAO = new LocacaoDAO();
-    private final VeiculoService veiculoService = new VeiculoService();
     private final VeiculoDAO veiculoDAO = new VeiculoDAO();
 
     public Locacao buscarLocacaoAtivaPorPlaca(String placa) throws SQLException {
