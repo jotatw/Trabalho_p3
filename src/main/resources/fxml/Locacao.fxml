@@ -2,73 +2,110 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<VBox alignment="TOP_CENTER" spacing="20" styleClass="home-conteudo" stylesheets="@../css/estilos.css"
-      xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+<VBox alignment="TOP_CENTER"
+      spacing="20"
+      styleClass="home-conteudo"
+      stylesheets="@../css/estilos.css"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LocacaoController">
 
     <VBox styleClass="tela-formulario">
+
+        <!-- Cabeçalho da tela -->
         <HBox alignment="CENTER_LEFT" styleClass="cabecalho-tela">
             <VBox HBox.hgrow="ALWAYS">
-                <Label styleClass="titulo-tela" text="Nova Locação" />
-                <Label styleClass="subtitulo-tela" text="Selecione um cliente e um veículo disponível para registrar o contrato." />
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="📝" styleClass="icone-titulo" />
+                    <Label styleClass="titulo-tela" text="Nova Locação" />
+                </HBox>
+
+                <Label styleClass="subtitulo-tela"
+                       text="Selecione um cliente, escolha o veículo e informe o período da locação." />
             </VBox>
-            <Button fx:id="btnVoltar" onAction="#voltarAction" styleClass="btn-secundario" text="Voltar">
-                <graphic><FontIcon iconLiteral="fas-arrow-left"/></graphic>
-            </Button>
+
+            <Button fx:id="btnVoltar"
+                    onAction="#voltarAction"
+                    styleClass="btn-secundario"
+                    text="← Voltar" />
         </HBox>
 
-        <VBox spacing="30" styleClass="painel-formulario">
-            <HBox spacing="30">
-                <!-- Coluna Cliente -->
-                <VBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: #F8FAFC; -fx-padding: 20; -fx-background-radius: 12; -fx-border-color: #E2E8F0; -fx-border-radius: 12;">
+        <!-- Formulário da locação -->
+        <VBox spacing="25" styleClass="painel-formulario">
+
+            <!-- Cliente e veículo -->
+            <HBox spacing="25">
+
+                <!-- Identificação do cliente -->
+                <VBox spacing="15" HBox.hgrow="ALWAYS" styleClass="bloco-operacao">
                     <HBox alignment="CENTER_LEFT" spacing="10">
-                        <FontIcon iconLiteral="fas-user" iconColor="#1E40AF" iconSize="18"/>
-                        <Label text="Identificação do Cliente" style="-fx-font-weight: bold; -fx-font-size: 15;"/>
+                        <Label text="👤" styleClass="icone-bloco" />
+                        <Label text="Identificação do Cliente" styleClass="titulo-bloco" />
                     </HBox>
 
                     <VBox spacing="8">
                         <Label text="CPF do Cliente" styleClass="rotulo-campo" />
                         <HBox spacing="10">
-                            <TextField fx:id="campoCpf" promptText="000.000.000-00" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
-                            <Button onAction="#buscarCliente" styleClass="btn-secundario">
-                                <graphic><FontIcon iconLiteral="fas-search"/></graphic>
-                            </Button>
+                            <TextField fx:id="campoCpf"
+                                       promptText="000.000.000-00"
+                                       styleClass="campo-texto"
+                                       HBox.hgrow="ALWAYS" />
+
+                            <Button onAction="#buscarCliente"
+                                    styleClass="btn-secundario"
+                                    text="🔍 Buscar" />
                         </HBox>
                     </VBox>
 
-                    <VBox spacing="5" style="-fx-background-color: white; -fx-padding: 10; -fx-background-radius: 8;">
+                    <VBox spacing="5" styleClass="resultado-operacao">
                         <Label text="Cliente Selecionado:" styleClass="subtitulo-tela" />
-                        <Label fx:id="labelCliente" text="-" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #1E40AF;" />
+                        <Label fx:id="labelCliente"
+                               text="-"
+                               styleClass="resultado-destaque" />
                     </VBox>
                 </VBox>
 
-                <!-- Coluna Veículo -->
-                <VBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: #F8FAFC; -fx-padding: 20; -fx-background-radius: 12; -fx-border-color: #E2E8F0; -fx-border-radius: 12;">
+                <!-- Seleção do veículo -->
+                <VBox spacing="15" HBox.hgrow="ALWAYS" styleClass="bloco-operacao">
                     <HBox alignment="CENTER_LEFT" spacing="10">
-                        <FontIcon iconLiteral="fas-car" iconColor="#1E40AF" iconSize="18"/>
-                        <Label text="Seleção do Veículo" style="-fx-font-weight: bold; -fx-font-size: 15;"/>
+                        <Label text="🚙" styleClass="icone-bloco" />
+                        <Label text="Seleção do Veículo" styleClass="titulo-bloco" />
                     </HBox>
 
                     <VBox spacing="8">
                         <Label text="Veículos Disponíveis" styleClass="rotulo-campo" />
-                        <ComboBox fx:id="comboVeiculosDisponiveis" maxWidth="Infinity" promptText="Selecione um carro..." styleClass="combo-box" />
+                        <ComboBox fx:id="comboVeiculosDisponiveis"
+                                  maxWidth="Infinity"
+                                  promptText="Selecione um veículo disponível..."
+                                  styleClass="campo-texto" />
                     </VBox>
 
                     <VBox spacing="8">
-                        <Label text="Ou digite a Placa" styleClass="rotulo-campo" />
+                        <Label text="Ou digite a placa" styleClass="rotulo-campo" />
                         <HBox spacing="10">
-                            <TextField fx:id="campoPlaca" promptText="ABC1D23" styleClass="campo-texto" HBox.hgrow="ALWAYS" />
-                            <Button onAction="#buscarVeiculo" styleClass="btn-secundario">
-                                <graphic><FontIcon iconLiteral="fas-search"/></graphic>
-                            </Button>
+                            <TextField fx:id="campoPlaca"
+                                       promptText="ABC1D23"
+                                       styleClass="campo-texto"
+                                       HBox.hgrow="ALWAYS" />
+
+                            <Button onAction="#buscarVeiculo"
+                                    styleClass="btn-secundario"
+                                    text="🔍 Buscar" />
                         </HBox>
+                    </VBox>
+
+                    <VBox spacing="5" styleClass="resultado-operacao">
+                        <Label text="Veículo Selecionado:" styleClass="subtitulo-tela" />
+                        <Label fx:id="labelVeiculo"
+                               text="-"
+                               styleClass="resultado-destaque" />
                     </VBox>
                 </VBox>
             </HBox>
 
-            <VBox spacing="20" style="-fx-background-color: #F1F5F9; -fx-padding: 25; -fx-background-radius: 12;">
+            <!-- Datas e valor -->
+            <VBox spacing="20" styleClass="bloco-operacao">
                 <GridPane hgap="25" vgap="15">
                     <columnConstraints>
                         <ColumnConstraints percentWidth="33" />
@@ -78,27 +115,33 @@
 
                     <VBox spacing="8">
                         <Label text="Data de Retirada" styleClass="rotulo-campo" />
-                        <DatePicker fx:id="dataRetirada" maxWidth="Infinity" styleClass="date-picker" />
+                        <DatePicker fx:id="dataRetirada"
+                                    maxWidth="Infinity"
+                                    styleClass="campo-texto" />
                     </VBox>
 
                     <VBox spacing="8" GridPane.columnIndex="1">
                         <Label text="Previsão de Devolução" styleClass="rotulo-campo" />
-                        <DatePicker fx:id="dataDevolucao" maxWidth="Infinity" styleClass="date-picker" />
+                        <DatePicker fx:id="dataDevolucao"
+                                    maxWidth="Infinity"
+                                    styleClass="campo-texto" />
                     </VBox>
 
                     <VBox alignment="CENTER_RIGHT" GridPane.columnIndex="2" spacing="5">
-                        <Label text="VALOR TOTAL ESTIMADO" style="-fx-font-size: 12; -fx-font-weight: bold; -fx-text-fill: #64748B;" />
-                        <Label fx:id="labelValor" text="R$ 0,00" style="-fx-font-size: 28; -fx-font-weight: 900; -fx-text-fill: #1E40AF;" />
+                        <Label text="VALOR TOTAL ESTIMADO" styleClass="rotulo-total" />
+                        <Label fx:id="labelValor"
+                               text="R$ 0,00"
+                               styleClass="valor-total" />
                     </VBox>
                 </GridPane>
 
                 <Separator />
 
+                <!-- Ação principal -->
                 <HBox spacing="15" alignment="CENTER_RIGHT">
-                     <Button onAction="#confirmarLocacao" styleClass="btn-primario" prefHeight="45" style="-fx-font-size: 16;">
-                        <graphic><FontIcon iconLiteral="fas-check-circle" iconColor="white"/></graphic>
-                        <text>Confirmar Locação</text>
-                    </Button>
+                    <Button onAction="#confirmarLocacao"
+                            styleClass="btn-primario, btn-grande"
+                            text="✅ Confirmar Locação" />
                 </HBox>
             </VBox>
         </VBox>

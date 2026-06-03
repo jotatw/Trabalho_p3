@@ -3,42 +3,57 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane prefHeight="600.0" prefWidth="800.0"
+<StackPane prefHeight="600.0"
+           prefWidth="800.0"
            styleClass="login-root"
            stylesheets="@../css/estilos.css"
            xmlns="http://javafx.com/javafx/17.0.12"
            xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LoginController">
 
-   <VBox alignment="CENTER" maxWidth="400" spacing="25" styleClass="cartao-login">
-      <children>
-         <VBox alignment="CENTER" spacing="10">
-            <VBox alignment="CENTER" style="-fx-background-color: #DBEAFE; -fx-padding: 20; -fx-background-radius: 50; -fx-max-width: 80;">
-               <FontIcon iconLiteral="fas-car" iconSize="40" iconColor="#1E40AF"/>
-            </VBox>
-            <Label styleClass="titulo-login" text="Locadora" />
-            <Label styleClass="subtitulo-tela" text="Gestão de Frotas e Locações" />
+   <!-- Cartão central de autenticação -->
+   <VBox alignment="CENTER"
+         maxWidth="400"
+         spacing="25"
+         styleClass="cartao-login">
+
+      <!-- Cabeçalho do login -->
+      <VBox alignment="CENTER" spacing="10">
+         <StackPane styleClass="icone-login">
+            <Label text="🚗" styleClass="icone-login-texto" />
+         </StackPane>
+
+         <Label text="Locadora" styleClass="titulo-login" />
+         <Label text="Gestão de Frotas e Locações" styleClass="subtitulo-tela" />
+      </VBox>
+
+      <!-- Campos de acesso -->
+      <VBox spacing="15">
+         <VBox spacing="5">
+            <Label text="E-mail" styleClass="rotulo-campo-login" />
+            <TextField fx:id="campoEmail"
+                       promptText="seu@email.com"
+                       styleClass="campo-texto" />
          </VBox>
 
-         <VBox spacing="15">
-            <VBox spacing="5">
-               <Label text="E-mail" styleClass="rotulo-campo" style="-fx-text-fill: #1E293B;"/>
-               <TextField fx:id="campoEmail" promptText="seu@email.com" styleClass="campo-texto" />
-            </VBox>
-
-            <VBox spacing="5">
-               <Label text="Senha" styleClass="rotulo-campo" style="-fx-text-fill: #1E293B;"/>
-               <PasswordField fx:id="campoSenha" promptText="••••••••" styleClass="campo-texto" />
-            </VBox>
+         <VBox spacing="5">
+            <Label text="Senha" styleClass="rotulo-campo-login" />
+            <PasswordField fx:id="campoSenha"
+                           promptText="••••••••"
+                           styleClass="campo-texto" />
          </VBox>
+      </VBox>
 
-         <Button fx:id="btnEntrar" defaultButton="true" maxWidth="Infinity"
-                 mnemonicParsing="false" onAction="#fazerLogin"
-                 styleClass="btn-primario" text="Acessar Sistema">
-             <graphic><FontIcon iconLiteral="fas-sign-in-alt" iconColor="white"/></graphic>
-         </Button>
+      <!-- Ação principal -->
+      <Button fx:id="btnEntrar"
+              defaultButton="true"
+              maxWidth="Infinity"
+              mnemonicParsing="false"
+              onAction="#fazerLogin"
+              styleClass="btn-primario"
+              text="Entrar no sistema" />
 
-         <Label text="IFG - Programação III" styleClass="subtitulo-tela" />
-      </children>
+      <!-- Rodapé -->
+      <Label text="IFG - Programação III" styleClass="subtitulo-tela" />
    </VBox>
 </StackPane>

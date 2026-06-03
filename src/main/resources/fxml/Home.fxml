@@ -2,84 +2,108 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane prefWidth="1200" prefHeight="800" styleClass="pagina" stylesheets="@../css/estilos.css"
-            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane prefWidth="1200"
+            prefHeight="800"
+            styleClass="pagina"
+            stylesheets="@../css/estilos.css"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
 
+    <!-- Menu lateral -->
     <left>
         <VBox fx:id="sidebar" styleClass="sidebar">
-            <children>
-                <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-logo-container">
-                    <Button onAction="#toggleSidebar" styleClass="nav-btn" style="-fx-padding: 5;">
-                        <graphic>
-                            <FontIcon iconLiteral="fas-bars" iconSize="20" iconColor="white"/>
-                        </graphic>
-                    </Button>
-                    <Label fx:id="labelLogo" styleClass="sidebar-titulo" text="LOCADORA" />
-                </HBox>
 
-                <Button fx:id="btnHome" mnemonicParsing="false" styleClass="nav-btn, ativo" text="Dashboard">
-                    <graphic><FontIcon iconLiteral="fas-chart-line"/></graphic>
-                </Button>
+            <!-- Logo e botão de recolher menu -->
+            <HBox alignment="CENTER_LEFT"
+                  spacing="10"
+                  styleClass="sidebar-logo-container">
+                <Button onAction="#toggleSidebar"
+                        styleClass="nav-btn"
+                        text="☰" />
 
-                <Button fx:id="btnVeiculos" mnemonicParsing="false" onAction="#abrirVeiculos" styleClass="nav-btn" text="Veículos">
-                    <graphic><FontIcon iconLiteral="fas-car"/></graphic>
-                </Button>
+                <Label fx:id="labelLogo"
+                       styleClass="sidebar-titulo"
+                       text="LOCADORA" />
+            </HBox>
 
-                <Button fx:id="btnClientes" mnemonicParsing="false" onAction="#abrirClientes" styleClass="nav-btn" text="Clientes">
-                    <graphic><FontIcon iconLiteral="fas-users"/></graphic>
-                </Button>
+            <!-- Navegação principal -->
+            <Button fx:id="btnHome"
+                    mnemonicParsing="false"
+                    styleClass="nav-btn, ativo"
+                    text="📊 Dashboard" />
 
-                <Button fx:id="btnLocacao" mnemonicParsing="false" onAction="#abrirLocacao" styleClass="nav-btn" text="Nova Locação">
-                    <graphic><FontIcon iconLiteral="fas-key"/></graphic>
-                </Button>
+            <Button fx:id="btnVeiculos"
+                    mnemonicParsing="false"
+                    onAction="#abrirVeiculos"
+                    styleClass="nav-btn"
+                    text="🚙 Veículos" />
 
-                <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#abrirDevolucao" styleClass="nav-btn" text="Devoluções">
-                    <graphic><FontIcon iconLiteral="fas-undo"/></graphic>
-                </Button>
+            <Button fx:id="btnClientes"
+                    mnemonicParsing="false"
+                    onAction="#abrirClientes"
+                    styleClass="nav-btn"
+                    text="👤 Clientes" />
 
-                <Button fx:id="btnUsuarios" mnemonicParsing="false" onAction="#abrirUsuarios" styleClass="nav-btn" text="Usuários">
-                    <graphic><FontIcon iconLiteral="fas-user-shield"/></graphic>
-                </Button>
+            <Button fx:id="btnLocacao"
+                    mnemonicParsing="false"
+                    onAction="#abrirLocacao"
+                    styleClass="nav-btn"
+                    text="📝 Nova Locação" />
 
-                <Pane VBox.vgrow="ALWAYS" />
+            <Button fx:id="btnDevolucao"
+                    mnemonicParsing="false"
+                    onAction="#abrirDevolucao"
+                    styleClass="nav-btn"
+                    text="↩ Devoluções" />
 
-                <Button fx:id="btnSair" mnemonicParsing="false" onAction="#sair" styleClass="nav-btn, nav-btn-sair" text="Sair">
-                    <graphic><FontIcon iconLiteral="fas-sign-out-alt"/></graphic>
-                </Button>
-            </children>
+            <Button fx:id="btnUsuarios"
+                    mnemonicParsing="false"
+                    onAction="#abrirUsuarios"
+                    styleClass="nav-btn"
+                    text="🔐 Usuários" />
+
+            <Pane VBox.vgrow="ALWAYS" />
+
+            <!-- Saída do sistema -->
+            <Button fx:id="btnSair"
+                    mnemonicParsing="false"
+                    onAction="#sair"
+                    styleClass="nav-btn, nav-btn-sair"
+                    text="🚪 Sair" />
         </VBox>
     </left>
 
+    <!-- Conteúdo principal -->
     <center>
         <ScrollPane fitToWidth="true" styleClass="area-home">
             <VBox spacing="30" styleClass="home-conteudo">
 
-                <!-- Cabeçalho Dashboard -->
+                <!-- Cabeçalho do dashboard -->
                 <HBox alignment="CENTER_LEFT">
                     <VBox spacing="5" HBox.hgrow="ALWAYS">
-                        <Label fx:id="labelBoasVindas" text="Olá, Usuário" styleClass="titulo-tela" />
+                        <Label fx:id="labelBoasVindas"
+                               text="Olá, Usuário"
+                               styleClass="titulo-tela" />
+
                         <HBox spacing="10" alignment="CENTER_LEFT">
-                             <Label text="Perfil:" styleClass="subtitulo-tela" />
-                             <Label fx:id="labelPerfil" text="ADMIN" style="-fx-font-weight: bold; -fx-text-fill: #1E40AF;" />
+                            <Label text="Perfil:" styleClass="subtitulo-tela" />
+                            <Label fx:id="labelPerfil"
+                                   text="ADMIN"
+                                   styleClass="perfil-usuario" />
                         </HBox>
                     </VBox>
-                    <HBox spacing="15" alignment="CENTER">
-                        <Button styleClass="btn-secundario" text="Relatórios">
-                            <graphic><FontIcon iconLiteral="fas-file-pdf"/></graphic>
-                        </Button>
-                    </HBox>
                 </HBox>
 
-                <!-- Cards de Resumo -->
+                <!-- Cards de resumo -->
                 <HBox spacing="20">
                     <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                         <HBox alignment="CENTER_LEFT" spacing="15">
-                            <VBox style="-fx-background-color: #DBEAFE; -fx-padding: 10; -fx-background-radius: 8;">
-                                <FontIcon iconLiteral="fas-user-check" iconSize="24" iconColor="#1E40AF"/>
-                            </VBox>
+                            <StackPane styleClass="card-icone, card-icone-azul">
+                                <Label text="👤" styleClass="card-icone-texto" />
+                            </StackPane>
+
                             <VBox>
                                 <Label text="Clientes Ativos" styleClass="card-home-titulo" />
                                 <Label fx:id="labelClientesAtivos" text="0" styleClass="card-home-numero" />
@@ -89,9 +113,10 @@
 
                     <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                         <HBox alignment="CENTER_LEFT" spacing="15">
-                            <VBox style="-fx-background-color: #DCFCE7; -fx-padding: 10; -fx-background-radius: 8;">
-                                <FontIcon iconLiteral="fas-car-side" iconSize="24" iconColor="#15803D"/>
-                            </VBox>
+                            <StackPane styleClass="card-icone, card-icone-verde">
+                                <Label text="🚙" styleClass="card-icone-texto" />
+                            </StackPane>
+
                             <VBox>
                                 <Label text="Veículos Disponíveis" styleClass="card-home-titulo" />
                                 <Label fx:id="labelVeiculosDisponiveis" text="0" styleClass="card-home-numero" />
@@ -101,9 +126,10 @@
 
                     <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                         <HBox alignment="CENTER_LEFT" spacing="15">
-                            <VBox style="-fx-background-color: #FEF9C3; -fx-padding: 10; -fx-background-radius: 8;">
-                                <FontIcon iconLiteral="fas-exchange-alt" iconSize="24" iconColor="#A16207"/>
-                            </VBox>
+                            <StackPane styleClass="card-icone, card-icone-amarelo">
+                                <Label text="📝" styleClass="card-icone-texto" />
+                            </StackPane>
+
                             <VBox>
                                 <Label text="Locações Ativas" styleClass="card-home-titulo" />
                                 <Label fx:id="labelLocacoesAtivas" text="0" styleClass="card-home-numero" />
@@ -112,31 +138,41 @@
                     </VBox>
                 </HBox>
 
-                <!-- Seção de Tabela -->
+                <!-- Tabela de locações ativas -->
                 <VBox spacing="15" styleClass="tela-formulario">
                     <HBox alignment="CENTER_LEFT" styleClass="cabecalho-tela">
                         <VBox HBox.hgrow="ALWAYS">
-                            <Label text="Locações em Andamento" styleClass="titulo-tela" style="-fx-font-size: 18;" />
-                            <Label text="Acompanhe as devoluções previstas para hoje." styleClass="subtitulo-tela" />
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label text="📌" styleClass="icone-titulo" />
+                                <Label text="Locações em Andamento" styleClass="titulo-secao" />
+                            </HBox>
+
+                            <Label text="Acompanhe os veículos que ainda estão em uso."
+                                   styleClass="subtitulo-tela" />
                         </VBox>
-                        <Button styleClass="btn-primario" text="Ver Todas" onAction="#abrirLocacao" />
+
+                        <Button styleClass="btn-primario"
+                                text="Nova Locação"
+                                onAction="#abrirLocacao" />
                     </HBox>
 
                     <VBox styleClass="bloco-tabela">
-                        <TableView fx:id="tabelaLocacoesAtivas" prefHeight="300" styleClass="tabela-padrao">
+                        <TableView fx:id="tabelaLocacoesAtivas"
+                                   prefHeight="300"
+                                   styleClass="tabela-padrao">
                             <columns>
                                 <TableColumn fx:id="colunaClienteLocacao" text="Cliente" prefWidth="300" />
                                 <TableColumn fx:id="colunaVeiculoLocacao" text="Veículo" prefWidth="200" />
                                 <TableColumn fx:id="colunaPlacaLocacao" text="Placa" prefWidth="120" />
                                 <TableColumn fx:id="colunaDevolucaoLocacao" text="Data Devolução" prefWidth="150" />
                             </columns>
+
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
                     </VBox>
                 </VBox>
-
             </VBox>
         </ScrollPane>
     </center>

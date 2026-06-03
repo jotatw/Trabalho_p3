@@ -70,7 +70,7 @@
     -fx-padding: 12 15;
     -fx-cursor: hand;
     -fx-background-radius: 8;
-    -fx-spacing: 12;
+    -fx-min-height: 44;
 }
 
 .nav-btn:hover {
@@ -81,15 +81,6 @@
 .nav-btn.ativo {
     -fx-background-color: #1E40AF;
     -fx-text-fill: white;
-}
-
-.nav-btn .ikonli-font-icon {
-    -fx-icon-color: #94A3B8;
-    -fx-icon-size: 18;
-}
-
-.nav-btn:hover .ikonli-font-icon, .nav-btn.ativo .ikonli-font-icon {
-    -fx-icon-color: white;
 }
 
 .nav-btn-sair {
@@ -236,6 +227,31 @@
     -fx-text-fill: #1E293B;
 }
 
+.icone-login {
+    -fx-background-color: #DBEAFE;
+    -fx-background-radius: 50;
+    -fx-padding: 18;
+    -fx-min-width: 78;
+    -fx-min-height: 78;
+    -fx-max-width: 78;
+    -fx-max-height: 78;
+}
+
+.icone-login-texto {
+    -fx-font-size: 34;
+}
+
+.rotulo-campo-login {
+    -fx-text-fill: #1E293B;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+}
+
+.subtitulo-login {
+    -fx-font-size: 14;
+    -fx-text-fill: #64748B;
+}
+
 /* =========================================================
    6. TELAS DE FORMULÁRIO (CLIENTES, VEICULOS, ETC)
 ========================================================= */
@@ -272,7 +288,7 @@
     -fx-padding: 25;
 }
 
-/* DASHBOARD SPECIFIC */
+/* AUXILIAR */
 .dashboard-header {
     -fx-alignment: CENTER_LEFT;
 }
@@ -281,4 +297,203 @@
     -fx-background-color: #E2E8F0;
     -fx-background-radius: 50;
     -fx-padding: 8;
+}
+.combo-box.campo-texto,
+.date-picker.campo-texto {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+}
+
+.combo-box.campo-texto:focused,
+.date-picker.campo-texto:focused {
+    -fx-border-color: #3B82F6;
+}
+/* =========================================================
+   7. ÍCONES SEM DEPENDÊNCIAS EXTERNAS
+   ========================================================= */
+
+.icone-login {
+    -fx-background-color: #DBEAFE;
+    -fx-background-radius: 50;
+    -fx-padding: 18;
+    -fx-min-width: 78;
+    -fx-min-height: 78;
+    -fx-max-width: 78;
+    -fx-max-height: 78;
+}
+
+.icone-login-texto {
+    -fx-font-size: 34;
+}
+
+.icone-titulo {
+    -fx-font-size: 24;
+}
+
+.icone-bloco {
+    -fx-font-size: 18;
+}
+
+.card-icone {
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+    -fx-min-width: 48;
+    -fx-min-height: 48;
+    -fx-max-width: 48;
+    -fx-max-height: 48;
+}
+
+.card-icone-texto {
+    -fx-font-size: 23;
+}
+
+.card-icone-azul {
+    -fx-background-color: #DBEAFE;
+}
+
+.card-icone-verde {
+    -fx-background-color: #DCFCE7;
+}
+
+.card-icone-amarelo {
+    -fx-background-color: #FEF9C3;
+}
+
+
+/* =========================================================
+   8. TEXTOS AUXILIARES E DESTAQUES
+   ========================================================= */
+
+.subtitulo-tela {
+    -fx-font-size: 14;
+    -fx-text-fill: #64748B;
+}
+
+.titulo-secao {
+    -fx-font-size: 18;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1E293B;
+}
+
+.perfil-usuario {
+    -fx-font-weight: 800;
+    -fx-text-fill: #1E40AF;
+}
+
+.rotulo-campo-login {
+    -fx-text-fill: #1E293B;
+    -fx-font-weight: 700;
+    -fx-font-size: 13;
+}
+
+.rotulo-busca {
+    -fx-font-size: 14;
+    -fx-font-weight: 700;
+    -fx-text-fill: #334155;
+}
+
+.texto-destaque {
+    -fx-font-weight: 800;
+    -fx-text-fill: #1E40AF;
+}
+
+.texto-perigo {
+    -fx-font-weight: 800;
+    -fx-text-fill: #DC2626;
+}
+
+.resultado-destaque {
+    -fx-font-size: 14;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1E40AF;
+}
+
+
+/* =========================================================
+   9. BLOCOS DE OPERAÇÃO: LOCAÇÃO E DEVOLUÇÃO
+   ========================================================= */
+
+.bloco-operacao {
+    -fx-background-color: #F8FAFC;
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 12;
+}
+
+.bloco-alerta {
+    -fx-background-color: #FFF7ED;
+    -fx-border-color: #FFEDD5;
+}
+
+.titulo-bloco {
+    -fx-font-size: 15;
+    -fx-font-weight: 800;
+    -fx-text-fill: #1E293B;
+}
+
+.titulo-bloco-alerta {
+    -fx-font-size: 15;
+    -fx-font-weight: 800;
+    -fx-text-fill: #9A3412;
+}
+
+.resultado-operacao {
+    -fx-background-color: white;
+    -fx-padding: 10;
+    -fx-background-radius: 8;
+    -fx-border-color: #E2E8F0;
+    -fx-border-radius: 8;
+}
+
+.rotulo-total {
+    -fx-font-size: 12;
+    -fx-font-weight: 800;
+    -fx-text-fill: #64748B;
+}
+
+.valor-total {
+    -fx-font-size: 28;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1E40AF;
+}
+
+.rotulo-total-alerta {
+    -fx-font-size: 11;
+    -fx-font-weight: 800;
+    -fx-text-fill: #9A3412;
+}
+
+.valor-total-alerta {
+    -fx-font-size: 24;
+    -fx-font-weight: 900;
+    -fx-text-fill: #9A3412;
+}
+
+
+/* =========================================================
+   10. BOTÕES E LINHAS DE AÇÃO
+   ========================================================= */
+
+.linha-btn {
+    -fx-spacing: 15;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.btn-grande {
+    -fx-font-size: 16;
+    -fx-padding: 13 28;
+    -fx-min-height: 45;
+}
+
+.btn-confirmar-verde {
+    -fx-background-color: #10B981;
+    -fx-text-fill: white;
+}
+
+.btn-confirmar-verde:hover {
+    -fx-background-color: #059669;
 }
