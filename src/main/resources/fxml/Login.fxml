@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import org.kordamp.ikonli.javafx.*?>
 
 <StackPane prefHeight="600.0" prefWidth="800.0"
            styleClass="login-root"
