@@ -1,46 +1,67 @@
 package com.br.ifg.luziania.trabalho_p3.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
-// Centraliza a criação de conexões com o banco de dados PostgreSQL.
+// Centraliza a configuração e a criação de conexões com o banco de dados.
 public class DBConnection {
 
-    private static final String DB_HOST = lerVariavel("LOCADORA_DB_HOST", "localhost");
-    private static final String DB_PORTA = lerVariavel("LOCADORA_DB_PORTA", "5432");
-    private static final String DB_NOME = lerVariavel("LOCADORA_DB_NOME", "locadora_db");
-
-    private static final String URL = "jdbc:postgresql://" + DB_HOST + ":" + DB_PORTA + "/" + DB_NOME;
-
-    private static final String USUARIO = lerVariavelObrigatoria("LOCADORA_DB_USUARIO");
-    private static final String SENHA = lerVariavelObrigatoria("LOCADORA_DB_SENHA");
+    private static final String ARQUIVO_CONFIGURACAO = "/database.properties";
+    private static final Properties propriedades = carregarPropriedades();
 
     private DBConnection() {
         // Evita instanciar classe utilitária.
     }
 
     public static Connection getConexao() throws SQLException {
-        return DriverManager.getConnection(URL, USUARIO, SENHA);
+        String url = montarUrl();
+
+        String usuario = obterPropriedadeObrigatoria("db.user");
+        String senha = obterPropriedadeObrigatoria("db.password");
+
+        return DriverManager.getConnection(url, usuario, senha);
     }
 
-    private static String lerVariavel(String nome, String valorPadrao) {
-        String valor = System.getenv(nome);
+    private static String montarUrl() {
+        String driver = obterPropriedadeObrigatoria("db.driver");
+        String host = obterPropriedadeObrigatoria("db.host");
+        String porta = obterPropriedadeObrigatoria("db.port");
+        String banco = obterPropriedadeObrigatoria("db.name");
 
-        if (valor == null || valor.isBlank()) {
-            return valorPadrao;
+        return "jdbc:" + driver + "://" + host + ":" + porta + "/" + banco;
+    }
+
+    private static Properties carregarPropriedades() {
+        Properties props = new Properties();
+
+        try (InputStream input = DBConnection.class.getResourceAsStream(ARQUIVO_CONFIGURACAO)) {
+            if (input == null) {
+                throw new IllegalStateException(
+                        "Arquivo de configuração não encontrado: " + ARQUIVO_CONFIGURACAO
+                );
+            }
+
+            props.load(input);
+            return props;
+
+        } catch (IOException e) {
+            throw new IllegalStateException(
+                    "Erro ao carregar o arquivo de configuração do banco de dados.",
+                    e
+            );
         }
-
-        return valor.trim();
     }
 
-    private static String lerVariavelObrigatoria(String nome) {
-        String valor = System.getenv(nome);
+    private static String obterPropriedadeObrigatoria(String chave) {
+        String valor = propriedades.getProperty(chave);
 
         if (valor == null || valor.isBlank()) {
             throw new IllegalStateException(
-                    "Variável de ambiente obrigatória não configurada: " + nome +
-                            ". Configure LOCADORA_DB_USUARIO e LOCADORA_DB_SENHA antes de executar o sistema."
+                    "Propriedade obrigatória não configurada no database.properties: " + chave
             );
         }
 
