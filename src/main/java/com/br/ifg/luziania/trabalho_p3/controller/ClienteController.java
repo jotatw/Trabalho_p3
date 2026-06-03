@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class ClienteController extends BaseController {
     private final ClienteService clienteService = new ClienteService();

@@ -67,8 +67,19 @@ public class LocacaoController extends BaseController {
         if (placa.isEmpty()) { mostrarAlerta("Informe a placa!"); return; }
         try {
             Veiculo v = veiculoService.buscarPorPlaca(placa);
-            if (v == null) { mostrarAlerta("Não encontrado!"); return; }
-            if (!v.isDisponivel()) { mostrarAlerta("Indisponível!"); return; }
+            if (v == null) {
+                labelVeiculo.setText("Não encontrado");
+                mostrarAlerta("Veículo não encontrado!");
+                return;
+            }
+
+            if (!v.isDisponivel()) {
+                labelVeiculo.setText("Indisponível");
+                mostrarAlerta("Veículo indisponível!");
+                return;
+            }
+
+            labelVeiculo.setText(v.getModelo() + " - " + v.getMarca());
             atualizarValorTotal();
         } catch (SQLException e) { mostrarErro("Erro ao buscar veículo."); }
     }
@@ -123,7 +134,9 @@ public class LocacaoController extends BaseController {
     private void limpar() {
         campoCpf.clear(); campoPlaca.clear();
         dataRetirada.setValue(null); dataDevolucao.setValue(null);
-        labelCliente.setText("-"); labelValor.setText("R$ 0,00");
+        labelCliente.setText("-");
+        labelVeiculo.setText("-");
+        labelValor.setText("R$ 0,00");
         comboVeiculosDisponiveis.getSelectionModel().clearSelection();
     }
 }

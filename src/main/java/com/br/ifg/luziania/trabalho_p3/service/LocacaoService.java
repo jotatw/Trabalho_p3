@@ -13,7 +13,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class LocacaoService {
-
     private final ClienteService clienteService = new ClienteService();
     private final VeiculoService veiculoService = new VeiculoService();
     private final LocacaoDAO locacaoDAO = new LocacaoDAO();
@@ -34,8 +33,6 @@ public class LocacaoService {
             Usuario usuarioLogado
     ) throws SQLException {
 
-
-        Cliente cliente = clienteService.buscarPorCpf(cpf);
         if (usuarioLogado == null) {
             LogUtil.registrar(
                     "LOCACAO_FALHOU",
@@ -44,6 +41,17 @@ public class LocacaoService {
             );
             throw new IllegalArgumentException("É necessário estar autenticado para realizar uma locação.");
         }
+
+        Cliente cliente = clienteService.buscarPorCpf(cpf);
+        if(cliente == null){
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    usuarioLogado,
+                    "Cliente não encontrado. CPF=" + cpf
+            );
+            throw new IllegalArgumentException("Cliente não encontrado para o CPF informado.");
+        }
+
         if (!cliente.isAtivo()) {
             LogUtil.registrar(
                     "LOCACAO_FALHOU",
@@ -72,6 +80,14 @@ public class LocacaoService {
             throw new IllegalArgumentException("Veículo não está disponível para locação.");
         }
 
+        if (dataRetirada == null || dataDevolucao == null) {
+            LogUtil.registrar(
+                    "LOCACAO_FALHOU",
+                    usuarioLogado,
+                    "Datas não informadas. Retirada=" + dataRetirada + ", Devolução=" + dataDevolucao
+            );
+            throw new IllegalArgumentException("Informe a data de retirada e a data de devolução.");
+        }
         long dias = ChronoUnit.DAYS.between(dataRetirada, dataDevolucao);
         if (dias <= 0) {
             LogUtil.registrar(

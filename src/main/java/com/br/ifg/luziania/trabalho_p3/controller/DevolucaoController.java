@@ -3,7 +3,6 @@ package com.br.ifg.luziania.trabalho_p3.controller;
 import com.br.ifg.luziania.trabalho_p3.model.Locacao;
 import com.br.ifg.luziania.trabalho_p3.service.DevolucaoService;
 import com.br.ifg.luziania.trabalho_p3.util.MascaraUtil;
-import com.br.ifg.luziania.trabalho_p3.util.ValidacaoUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
