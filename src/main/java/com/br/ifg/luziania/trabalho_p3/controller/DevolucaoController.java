@@ -79,13 +79,21 @@ public class DevolucaoController extends BaseController {
             mostrarSucesso("Devolução concluída!\nTotal: R$ " + String.format("%.2f", loc.getValorTotal() + loc.getMultas()));
             limpar();
             carregarPlacasAtivas();
-        } catch (Exception e) { mostrarErro("Erro ao processar devolução."); }
+        } catch (IllegalArgumentException e) {
+            mostrarErro("Erro ao processar devolução.");
+        } catch (SQLException e) {
+            mostrarErro("Erro ao processar devolução no banco de dados.");
+        }
     }
 
     @FXML private void voltarAction() { voltar(btnVoltar); }
 
     private void carregarPlacasAtivas() {
-        try { placasAtivas.setAll(devolucaoService.listarPlacasComLocacaoAtiva()); } catch (SQLException e) { }
+        try {
+            placasAtivas.setAll(devolucaoService.listarPlacasComLocacaoAtiva());
+        } catch (SQLException e) {
+            mostrarErro("Erro ao carregar placas com locação ativa.");
+        }
     }
 
     private void limpar() {

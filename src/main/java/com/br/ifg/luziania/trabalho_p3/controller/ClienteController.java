@@ -134,7 +134,7 @@ public class ClienteController extends BaseController {
         c.setCpf(campoCpf.getText().trim());
         c.setCnh(campoCnh.getText().trim());
         c.setTelefone(campoTelefone.getText().trim());
-        c.setEmail(campoEmail.getText().trim());
+        c.setEmail(campoEmail.getText().trim().toLowerCase());
     }
 
     private void preencherFormulario(Cliente c) {
@@ -160,7 +160,12 @@ public class ClienteController extends BaseController {
             listaFiltrada.setPredicate(c -> {
                 if (novo == null || novo.isEmpty()) return true;
                 String f = novo.toLowerCase();
-                return c.getNome().toLowerCase().contains(f) || c.getCpf().contains(f) || c.getEmail().toLowerCase().contains(f);
+                return c.getNome().toLowerCase().contains(f)
+                        || c.getCpf().toLowerCase().contains(f)
+                        || c.getCnh().toLowerCase().contains(f)
+                        || c.getTelefone().toLowerCase().contains(f)
+                        || c.getEmail().toLowerCase().contains(f)
+                        || String.valueOf(c.isAtivo()).contains(f);
             });
         });
     }

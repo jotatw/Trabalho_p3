@@ -128,7 +128,11 @@ public class LocacaoController extends BaseController {
     }
 
     private void carregarVeiculosDisponiveis() {
-        try { veiculosDisponiveis.setAll(veiculoService.listarDisponiveis()); } catch (SQLException e) { }
+        try {
+            veiculosDisponiveis.setAll(veiculoService.listarDisponiveis());
+        } catch (SQLException e) {
+            mostrarErro("Erro ao carregar veículos disponíveis.");
+        }
     }
 
     private void limpar() {

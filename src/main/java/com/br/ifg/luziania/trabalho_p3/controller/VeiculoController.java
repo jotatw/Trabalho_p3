@@ -132,7 +132,12 @@ public class VeiculoController extends BaseController {
             listaFiltrada.setPredicate(v -> {
                 if (novo == null || novo.isEmpty()) return true;
                 String f = novo.toLowerCase();
-                return v.getPlaca().toLowerCase().contains(f) || v.getModelo().toLowerCase().contains(f);
+                return v.getPlaca().toLowerCase().contains(f)
+                        || v.getModelo().toLowerCase().contains(f)
+                        || v.getMarca().toLowerCase().contains(f)
+                        || v.getCategoria().toLowerCase().contains(f)
+                        || String.valueOf(v.getValorLocacao()).contains(f)
+                        || String.valueOf(v.isDisponivel()).contains(f);
             });
         });
     }

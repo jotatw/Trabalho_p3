@@ -51,7 +51,7 @@ public class UsuarioController extends BaseController {
             try {
                 Usuario u = new Usuario();
                 u.setNomeCompleto(campoNome.getText().trim());
-                u.setEmail(campoEmail.getText().trim());
+                u.setEmail(campoEmail.getText().trim().toLowerCase());
                 u.setSenha(campoSenha.getText().trim());
                 u.setPerfil(cmbPerfil.getValue());
                 u.setAtivo(true);
@@ -70,7 +70,7 @@ public class UsuarioController extends BaseController {
         if (validarCampos(false)) {
             try {
                 usuarioSelecionado.setNomeCompleto(campoNome.getText().trim());
-                usuarioSelecionado.setEmail(campoEmail.getText().trim());
+                usuarioSelecionado.setEmail(campoEmail.getText().trim().toLowerCase());
                 usuarioSelecionado.setPerfil(cmbPerfil.getValue());
                 if (!campoSenha.getText().isEmpty()) usuarioSelecionado.setSenha(campoSenha.getText());
 
@@ -130,7 +130,12 @@ public class UsuarioController extends BaseController {
         campoBusca.textProperty().addListener((obs, antigo, novo) -> {
             listaFiltrada.setPredicate(u -> {
                 if (novo == null || novo.isEmpty()) return true;
-                return u.getNomeCompleto().toLowerCase().contains(novo.toLowerCase()) || u.getEmail().toLowerCase().contains(novo.toLowerCase());
+                String f = novo.toLowerCase().trim();
+
+                return u.getNomeCompleto().toLowerCase().contains(f)
+                        || u.getEmail().toLowerCase().contains(f)
+                        || u.getPerfil().toLowerCase().contains(f)
+                        || String.valueOf(u.isAtivo()).contains(f);
             });
         });
     }
