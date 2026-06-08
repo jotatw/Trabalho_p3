@@ -5,7 +5,7 @@
 -- =========================================================
 
 -- Apaga as tabelas se já existirem.
--- A ordem é importante por causa das chaves estrangeiras.
+-- A ordem é importante devido às chaves estrangeiras.
 DROP TABLE IF EXISTS locacao CASCADE;
 DROP TABLE IF EXISTS veiculo CASCADE;
 DROP TABLE IF EXISTS cliente CASCADE;
