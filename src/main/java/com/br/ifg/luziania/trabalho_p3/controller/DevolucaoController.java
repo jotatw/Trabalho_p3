@@ -80,10 +80,10 @@ public class DevolucaoController extends BaseController {
             limpar();
             carregarPlacasAtivas();
         } catch (IllegalArgumentException e) {
-            mostrarErro("Erro ao processar devolução.");
-        } catch (SQLException e) {
-            mostrarErro("Erro ao processar devolução no banco de dados.");
-        }
+        mostrarAlerta(e.getMessage());
+    } catch (SQLException e) {
+        mostrarErro("Erro ao processar devolução no banco de dados.");
+    }
     }
 
     @FXML private void voltarAction() { voltar(btnVoltar); }

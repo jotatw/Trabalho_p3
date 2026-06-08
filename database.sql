@@ -209,4 +209,4 @@ WHERE id = 1;
 -- SELECT * FROM cliente;
 -- SELECT * FROM veiculo;
 -- SELECT * FROM locacao;
--- =========================================================SELECT * FROM locacao;
+-- =========================================================

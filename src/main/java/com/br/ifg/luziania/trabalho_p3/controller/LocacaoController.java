@@ -98,7 +98,11 @@ public class LocacaoController extends BaseController {
             mostrarSucesso("Locação realizada! Total: R$ " + String.format("%.2f", loc.getValorTotal()));
             limpar();
             carregarVeiculosDisponiveis();
-        } catch (Exception e) { mostrarAlerta(e.getMessage()); }
+        }catch (IllegalArgumentException e) {
+            mostrarAlerta(e.getMessage());
+        } catch (SQLException e) {
+            mostrarErro("Erro ao registrar locação no banco de dados.");
+        }
     }
 
     @FXML private void voltarAction() { voltar(btnVoltar); }
