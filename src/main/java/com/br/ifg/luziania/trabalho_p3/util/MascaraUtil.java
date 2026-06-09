@@ -2,30 +2,40 @@ package com.br.ifg.luziania.trabalho_p3.util;
 
 import javafx.scene.control.TextField;
 
+// Centraliza as máscaras aplicadas nos campos de texto da interface.
+// As máscaras ajudam o usuário a digitar CPF, CNH, telefone e placa no formato esperado.
 public class MascaraUtil {
-    public static void cpf (TextField campo){
+
+    private MascaraUtil() {
+        // Evita instanciar classe utilitária.
+    }
+
+    // Aplica máscara de CPF no formato 000.000.000-00.
+    public static void cpf(TextField campo) {
         campo.textProperty().addListener((obs, antigo, novo) -> {
-            //extrai so os digitos
             String digito = novo.replaceAll("[^0-9]", "");
 
-            //limita a 11 digitos
+            // CPF possui 11 dígitos.
             if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
             }
 
-            //formata e atualiza só se mudou para evitar loop infinito
             String formatado = formatarCpf(digito);
+
+            // Atualiza o campo apenas quando o texto formatado for diferente.
+            // Isso evita loop infinito no listener.
             if (!novo.equals(formatado)) {
                 campo.setText(formatado);
                 campo.positionCaret(formatado.length());
             }
         });
     }
-    public static void cnh (TextField campo){
-        campo.textProperty().addListener((obs, ontigo, novo) -> {
+
+    // Permite apenas números e limita o campo CNH a 11 dígitos.
+    public static void cnh(TextField campo) {
+        campo.textProperty().addListener((obs, antigo, novo) -> {
             String digito = novo.replaceAll("[^0-9]", "");
 
-            //limita a 11 digitos
             if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
             }
@@ -36,28 +46,32 @@ public class MascaraUtil {
             }
         });
     }
-    public static void telefone (TextField campo){
+
+    // Aplica máscara de telefone nos formatos (99) 99999-9999 ou (99) 3333-4444.
+    public static void telefone(TextField campo) {
         campo.textProperty().addListener((obs, antigo, novo) -> {
             String digito = novo.replaceAll("[^0-9]", "");
 
-            //limita a 11 digitos (DDD + 9 digitos)
+            // Limita o telefone a DDD + número, com no máximo 11 dígitos.
             if (digito.length() > 11) {
                 digito = digito.substring(0, 11);
             }
 
             String formatado = formatarTelefone(digito);
+
             if (!novo.equals(formatado)) {
                 campo.setText(formatado);
                 campo.positionCaret(formatado.length());
             }
         });
     }
-    public static void placa (TextField campo){
+
+    // Padroniza a placa removendo caracteres inválidos e convertendo para letras maiúsculas.
+    // Aceita até 7 caracteres, tanto para placa antiga quanto para Mercosul.
+    public static void placa(TextField campo) {
         campo.textProperty().addListener((obs, antigo, novo) -> {
-            //converte para maiusculo e remove caracteres invalidos
             String limpo = novo.toUpperCase().replaceAll("[^A-Z0-9]", "");
 
-            //limita a 7 cacarteres (tamanho de qualquer placa)
             if (limpo.length() > 7) {
                 limpo = limpo.substring(0, 7);
             }
@@ -68,28 +82,56 @@ public class MascaraUtil {
             }
         });
     }
-    private static String formatarCpf(String digito){
+
+    // Monta a formatação visual do CPF conforme os dígitos são digitados.
+    private static String formatarCpf(String digito) {
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < digito.length(); i++) {
-            if (i == 3 || i == 6) sb.append('.');
-            if (i == 9) sb.append('-');
+            if (i == 3 || i == 6) {
+                sb.append('.');
+            }
+
+            if (i == 9) {
+                sb.append('-');
+            }
+
             sb.append(digito.charAt(i));
         }
+
         return sb.toString();
     }
-    private static String formatarTelefone(String digito){
+
+    // Monta a formatação visual do telefone.
+    // Para celular usa o traço após o quinto dígito do número; para fixo, após o quarto.
+    private static String formatarTelefone(String digito) {
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < digito.length(); i++) {
-            if (i == 0) sb.append('(');
-            if (i == 2) sb.append(") ");
-            //celular: traço na posição 7 (9 digitos); fixo: posição 6 (8 digitos)
-            if (i == 7 && digito.length() == 11) sb.append('-');
-            if (i == 6 && digito.length() == 10) sb.append('-');
+            if (i == 0) {
+                sb.append('(');
+            }
+
+            if (i == 2) {
+                sb.append(") ");
+            }
+
+            if (i == 7 && digito.length() == 11) {
+                sb.append('-');
+            }
+
+            if (i == 6 && digito.length() == 10) {
+                sb.append('-');
+            }
+
             sb.append(digito.charAt(i));
         }
+
         return sb.toString();
     }
-    public static void limpar (TextField campo){
+
+    // Limpa o conteúdo de um campo de texto.
+    public static void limpar(TextField campo) {
         campo.setText("");
     }
 }
