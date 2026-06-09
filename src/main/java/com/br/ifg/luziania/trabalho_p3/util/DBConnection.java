@@ -7,16 +7,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-// Centraliza a configuração e a criação de conexões com o banco de dados.
+// Responsável por centralizar a configuração e a criação de conexões com o banco de dados.
+// A classe lê os dados do arquivo database.properties e monta a URL JDBC usada pelo PostgreSQL.
 public class DBConnection {
 
+    // Arquivo localizado em src/main/resources/database.properties.
+    // O caminho começa com "/" porque o arquivo é carregado a partir da raiz dos resources.
     private static final String ARQUIVO_CONFIGURACAO = "/database.properties";
+
+    // Carrega as configurações uma única vez quando a classe é inicializada.
     private static final Properties propriedades = carregarPropriedades();
 
     private DBConnection() {
         // Evita instanciar classe utilitária.
     }
 
+    // Cria e retorna uma nova conexão com o banco de dados.
+    // Cada DAO chama este método quando precisa executar uma operação no PostgreSQL.
     public static Connection getConexao() throws SQLException {
         String url = montarUrl();
 
@@ -26,6 +33,8 @@ public class DBConnection {
         return DriverManager.getConnection(url, usuario, senha);
     }
 
+    // Monta a URL JDBC com base nas informações do arquivo database.properties.
+    // Exemplo gerado: jdbc:postgresql://localhost:5432/locadora_db
     private static String montarUrl() {
         String driver = obterPropriedadeObrigatoria("db.driver");
         String host = obterPropriedadeObrigatoria("db.host");
@@ -35,6 +44,8 @@ public class DBConnection {
         return "jdbc:" + driver + "://" + host + ":" + porta + "/" + banco;
     }
 
+    // Lê o arquivo database.properties e carrega as suas chaves e valores.
+    // Se o arquivo não existir, a aplicação é interrompida com uma mensagem clara.
     private static Properties carregarPropriedades() {
         Properties props = new Properties();
 
@@ -56,6 +67,8 @@ public class DBConnection {
         }
     }
 
+    // Busca uma propriedade obrigatória no arquivo de configuração.
+    // Caso a chave não exista ou esteja vazia, informa exatamente qual configuração falta.
     private static String obterPropriedadeObrigatoria(String chave) {
         String valor = propriedades.getProperty(chave);
 
