@@ -1,30 +1,42 @@
 /* =========================================================
-   1. CONFIGURAÇÕES GLOBAIS E PALETA DE CORES (MODERNA AZUL)
+   1. CONFIGURAÇÕES GLOBAIS
 ========================================================= */
 
 .root {
-    -primary-color: #1E40AF;       /* Azul Principal */
-    -primary-dark: #1E3A8A;        /* Azul Escuro */
-    -primary-light: #3B82F6;       /* Azul Vibrante */
-    -bg-sidebar: #0F172A;          /* Azul Profundo (Sidebar) */
-    -bg-main: #F8FAFC;             /* Cinza Azulado Claríssimo (Fundo) */
-    -bg-card: #FFFFFF;             /* Branco */
-    -text-main: #0F172A;           /* Texto Escuro */
-    -text-muted: #64748B;          /* Texto Secundário */
-    -border-color: #E2E8F0;        /* Cor de Borda */
-    -success-color: #10B981;       /* Verde Sucesso */
-    -danger-color: #EF4444;        /* Vermelho Perigo */
+    -primary-color: #1E40AF;
+    -primary-dark: #1E3A8A;
+    -primary-light: #3B82F6;
+
+    -bg-sidebar: #0F172A;
+    -bg-main: #F8FAFC;
+    -bg-card: #FFFFFF;
+
+    -text-main: #0F172A;
+    -text-title: #1E293B;
+    -text-muted: #64748B;
+
+    -border-color: #E2E8F0;
+
+    -success-color: #10B981;
+    -success-dark: #059669;
+    -danger-color: #EF4444;
+    -danger-dark: #B91C1C;
+    -warning-bg: #FFF7ED;
+    -warning-border: #FFEDD5;
+    -warning-text: #9A3412;
 
     -fx-font-family: "Segoe UI", "Inter", sans-serif;
-    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E293B);
+    -fx-background-color: -bg-main;
 }
 
+
 /* =========================================================
-   2. LAYOUTS E ESTRUTURA
+   2. LAYOUT PRINCIPAL
 ========================================================= */
 
 .pagina {
     -fx-padding: 0;
+    -fx-background-color: -bg-main;
 }
 
 .area-home {
@@ -34,11 +46,36 @@
 .home-conteudo {
     -fx-padding: 30;
     -fx-spacing: 25;
+    -fx-background-color: -bg-main;
 }
 
-/* Sidebar Moderna */
+.tela-formulario {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 5);
+}
+
+.cabecalho-tela {
+    -fx-padding: 25;
+    -fx-border-color: transparent transparent -border-color transparent;
+}
+
+.painel-formulario {
+    -fx-padding: 25;
+    -fx-background-color: -bg-card;
+}
+
+.bloco-tabela {
+    -fx-padding: 25;
+}
+
+
+/* =========================================================
+   3. SIDEBAR E NAVEGAÇÃO
+========================================================= */
+
 .sidebar {
-    -fx-background-color: #0F172A;
+    -fx-background-color: -bg-sidebar;
     -fx-padding: 20 10;
     -fx-spacing: 10;
     -fx-pref-width: 240;
@@ -60,7 +97,6 @@
     -fx-font-weight: 800;
 }
 
-/* Botões da Sidebar */
 .nav-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #94A3B8;
@@ -79,7 +115,7 @@
 }
 
 .nav-btn.ativo {
-    -fx-background-color: #1E40AF;
+    -fx-background-color: -primary-color;
     -fx-text-fill: white;
 }
 
@@ -91,41 +127,180 @@
 }
 
 .nav-btn-sair:hover {
-    -fx-background-color: #EF4444;
+    -fx-background-color: -danger-color;
     -fx-text-fill: white;
 }
 
+
 /* =========================================================
-   3. COMPONENTES VISUAIS (CARDS, TABELAS)
+   4. TEXTOS, TÍTULOS E ÍCONES
 ========================================================= */
 
-.card-home {
-    -fx-background-color: white;
-    -fx-background-radius: 12;
-    -fx-padding: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 4);
-    -fx-border-color: #E2E8F0;
-    -fx-border-radius: 12;
+.titulo-tela {
+    -fx-font-size: 22;
+    -fx-font-weight: 800;
+    -fx-text-fill: -text-title;
 }
 
-.card-home-titulo {
+.subtitulo-tela {
+    -fx-font-size: 14;
+    -fx-text-fill: -text-muted;
+}
+
+.titulo-secao {
+    -fx-font-size: 18;
+    -fx-font-weight: 800;
+    -fx-text-fill: -text-title;
+}
+
+.perfil-usuario {
+    -fx-font-weight: 800;
+    -fx-text-fill: -primary-color;
+}
+
+.rotulo-campo {
+    -fx-font-size: 14;
+    -fx-font-weight: 600;
+    -fx-text-fill: #475569;
+}
+
+.rotulo-busca {
     -fx-font-size: 14;
     -fx-font-weight: 700;
-    -fx-text-fill: #64748B;
+    -fx-text-fill: #334155;
 }
 
-.card-home-numero {
-    -fx-font-size: 32;
+.texto-destaque {
     -fx-font-weight: 800;
-    -fx-text-fill: #1E40AF;
-    -fx-padding: 5 0;
+    -fx-text-fill: -primary-color;
 }
 
-/* Tabelas Modernas */
+.texto-perigo {
+    -fx-font-weight: 800;
+    -fx-text-fill: #DC2626;
+}
+
+.resultado-destaque {
+    -fx-font-size: 14;
+    -fx-font-weight: 800;
+    -fx-text-fill: -primary-color;
+}
+
+.icone-titulo {
+    -fx-font-size: 24;
+}
+
+.icone-bloco {
+    -fx-font-size: 18;
+}
+
+
+/* =========================================================
+   5. FORMULÁRIOS
+========================================================= */
+
+.campo-texto {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 15;
+    -fx-font-size: 14;
+}
+
+.campo-texto:focused {
+    -fx-border-color: -primary-light;
+}
+
+.combo-box.campo-texto,
+.date-picker.campo-texto {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14;
+}
+
+.combo-box.campo-texto:focused,
+.date-picker.campo-texto:focused {
+    -fx-border-color: -primary-light;
+}
+
+
+/* =========================================================
+   6. BOTÕES
+========================================================= */
+
+.btn-primario {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-padding: 10 25;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-primario:hover {
+    -fx-background-color: -primary-dark;
+}
+
+.btn-secundario {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-text-fill: #475569;
+    -fx-font-weight: 700;
+    -fx-padding: 10 25;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-secundario:hover {
+    -fx-background-color: #F1F5F9;
+}
+
+.btn-perigo {
+    -fx-background-color: #FEE2E2;
+    -fx-text-fill: -danger-dark;
+    -fx-font-weight: 700;
+    -fx-padding: 10 25;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-perigo:hover {
+    -fx-background-color: #FECACA;
+}
+
+.btn-grande {
+    -fx-font-size: 16;
+    -fx-padding: 13 28;
+    -fx-min-height: 45;
+}
+
+.btn-confirmar-verde {
+    -fx-background-color: -success-color;
+    -fx-text-fill: white;
+}
+
+.btn-confirmar-verde:hover {
+    -fx-background-color: -success-dark;
+}
+
+.linha-btn {
+    -fx-spacing: 15;
+    -fx-alignment: CENTER_LEFT;
+}
+
+
+/* =========================================================
+   7. TABELAS
+========================================================= */
+
 .tabela-padrao {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-border-color: #E2E8F0;
+    -fx-border-color: -border-color;
     -fx-border-radius: 8;
 }
 
@@ -145,182 +320,44 @@
     -fx-cell-size: 45;
 }
 
-.tabela-padrao .table-row-cell:odd { -fx-background-color: white; }
-.tabela-padrao .table-row-cell:even { -fx-background-color: #F8FAFC; }
+.tabela-padrao .table-row-cell:odd {
+    -fx-background-color: white;
+}
+
+.tabela-padrao .table-row-cell:even {
+    -fx-background-color: #F8FAFC;
+}
 
 .tabela-padrao .table-row-cell:selected {
     -fx-background-color: #DBEAFE;
-    -fx-text-fill: #1E40AF;
+    -fx-text-fill: -primary-color;
 }
+
 
 /* =========================================================
-   4. FORMULÁRIOS E BOTÕES
+   8. CARDS E DASHBOARD
 ========================================================= */
 
-.campo-texto {
-    -fx-background-color: white;
-    -fx-border-color: #CBD5E1;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-padding: 10 15;
-    -fx-font-size: 14;
-}
-
-.campo-texto:focused {
-    -fx-border-color: #3B82F6;
-}
-
-.btn-primario {
-    -fx-background-color: #1E40AF;
-    -fx-text-fill: white;
-    -fx-font-weight: 700;
-    -fx-padding: 10 25;
-    -fx-background-radius: 8;
-    -fx-cursor: hand;
-}
-
-.btn-primario:hover { -fx-background-color: #1E3A8A; }
-
-.btn-secundario {
-    -fx-background-color: white;
-    -fx-border-color: #CBD5E1;
-    -fx-text-fill: #475569;
-    -fx-font-weight: 700;
-    -fx-padding: 10 25;
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-cursor: hand;
-}
-
-.btn-secundario:hover { -fx-background-color: #F1F5F9; }
-
-.btn-perigo {
-    -fx-background-color: #FEE2E2;
-    -fx-text-fill: #B91C1C;
-    -fx-font-weight: 700;
-    -fx-padding: 10 25;
-    -fx-background-radius: 8;
-    -fx-cursor: hand;
-}
-
-.btn-perigo:hover { -fx-background-color: #FECACA; }
-
-/* =========================================================
-   5. TELA DE LOGIN
-========================================================= */
-
-.login-root {
-    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E3A8A);
-}
-
-.cartao-login {
-    -fx-background-color: white;
-    -fx-padding: 40;
-    -fx-background-radius: 16;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 30, 0, 0, 10);
-    -fx-min-width: 380;
-}
-
-.titulo-login {
-    -fx-font-size: 26;
-    -fx-font-weight: 800;
-    -fx-text-fill: #1E293B;
-}
-
-.icone-login {
-    -fx-background-color: #DBEAFE;
-    -fx-background-radius: 50;
-    -fx-padding: 18;
-    -fx-min-width: 78;
-    -fx-min-height: 78;
-    -fx-max-width: 78;
-    -fx-max-height: 78;
-}
-
-.icone-login-texto {
-    -fx-font-size: 34;
-}
-
-.rotulo-campo-login {
-    -fx-text-fill: #1E293B;
-    -fx-font-weight: bold;
-    -fx-font-size: 13;
-}
-
-.subtitulo-login {
-    -fx-font-size: 14;
-    -fx-text-fill: #64748B;
-}
-
-/* =========================================================
-   6. TELAS DE FORMULÁRIO (CLIENTES, VEICULOS, ETC)
-========================================================= */
-
-.tela-formulario {
+.card-home {
     -fx-background-color: white;
     -fx-background-radius: 12;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 5);
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 4);
+    -fx-border-color: -border-color;
+    -fx-border-radius: 12;
 }
 
-.cabecalho-tela {
-    -fx-padding: 25;
-    -fx-border-color: transparent transparent #E2E8F0 transparent;
+.card-home-titulo {
+    -fx-font-size: 14;
+    -fx-font-weight: 700;
+    -fx-text-fill: -text-muted;
 }
 
-.titulo-tela {
-    -fx-font-size: 22;
+.card-home-numero {
+    -fx-font-size: 32;
     -fx-font-weight: 800;
-    -fx-text-fill: #1E293B;
-}
-
-.painel-formulario {
-    -fx-padding: 25;
-    -fx-background-color: white;
-}
-
-.rotulo-campo {
-    -fx-font-size: 14;
-    -fx-font-weight: 600;
-    -fx-text-fill: #475569;
-}
-
-.bloco-tabela {
-    -fx-padding: 25;
-}
-
-/* AUXILIAR */
-.dashboard-header {
-    -fx-alignment: CENTER_LEFT;
-}
-
-.user-profile-mini {
-    -fx-background-color: #E2E8F0;
-    -fx-background-radius: 50;
-    -fx-padding: 8;
-}
-.combo-box.campo-texto,
-.date-picker.campo-texto {
-    -fx-background-color: white;
-    -fx-border-color: #CBD5E1;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-font-size: 14;
-}
-
-.combo-box.campo-texto:focused,
-.date-picker.campo-texto:focused {
-    -fx-border-color: #3B82F6;
-}
-/* =========================================================
-   7. ÍCONES SEM DEPENDÊNCIAS EXTERNAS
-   ========================================================= */
-
-.icone-titulo {
-    -fx-font-size: 24;
-}
-
-.icone-bloco {
-    -fx-font-size: 18;
+    -fx-text-fill: -primary-color;
+    -fx-padding: 5 0;
 }
 
 .card-icone {
@@ -348,132 +385,122 @@
     -fx-background-color: #FEF9C3;
 }
 
-
-/* =========================================================
-   8. TEXTOS AUXILIARES E DESTAQUES
-   ========================================================= */
-
-.subtitulo-tela {
-    -fx-font-size: 14;
-    -fx-text-fill: #64748B;
+.dashboard-header {
+    -fx-alignment: CENTER_LEFT;
 }
 
-.titulo-secao {
-    -fx-font-size: 18;
-    -fx-font-weight: 800;
-    -fx-text-fill: #1E293B;
-}
-
-.perfil-usuario {
-    -fx-font-weight: 800;
-    -fx-text-fill: #1E40AF;
-}
-
-.rotulo-busca {
-    -fx-font-size: 14;
-    -fx-font-weight: 700;
-    -fx-text-fill: #334155;
-}
-
-.texto-destaque {
-    -fx-font-weight: 800;
-    -fx-text-fill: #1E40AF;
-}
-
-.texto-perigo {
-    -fx-font-weight: 800;
-    -fx-text-fill: #DC2626;
-}
-
-.resultado-destaque {
-    -fx-font-size: 14;
-    -fx-font-weight: 800;
-    -fx-text-fill: #1E40AF;
+.user-profile-mini {
+    -fx-background-color: #E2E8F0;
+    -fx-background-radius: 50;
+    -fx-padding: 8;
 }
 
 
 /* =========================================================
-   9. BLOCOS DE OPERAÇÃO: LOCAÇÃO E DEVOLUÇÃO
-   ========================================================= */
+   9. TELA DE LOGIN
+========================================================= */
+
+.login-root {
+    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E3A8A);
+}
+
+.cartao-login {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 30, 0, 0, 10);
+    -fx-min-width: 380;
+}
+
+.titulo-login {
+    -fx-font-size: 26;
+    -fx-font-weight: 800;
+    -fx-text-fill: -text-title;
+}
+
+.subtitulo-login {
+    -fx-font-size: 14;
+    -fx-text-fill: -text-muted;
+}
+
+.icone-login {
+    -fx-background-color: #DBEAFE;
+    -fx-background-radius: 50;
+    -fx-padding: 18;
+    -fx-min-width: 78;
+    -fx-min-height: 78;
+    -fx-max-width: 78;
+    -fx-max-height: 78;
+}
+
+.icone-login-texto {
+    -fx-font-size: 34;
+}
+
+.rotulo-campo-login {
+    -fx-text-fill: -text-title;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+}
+
+
+/* =========================================================
+   10. LOCAÇÃO E DEVOLUÇÃO
+========================================================= */
 
 .bloco-operacao {
     -fx-background-color: #F8FAFC;
     -fx-padding: 20;
     -fx-background-radius: 12;
-    -fx-border-color: #E2E8F0;
+    -fx-border-color: -border-color;
     -fx-border-radius: 12;
 }
 
 .bloco-alerta {
-    -fx-background-color: #FFF7ED;
-    -fx-border-color: #FFEDD5;
+    -fx-background-color: -warning-bg;
+    -fx-border-color: -warning-border;
 }
 
 .titulo-bloco {
     -fx-font-size: 15;
     -fx-font-weight: 800;
-    -fx-text-fill: #1E293B;
+    -fx-text-fill: -text-title;
 }
 
 .titulo-bloco-alerta {
     -fx-font-size: 15;
     -fx-font-weight: 800;
-    -fx-text-fill: #9A3412;
+    -fx-text-fill: -warning-text;
 }
 
 .resultado-operacao {
     -fx-background-color: white;
     -fx-padding: 10;
     -fx-background-radius: 8;
-    -fx-border-color: #E2E8F0;
+    -fx-border-color: -border-color;
     -fx-border-radius: 8;
 }
 
 .rotulo-total {
     -fx-font-size: 12;
     -fx-font-weight: 800;
-    -fx-text-fill: #64748B;
+    -fx-text-fill: -text-muted;
 }
 
 .valor-total {
     -fx-font-size: 28;
     -fx-font-weight: 900;
-    -fx-text-fill: #1E40AF;
+    -fx-text-fill: -primary-color;
 }
 
 .rotulo-total-alerta {
     -fx-font-size: 11;
     -fx-font-weight: 800;
-    -fx-text-fill: #9A3412;
+    -fx-text-fill: -warning-text;
 }
 
 .valor-total-alerta {
     -fx-font-size: 24;
     -fx-font-weight: 900;
-    -fx-text-fill: #9A3412;
-}
-
-
-/* =========================================================
-   10. BOTÕES E LINHAS DE AÇÃO
-   ========================================================= */
-
-.linha-btn {
-    -fx-spacing: 15;
-    -fx-alignment: CENTER_LEFT;
-}
-
-.btn-grande {
-    -fx-font-size: 16;
-    -fx-padding: 13 28;
-    -fx-min-height: 45;
-}
-
-.btn-confirmar-verde {
-    -fx-background-color: #10B981;
-    -fx-text-fill: white;
-}
-
-.btn-confirmar-verde:hover {
-    -fx-background-color: #059669;
+    -fx-text-fill: -warning-text;
 }
