@@ -9,11 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Responsável pelo acesso à tabela cliente.
+// Contém as operações de cadastro, consulta, atualização, inativação e exclusão.
 public class ClienteDAO extends BaseDAO {
-    //salva um novo cliente no banco de dados
+
+    // Insere um novo cliente na tabela cliente.
     public void salvar(Cliente cliente) throws SQLException {
         String sql = """
-            INSERT INTO cliente (nome, cpf, cnh, telefone, email, ativo) VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO cliente (nome, cpf, cnh, telefone, email, ativo)
+            VALUES (?, ?, ?, ?, ?, ?)
             """;
 
         try (Connection conn = getConnection();
@@ -25,37 +29,49 @@ public class ClienteDAO extends BaseDAO {
             stmt.setString(4, cliente.getTelefone());
             stmt.setString(5, cliente.getEmail());
             stmt.setBoolean(6, cliente.isAtivo());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             registrarErro("ClienteDAO.salvar", e);
             throw e;
         }
     }
-    //busca todos os dados do cliente a partir do cpf
+
+    // Busca um cliente pelo CPF.
+    // Retorna null quando nenhum cliente for encontrado.
     public Cliente buscarPorCpf(String cpf) throws SQLException {
         String sql = """
-            SELECT id, nome, cpf, cnh, telefone, email, ativo FROM cliente WHERE cpf = ?
+            SELECT id, nome, cpf, cnh, telefone, email, ativo
+            FROM cliente
+            WHERE cpf = ?
             """;
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setString(1, cpf);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapearCliente(rs);//retorna cliente
+                    return mapearCliente(rs);
                 }
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             registrarErro("ClienteDAO.buscarPorCpf", e);
             throw e;
         }
-        return null; //para clientes não encontrados
+
+        return null;
     }
+
+    // Lista todos os clientes cadastrados, ordenados pelo nome.
     public List<Cliente> listarTodos() throws SQLException {
         String sql = """
-            SELECT id, nome, cpf, cnh, telefone, email, ativo FROM cliente ORDER BY nome
+            SELECT id, nome, cpf, cnh, telefone, email, ativo
+            FROM cliente
+            ORDER BY nome
             """;
+
         List<Cliente> lista = new ArrayList<>();
 
         try (Connection conn = getConnection();
@@ -66,18 +82,25 @@ public class ClienteDAO extends BaseDAO {
                     lista.add(mapearCliente(rs));
                 }
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             registrarErro("ClienteDAO.listarTodos", e);
             throw e;
         }
+
         return lista;
     }
-    public void atualizar (Cliente cliente) throws SQLException {
+
+    // Atualiza todos os dados cadastrais do cliente.
+    public void atualizar(Cliente cliente) throws SQLException {
         String sql = """
-                UPDATE cliente SET nome = ?, cpf = ?, cnh = ?, telefone = ?, email = ?, ativo = ? WHERE id = ?
-                """;
+            UPDATE cliente
+            SET nome = ?, cpf = ?, cnh = ?, telefone = ?, email = ?, ativo = ?
+            WHERE id = ?
+            """;
+
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getCpf());
             stmt.setString(3, cliente.getCnh());
@@ -85,12 +108,16 @@ public class ClienteDAO extends BaseDAO {
             stmt.setString(5, cliente.getEmail());
             stmt.setBoolean(6, cliente.isAtivo());
             stmt.setInt(7, cliente.getId());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             registrarErro("ClienteDAO.atualizar", e);
             throw e;
         }
     }
+
+    // Inativa o cliente sem remover o seu registro do banco.
+    // Essa abordagem preserva o histórico de locações relacionadas ao cliente.
     public void inativar(Cliente cliente) throws SQLException {
         String sql = """
             UPDATE cliente
@@ -99,36 +126,46 @@ public class ClienteDAO extends BaseDAO {
             """;
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
             stmt.setInt(1, cliente.getId());
-            stmt.executeUpdate();
 
+            stmt.executeUpdate();
         } catch (SQLException e) {
             registrarErro("ClienteDAO.inativar", e);
             throw e;
         }
     }
+
+    // Remove fisicamente um cliente do banco.
+    // No fluxo principal do sistema, a inativação é preferível à exclusão.
     public void deletar(Cliente cliente) throws SQLException {
         String sql = """
-                DELETE FROM cliente WHERE id = ?
-                """;
+            DELETE FROM cliente
+            WHERE id = ?
+            """;
+
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)
         ) {
             stmt.setInt(1, cliente.getId());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             registrarErro("ClienteDAO.deletar", e);
             throw e;
         }
     }
-    public int contarAtivos()throws SQLException {
+
+    // Conta quantos clientes estão ativos.
+    // Usado no dashboard da tela Home.
+    public int contarAtivos() throws SQLException {
         String sql = """
-        SELECT COUNT(*) AS total
-        FROM cliente
-        WHERE ativo = true
-        """;
+            SELECT COUNT(*) AS total
+            FROM cliente
+            WHERE ativo = true
+            """;
+
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()
@@ -140,10 +177,14 @@ public class ClienteDAO extends BaseDAO {
             registrarErro("ClienteDAO.contarAtivos", e);
             throw e;
         }
+
         return 0;
     }
+
+    // Converte uma linha retornada pelo ResultSet em um objeto Cliente.
     private Cliente mapearCliente(ResultSet rs) throws SQLException {
         Cliente cliente = new Cliente();
+
         cliente.setId(rs.getInt("id"));
         cliente.setNome(rs.getString("nome"));
         cliente.setCpf(rs.getString("cpf"));
@@ -151,6 +192,7 @@ public class ClienteDAO extends BaseDAO {
         cliente.setTelefone(rs.getString("telefone"));
         cliente.setEmail(rs.getString("email"));
         cliente.setAtivo(rs.getBoolean("ativo"));
+
         return cliente;
     }
 }
