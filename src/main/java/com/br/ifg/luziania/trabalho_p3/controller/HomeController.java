@@ -11,13 +11,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
+// Controller responsável pela tela Home.
+// Carrega dados do dashboard, tabela de locações ativas, permissões e navegação principal.
 public class HomeController extends BaseController {
+
     private final ClienteService clienteService = new ClienteService();
     private final VeiculoService veiculoService = new VeiculoService();
     private final LocacaoService locacaoService = new LocacaoService();
@@ -26,6 +32,7 @@ public class HomeController extends BaseController {
     private final DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML private VBox sidebar;
+
     @FXML private Button btnVeiculos;
     @FXML private Button btnClientes;
     @FXML private Button btnLocacao;
@@ -47,39 +54,71 @@ public class HomeController extends BaseController {
 
     private boolean sidebarExpandida = true;
 
+    // Inicializa a tela Home assim que o FXML é carregado.
     @FXML
     public void initialize() {
         carregarUsuarioLogado();
         aplicarPermissoes();
         configurarTabelaLocacoes();
         carregarResumoSistema();
-        carregaLocacoesAtivas();
+        carregarLocacoesAtivas();
     }
 
+    // Exibe o nome e o perfil do usuário atualmente logado.
     private void carregarUsuarioLogado() {
         Usuario usuario = Sessao.getUsuarioLogado();
+
         if (usuario == null) {
             labelBoasVindas.setText("Bem-vindo ao sistema");
             labelPerfil.setText("Perfil: -");
             return;
         }
+
         labelBoasVindas.setText("Olá, " + usuario.getNomeCompleto());
         labelPerfil.setText(usuario.getPerfil());
     }
 
+    // Aplica regras de permissão na tela.
+    // Apenas usuários ADMIN podem acessar o gerenciamento de usuários.
     private void aplicarPermissoes() {
         Usuario usuario = Sessao.getUsuarioLogado();
         boolean admin = usuario != null && "ADMIN".equalsIgnoreCase(usuario.getPerfil());
+
         btnUsuarios.setVisible(admin);
         btnUsuarios.setManaged(admin);
     }
 
-    @FXML private void abrirVeiculos() { abrirTela(btnVeiculos, "/fxml/Veiculo.fxml", "Locadora - Veículos"); }
-    @FXML private void abrirClientes() { abrirTela(btnClientes, "/fxml/Cliente.fxml", "Locadora - Clientes"); }
-    @FXML private void abrirLocacao() { abrirTela(btnLocacao, "/fxml/Locacao.fxml", "Locadora - Locação"); }
-    @FXML private void abrirDevolucao() { abrirTela(btnDevolucao, "/fxml/Devolucao.fxml", "Locadora - Devolução"); }
-    @FXML private void abrirUsuarios() { abrirTela(btnUsuarios, "/fxml/Usuario.fxml", "Locadora - Usuários"); }
+    // Abre a tela de gerenciamento de veículos.
+    @FXML
+    private void abrirVeiculos() {
+        abrirTela(btnVeiculos, "/fxml/Veiculo.fxml", "Locadora - Veículos");
+    }
 
+    // Abre a tela de gerenciamento de clientes.
+    @FXML
+    private void abrirClientes() {
+        abrirTela(btnClientes, "/fxml/Cliente.fxml", "Locadora - Clientes");
+    }
+
+    // Abre a tela de nova locação.
+    @FXML
+    private void abrirLocacao() {
+        abrirTela(btnLocacao, "/fxml/Locacao.fxml", "Locadora - Locação");
+    }
+
+    // Abre a tela de devolução.
+    @FXML
+    private void abrirDevolucao() {
+        abrirTela(btnDevolucao, "/fxml/Devolucao.fxml", "Locadora - Devolução");
+    }
+
+    // Abre a tela de gerenciamento de usuários.
+    @FXML
+    private void abrirUsuarios() {
+        abrirTela(btnUsuarios, "/fxml/Usuario.fxml", "Locadora - Usuários");
+    }
+
+    // Encerra a sessão atual e retorna para a tela de login.
     @FXML
     private void sair() {
         if (confirmarAcao("Sair", "Deseja realmente encerrar a sessão?")) {
@@ -89,9 +128,11 @@ public class HomeController extends BaseController {
         }
     }
 
+    // Recolhe ou expande o menu lateral.
     @FXML
     private void toggleSidebar() {
         sidebarExpandida = !sidebarExpandida;
+
         if (sidebarExpandida) {
             sidebar.setPrefWidth(240);
             sidebar.getStyleClass().remove("sidebar-collapsed");
@@ -101,6 +142,7 @@ public class HomeController extends BaseController {
         }
     }
 
+    // Carrega os números exibidos nos cards do dashboard.
     private void carregarResumoSistema() {
         try {
             labelClientesAtivos.setText(String.valueOf(clienteService.contarAtivos()));
@@ -111,15 +153,31 @@ public class HomeController extends BaseController {
         }
     }
 
+    // Configura as colunas da tabela de locações ativas.
     private void configurarTabelaLocacoes() {
-        colunaClienteLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getCliente().getNome()));
-        colunaVeiculoLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getVeiculo().getModelo()));
-        colunaPlacaLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getVeiculo().getPlaca()));
-        colunaDevolucaoLocacao.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getDataDevolucaoPrevista().format(formatadorData)));
+        colunaClienteLocacao.setCellValueFactory(
+                cd -> new SimpleStringProperty(cd.getValue().getCliente().getNome())
+        );
+
+        colunaVeiculoLocacao.setCellValueFactory(
+                cd -> new SimpleStringProperty(cd.getValue().getVeiculo().getModelo())
+        );
+
+        colunaPlacaLocacao.setCellValueFactory(
+                cd -> new SimpleStringProperty(cd.getValue().getVeiculo().getPlaca())
+        );
+
+        colunaDevolucaoLocacao.setCellValueFactory(
+                cd -> new SimpleStringProperty(
+                        cd.getValue().getDataDevolucaoPrevista().format(formatadorData)
+                )
+        );
+
         tabelaLocacoesAtivas.setItems(locacoesAtivas);
     }
 
-    private void carregaLocacoesAtivas() {
+    // Carrega as locações em andamento exibidas na tabela da Home.
+    private void carregarLocacoesAtivas() {
         try {
             locacoesAtivas.setAll(locacaoService.listarAtivasResumo());
         } catch (SQLException e) {
