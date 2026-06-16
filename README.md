@@ -125,15 +125,17 @@ src/main/resources/database.properties
 Exemplo de configuração:
 
 ```properties
-db.driver=postgresql
-db.host=localhost
-db.port=5432
-db.name=locadora_db
-db.user=postgres
-db.password=123456
+db.driver="seu_banco_de_dados"
+db.host="seu_host"
+db.port="sua_porta"
+db.name="nome_da_sua_tabela"
+db.user="seu_usuario"
+db.password="sua_senha"
 ```
 
 Esse arquivo centraliza os dados de conexão com o banco, evitando que URL, usuário e senha fiquem espalhados pelo código Java.
+
+### E necessaria inserir as informações do seu banco de dados!
 
 ---
 
@@ -168,12 +170,12 @@ locacao
 
 ### Resumo das tabelas
 
-| Tabela | Finalidade |
-|---|---|
-| `usuario` | Armazena os usuários que acessam o sistema |
-| `cliente` | Armazena os clientes da locadora |
+| Tabela    | Finalidade                                    |
+|-----------|-----------------------------------------------|
+| `usuario` | Armazena os usuários que acessam o sistema    |
+| `cliente` | Armazena os clientes da locadora              |
 | `veiculo` | Armazena os veículos disponíveis para locação |
-| `locacao` | Armazena as locações realizadas e devoluções |
+| `locacao` | Armazena as locações realizadas e devoluções  |
 
 ---
 

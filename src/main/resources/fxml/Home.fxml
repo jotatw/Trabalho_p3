@@ -3,75 +3,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefWidth="1200"
-            prefHeight="800"
-            styleClass="pagina"
-            stylesheets="@../css/estilos.css"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
+<BorderPane prefHeight="800" prefWidth="1200" styleClass="pagina" stylesheets="@../css/estilos.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.br.ifg.luziania.trabalho_p3.controller.HomeController">
 
     <!-- Menu lateral -->
     <left>
         <VBox fx:id="sidebar" styleClass="sidebar">
 
             <!-- Logo e botão de recolher menu -->
-            <HBox alignment="CENTER_LEFT"
-                  spacing="10"
-                  styleClass="sidebar-logo-container">
-                <Button onAction="#toggleSidebar"
-                        styleClass="nav-btn"
-                        text="☰" />
+            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="sidebar-logo-container">
+                <Button onAction="#toggleSidebar" styleClass="nav-btn" text="☰" />
 
-                <Label fx:id="labelLogo"
-                       styleClass="sidebar-titulo"
-                       text="LOCADORA" />
+                <Label fx:id="labelLogo" styleClass="sidebar-titulo" text="LOCADORA" />
             </HBox>
 
             <!-- Navegação principal -->
-            <Button fx:id="btnHome"
-                    mnemonicParsing="false"
-                    styleClass="nav-btn, ativo"
-                    text="📊 Dashboard" />
+            <Button fx:id="btnHome" mnemonicParsing="false" styleClass="nav-btn, ativo" text="📊 Dashboard" />
 
-            <Button fx:id="btnVeiculos"
-                    mnemonicParsing="false"
-                    onAction="#abrirVeiculos"
-                    styleClass="nav-btn"
-                    text="🚙 Veículos" />
+            <Button fx:id="btnVeiculos" mnemonicParsing="false" onAction="#abrirVeiculos" styleClass="nav-btn" text="🚙 Veículos" />
 
-            <Button fx:id="btnClientes"
-                    mnemonicParsing="false"
-                    onAction="#abrirClientes"
-                    styleClass="nav-btn"
-                    text="👤 Clientes" />
+            <Button fx:id="btnClientes" mnemonicParsing="false" onAction="#abrirClientes" styleClass="nav-btn" text="👤 Clientes" />
 
-            <Button fx:id="btnLocacao"
-                    mnemonicParsing="false"
-                    onAction="#abrirLocacao"
-                    styleClass="nav-btn"
-                    text="📝 Nova Locação" />
+            <Button fx:id="btnLocacao" mnemonicParsing="false" onAction="#abrirLocacao" styleClass="nav-btn" text="📝 Nova Locação" />
 
-            <Button fx:id="btnDevolucao"
-                    mnemonicParsing="false"
-                    onAction="#abrirDevolucao"
-                    styleClass="nav-btn"
-                    text="↩ Devoluções" />
+            <Button fx:id="btnDevolucao" mnemonicParsing="false" onAction="#abrirDevolucao" styleClass="nav-btn" text="↩ Devoluções" />
 
-            <Button fx:id="btnUsuarios"
-                    mnemonicParsing="false"
-                    onAction="#abrirUsuarios"
-                    styleClass="nav-btn"
-                    text="🔐 Usuários" />
+            <Button fx:id="btnUsuarios" mnemonicParsing="false" onAction="#abrirUsuarios" styleClass="nav-btn" text="🔐 Usuários" />
 
             <Pane VBox.vgrow="ALWAYS" />
 
             <!-- Saída do sistema -->
-            <Button fx:id="btnSair"
-                    mnemonicParsing="false"
-                    onAction="#sair"
-                    styleClass="nav-btn, nav-btn-sair"
-                    text="🚪 Sair" />
+            <Button fx:id="btnSair" mnemonicParsing="false" onAction="#sair" styleClass="nav-btn, nav-btn-sair" text="🚪 Sair" />
         </VBox>
     </left>
 
@@ -83,15 +44,11 @@
                 <!-- Cabeçalho do dashboard -->
                 <HBox alignment="CENTER_LEFT">
                     <VBox spacing="5" HBox.hgrow="ALWAYS">
-                        <Label fx:id="labelBoasVindas"
-                               text="Olá, Usuário"
-                               styleClass="titulo-tela" />
+                        <Label fx:id="labelBoasVindas" styleClass="titulo-tela" text="Olá, Usuário" />
 
-                        <HBox spacing="10" alignment="CENTER_LEFT">
-                            <Label text="Perfil:" styleClass="subtitulo-tela" />
-                            <Label fx:id="labelPerfil"
-                                   text="ADMIN"
-                                   styleClass="perfil-usuario" />
+                        <HBox alignment="CENTER_LEFT" spacing="10">
+                            <Label styleClass="subtitulo-tela" text="Perfil:" />
+                            <Label fx:id="labelPerfil" styleClass="perfil-usuario" text="ADMIN" />
                         </HBox>
                     </VBox>
                 </HBox>
@@ -101,12 +58,12 @@
                     <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                         <HBox alignment="CENTER_LEFT" spacing="15">
                             <StackPane styleClass="card-icone, card-icone-azul">
-                                <Label text="👤" styleClass="card-icone-texto" />
+                                <Label styleClass="card-icone-texto" text="👤" />
                             </StackPane>
 
                             <VBox>
-                                <Label text="Clientes Ativos" styleClass="card-home-titulo" />
-                                <Label fx:id="labelClientesAtivos" text="0" styleClass="card-home-numero" />
+                                <Label styleClass="card-home-titulo" text="Clientes Ativos" />
+                                <Label fx:id="labelClientesAtivos" styleClass="card-home-numero" text="0" />
                             </VBox>
                         </HBox>
                     </VBox>
@@ -114,12 +71,12 @@
                     <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                         <HBox alignment="CENTER_LEFT" spacing="15">
                             <StackPane styleClass="card-icone, card-icone-verde">
-                                <Label text="🚙" styleClass="card-icone-texto" />
+                                <Label styleClass="card-icone-texto" text="🚙" />
                             </StackPane>
 
                             <VBox>
-                                <Label text="Veículos Disponíveis" styleClass="card-home-titulo" />
-                                <Label fx:id="labelVeiculosDisponiveis" text="0" styleClass="card-home-numero" />
+                                <Label styleClass="card-home-titulo" text="Veículos Disponíveis" />
+                                <Label fx:id="labelVeiculosDisponiveis" styleClass="card-home-numero" text="0" />
                             </VBox>
                         </HBox>
                     </VBox>
@@ -127,12 +84,12 @@
                     <VBox styleClass="card-home" HBox.hgrow="ALWAYS">
                         <HBox alignment="CENTER_LEFT" spacing="15">
                             <StackPane styleClass="card-icone, card-icone-amarelo">
-                                <Label text="📝" styleClass="card-icone-texto" />
+                                <Label styleClass="card-icone-texto" text="📝" />
                             </StackPane>
 
                             <VBox>
-                                <Label text="Locações Ativas" styleClass="card-home-titulo" />
-                                <Label fx:id="labelLocacoesAtivas" text="0" styleClass="card-home-numero" />
+                                <Label styleClass="card-home-titulo" text="Locações Ativas" />
+                                <Label fx:id="labelLocacoesAtivas" styleClass="card-home-numero" text="0" />
                             </VBox>
                         </HBox>
                     </VBox>
@@ -143,28 +100,23 @@
                     <HBox alignment="CENTER_LEFT" styleClass="cabecalho-tela">
                         <VBox HBox.hgrow="ALWAYS">
                             <HBox alignment="CENTER_LEFT" spacing="10">
-                                <Label text="📌" styleClass="icone-titulo" />
-                                <Label text="Locações em Andamento" styleClass="titulo-secao" />
+                                <Label styleClass="icone-titulo" text="📌" />
+                                <Label styleClass="titulo-secao" text="Locações em Andamento" />
                             </HBox>
 
-                            <Label text="Acompanhe os veículos que ainda estão em uso."
-                                   styleClass="subtitulo-tela" />
+                            <Label styleClass="subtitulo-tela" text="Acompanhe os veículos que ainda estão em uso." />
                         </VBox>
 
-                        <Button styleClass="btn-primario"
-                                text="Nova Locação"
-                                onAction="#abrirLocacao" />
+                        <Button onAction="#abrirLocacao" styleClass="btn-primario" text="Nova Locação" />
                     </HBox>
 
                     <VBox styleClass="bloco-tabela">
-                        <TableView fx:id="tabelaLocacoesAtivas"
-                                   prefHeight="300"
-                                   styleClass="tabela-padrao">
+                        <TableView fx:id="tabelaLocacoesAtivas" prefHeight="300" styleClass="tabela-padrao">
                             <columns>
-                                <TableColumn fx:id="colunaClienteLocacao" text="Cliente" prefWidth="300" />
-                                <TableColumn fx:id="colunaVeiculoLocacao" text="Veículo" prefWidth="200" />
-                                <TableColumn fx:id="colunaPlacaLocacao" text="Placa" prefWidth="120" />
-                                <TableColumn fx:id="colunaDevolucaoLocacao" text="Data Devolução" prefWidth="150" />
+                                <TableColumn fx:id="colunaClienteLocacao" prefWidth="300" text="Cliente" />
+                                <TableColumn fx:id="colunaVeiculoLocacao" prefWidth="200" text="Veículo" />
+                                <TableColumn fx:id="colunaPlacaLocacao" prefWidth="120" text="Placa" />
+                                <TableColumn fx:id="colunaDevolucaoLocacao" prefWidth="150" text="Data Devolução" />
                             </columns>
 
                             <columnResizePolicy>
