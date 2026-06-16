@@ -135,6 +135,12 @@ db.password="sua_senha"
 
 Esse arquivo centraliza os dados de conexão com o banco, evitando que URL, usuário e senha fiquem espalhados pelo código Java.
 
+O arquivo da database-exemplo esta na pasta raiz:
+
+```text
+database.properties-exemplo
+```
+
 ### E necessaria inserir as informações do seu banco de dados!
 
 ---
