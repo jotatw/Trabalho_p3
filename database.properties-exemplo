@@ -1,0 +1,22 @@
+# =========================================================
+# CONFIGURAÇÕES DO BANCO DE DADOS
+# Sistema Locadora - Programação III
+# =========================================================
+
+# Tipo de banco usado pelo sistema
+db.driver="seu_banco_de_dados"
+
+# endereço do servidor do banco
+db.host="seu_host"
+
+# Porta padrão do PostgreSQL
+db.port="sua_porta"
+
+# Nome do Banco de dados
+db.name="nome_da_sua_tabela"
+
+# Usuario do Banco
+db.user="seu_usuario"
+
+# Senha do Banco
+db.password="sua_senha"
