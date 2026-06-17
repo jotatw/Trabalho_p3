@@ -2,21 +2,39 @@
 # CONFIGURAÇÕES DO BANCO DE DADOS
 # Sistema Locadora - Programação III
 # =========================================================
+#
+# Este arquivo serve como exemplo de configuração.
+# Para usar o sistema, copie este arquivo, renomeie para
+# database.properties e coloque em:
+#
+# src/main/resources/database.properties
+#
+# IMPORTANTE:
+# - Não coloque aspas nos valores.
+# - Altere usuário e senha conforme o seu PostgreSQL.
+# - O banco informado em db.name precisa existir antes de executar o sistema.
+# =========================================================
 
-# Tipo de banco usado pelo sistema
-db.driver="seu_banco_de_dados"
+# Tipo de banco usado pelo sistema.
+# Para este projeto, mantenha postgresql.
+db.driver=postgresql
 
-# endereço do servidor do banco
-db.host="seu_host"
+# Endereço do servidor do banco.
+# Em ambiente local, normalmente será localhost.
+db.host=localhost
 
-# Porta padrão do PostgreSQL
-db.port="sua_porta"
+# Porta do PostgreSQL.
+# A porta padrão é 5432.
+db.port=5432
 
-# Nome do Banco de dados
-db.name="nome_da_sua_tabela"
+# Nome do banco de dados usado pelo sistema.
+# Esse banco deve ser criado antes de executar a aplicação.
+db.name=locadora_db
 
-# Usuario do Banco
-db.user="seu_usuario"
+# Usuário do PostgreSQL.
+# Altere conforme o usuário configurado na sua máquina.
+db.user=postgres
 
-# Senha do Banco
-db.password="sua_senha"
+# Senha do usuário do PostgreSQL.
+# Altere conforme a senha configurada na sua máquina.
+db.password=sua_senha

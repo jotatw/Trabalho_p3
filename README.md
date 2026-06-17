@@ -42,8 +42,8 @@ Controller → Service → DAO → Banco de Dados
 - Senhas armazenadas com hash BCrypt
 - Controle de sessão do usuário autenticado
 - Controle de perfis de acesso:
-    - ADMIN
-    - ATENDENTE
+  - ADMIN
+  - ATENDENTE
 - Cadastro, atualização, busca e inativação de usuários
 
 ### Clientes
@@ -71,13 +71,21 @@ Controller → Service → DAO → Banco de Dados
 - Cálculo de multa por atraso
 - Atualização automática da disponibilidade do veículo
 
+### Logs e auditoria
+
+- Geração de logs de uso
+- Geração de logs de erro
+- Registro das principais ações executadas pelos usuários
+- Tela administrativa para visualização dos logs de uso
+- Filtro de logs por data, ação, usuário ou detalhes
+- Acesso à tela de logs restrito ao perfil ADMIN
+
 ### Sistema
 
 - Dashboard com resumo do sistema
 - Tabela de locações ativas
-- Logs de uso e auditoria
-- Logs de erro
 - Uso de transações em operações críticas
+- Organização visual com CSS centralizado
 
 ---
 
@@ -110,46 +118,115 @@ src/main/resources
 └── database.properties
 ```
 
+O arquivo `database.properties` deve ser criado a partir do modelo `database.properties-exemplo`, localizado na raiz do projeto.
+
 ---
 
 ## Banco de dados
 
-O sistema utiliza **PostgreSQL**.
+O sistema utiliza **PostgreSQL** para armazenar os dados da aplicação.
 
-A conexão com o banco é configurada pelo arquivo:
+A conexão com o banco é feita por meio do arquivo:
 
 ```text
 src/main/resources/database.properties
 ```
 
-Exemplo de configuração:
+Esse arquivo contém as informações necessárias para o Java se conectar ao PostgreSQL, como tipo do banco, endereço do servidor, porta, nome do banco, usuário e senha.
 
-```properties
-db.driver="seu_banco_de_dados"
-db.host="seu_host"
-db.port="sua_porta"
-db.name="nome_da_sua_tabela"
-db.user="seu_usuario"
-db.password="sua_senha"
-```
+### Arquivo de exemplo
 
-Esse arquivo centraliza os dados de conexão com o banco, evitando que URL, usuário e senha fiquem espalhados pelo código Java.
-
-O arquivo da database-exemplo esta na pasta raiz:
+O projeto possui um arquivo de exemplo na raiz:
 
 ```text
 database.properties-exemplo
 ```
 
-Substitua os campos com aspas e depois renomei o arquivo para: database.properties
+Esse arquivo serve como modelo para criar o arquivo real de configuração.
 
-Depois e so inserir no seguinte caminho
+Exemplo de conteúdo:
 
-```text
-src/main/resources
+```properties
+# Tipo de banco usado pelo sistema
+db.driver=postgresql
+
+# Endereço do servidor do banco
+db.host=localhost
+
+# Porta do PostgreSQL
+db.port=5432
+
+# Nome do banco de dados
+db.name=locadora_db
+
+# Usuário do PostgreSQL
+db.user=postgres
+
+# Senha do usuário do PostgreSQL
+db.password=sua_senha
 ```
 
-### E necessaria inserir as informações do seu banco de dados!
+### Como configurar o arquivo
+
+Para configurar a conexão com o banco de dados:
+
+```text
+1. Copie o arquivo database.properties-exemplo.
+2. Renomeie a cópia para database.properties.
+3. Edite o arquivo database.properties com os dados do seu PostgreSQL.
+4. Coloque o arquivo final dentro da pasta src/main/resources.
+```
+
+O caminho final deve ficar assim:
+
+```text
+src/main/resources/database.properties
+```
+
+### Explicação dos campos
+
+| Campo         | Explicação                                | Exemplo       |
+|---------------|-------------------------------------------|---------------|
+| `db.driver`   | Tipo do banco de dados usado pelo sistema | `postgresql`  |
+| `db.host`     | Endereço onde o banco está rodando        | `localhost`   |
+| `db.port`     | Porta usada pelo PostgreSQL               | `5432`        |
+| `db.name`     | Nome do banco de dados da aplicação       | `locadora_db` |
+| `db.user`     | Usuário do PostgreSQL                     | `postgres`    |
+| `db.password` | Senha do usuário do PostgreSQL            | `sua_senha`   |
+
+### Observações importantes
+
+O arquivo `database.properties` **não deve usar aspas nos valores**.
+
+Correto:
+
+```properties
+db.user=postgres
+db.password=00000
+```
+
+Incorreto:
+
+```properties
+db.user="postgres"
+db.password="00000"
+```
+
+O banco informado em `db.name` precisa existir antes de executar o sistema.
+
+Exemplo de criação do banco:
+
+```bash
+createdb -U postgres locadora_db
+```
+
+Depois de criar o banco, execute o script SQL do projeto:
+
+```bash
+psql -U postgres -d locadora_db -f database.sql
+```
+
+Em um projeto real, o ideal é versionar apenas o arquivo `database.properties-exemplo`, pois o arquivo `database.properties` pode conter usuário e senha locais do banco de dados.
 
 ---
 
@@ -290,9 +367,11 @@ Ela inicia a aplicação JavaFX e carrega a tela de login.
 
 ---
 
-## Logs
+## Logs e auditoria
 
-O sistema gera arquivos de log na pasta:
+O sistema registra logs para auditoria e acompanhamento das ações executadas pelos usuários.
+
+Os arquivos de log são gerados automaticamente na pasta:
 
 ```text
 logs
@@ -307,18 +386,52 @@ erros.log
 
 ### `uso.log`
 
-Registra ações executadas pelos usuários, como:
+Registra ações executadas no sistema, como:
 
 - Login
-- Cadastro
-- Atualização
-- Inativação
-- Locação
-- Devolução
+- Logout
+- Cadastro de clientes
+- Atualização de clientes
+- Inativação de clientes
+- Cadastro e atualização de veículos
+- Cadastro, atualização e inativação de usuários
+- Realização de locações
+- Registro de devoluções
+- Tentativas de ações inválidas
+
+Cada registro contém:
+
+```text
+data/hora
+ação executada
+usuário responsável
+detalhes da operação
+```
+
+Exemplo de linha de log:
+
+```text
+[27/05/2026 20:15:33] ACAO='LOCACAO_REALIZADA' USUARIO='admin@locadora.com' DETALHES='CPF=000.000.000-00, PLACA=ABC1D23, DIAS=3, VALOR_TOTAL=450.0'
+```
+
+### Tela de logs
+
+Além dos arquivos físicos, o sistema possui uma tela própria para visualização dos logs de uso.
+
+A tela **Logs de Uso do Sistema** permite:
+
+- Visualizar registros do arquivo `uso.log`
+- Filtrar logs por data, ação, usuário ou detalhes
+- Selecionar um registro e ver a linha completa
+- Atualizar a listagem durante a execução do sistema
+
+O acesso à tela de logs é feito pelo menu lateral da Home e fica disponível apenas para usuários com perfil **ADMIN**.
 
 ### `erros.log`
 
 Registra exceções e falhas ocorridas durante a execução do sistema.
+
+Esse arquivo auxilia na identificação de problemas internos, como falhas de banco de dados, erros de leitura de arquivos ou exceções inesperadas.
 
 ---
 
@@ -334,6 +447,9 @@ O projeto aplica boas práticas estudadas na disciplina, como:
 - Configuração centralizada da conexão com o banco
 - Uso de BCrypt para senhas
 - Uso de transações com `commit()` e `rollback()`
+- Registro de auditoria das ações executadas pelos usuários
+- Tela administrativa para consulta dos logs de uso
+- Separação entre geração dos logs e visualização dos logs
 - Separação entre interface, regra de negócio e persistência
 
 ---
