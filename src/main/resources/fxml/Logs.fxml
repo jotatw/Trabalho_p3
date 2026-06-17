@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox alignment="TOP_CENTER"
+      spacing="20"
+      styleClass="home-conteudo"
+      stylesheets="@../css/estilos.css"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.br.ifg.luziania.trabalho_p3.controller.LogController">
 
-</AnchorPane>
+    <VBox styleClass="tela-formulario">
+
+        <HBox alignment="CENTER_LEFT" styleClass="cabecalho-tela">
+            <VBox HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="📋" styleClass="icone-titulo" />
+                    <Label text="Logs de Uso do Sistema" styleClass="titulo-tela" />
+                </HBox>
+
+                <Label text="Consulte as ações registradas durante o uso da aplicação."
+                       styleClass="subtitulo-tela" />
+            </VBox>
+
+            <Button fx:id="btnVoltar"
+                    onAction="#voltarAction"
+                    styleClass="btn-secundario"
+                    text="← Voltar" />
+        </HBox>
+
+        <VBox spacing="15" styleClass="painel-formulario">
+            <VBox spacing="5">
+                <Label text="Buscar nos logs" styleClass="rotulo-busca" />
+                <TextField fx:id="campoBusca"
+                           promptText="Busque por data, ação, usuário ou detalhes..."
+                           styleClass="campo-texto" />
+            </VBox>
+
+            <HBox spacing="15" styleClass="linha-btn">
+                <Button text="Atualizar"
+                        onAction="#carregarLogs"
+                        styleClass="btn-primario" />
+
+                <Button text="Limpar busca"
+                        onAction="#limparBusca"
+                        styleClass="btn-secundario" />
+
+                <Label fx:id="labelTotalLogs"
+                       text="Registros encontrados: 0"
+                       styleClass="resultado-destaque" />
+            </HBox>
+        </VBox>
+
+        <VBox spacing="15" styleClass="bloco-tabela">
+            <TableView fx:id="tabelaLogs"
+                       prefHeight="350"
+                       styleClass="tabela-padrao">
+                <columns>
+                    <TableColumn fx:id="colunaDataHora" text="Data/Hora" prefWidth="170" />
+                    <TableColumn fx:id="colunaAcao" text="Ação" prefWidth="180" />
+                    <TableColumn fx:id="colunaUsuario" text="Usuário" prefWidth="220" />
+                    <TableColumn fx:id="colunaDetalhes" text="Detalhes" prefWidth="420" />
+                </columns>
+
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+
+            <VBox spacing="5">
+                <Label text="Detalhes do registro selecionado" styleClass="rotulo-campo" />
+
+                <TextArea fx:id="areaDetalhes"
+                          editable="false"
+                          prefHeight="100"
+                          wrapText="true"
+                          styleClass="campo-texto" />
+            </VBox>
+        </VBox>
+    </VBox>
+</VBox>

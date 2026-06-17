@@ -39,6 +39,7 @@ public class HomeController extends BaseController {
     @FXML private Button btnDevolucao;
     @FXML private Button btnUsuarios;
     @FXML private Button btnSair;
+    @FXML private Button btnLogs;
 
     @FXML private Label labelBoasVindas;
     @FXML private Label labelPerfil;
@@ -86,6 +87,9 @@ public class HomeController extends BaseController {
 
         btnUsuarios.setVisible(admin);
         btnUsuarios.setManaged(admin);
+
+        btnLogs.setVisible(admin);
+        btnLogs.setManaged(admin);
     }
 
     // Abre a tela de gerenciamento de veículos.
@@ -116,6 +120,12 @@ public class HomeController extends BaseController {
     @FXML
     private void abrirUsuarios() {
         abrirTela(btnUsuarios, "/fxml/Usuario.fxml", "Locadora - Usuários");
+    }
+
+    // Abre a tela de logs de uso do sistema.
+    @FXML
+    private void abrirLogs() {
+        abrirTela(btnLogs, "/fxml/Logs.fxml", "Locadora - Logs de Uso");
     }
 
     // Encerra a sessão atual e retorna para a tela de login.

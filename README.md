@@ -141,6 +141,14 @@ O arquivo da database-exemplo esta na pasta raiz:
 database.properties-exemplo
 ```
 
+Substitua os campos com aspas e depois renomei o arquivo para: database.properties
+
+Depois e so inserir no seguinte caminho
+
+```text
+src/main/resources
+```
+
 ### E necessaria inserir as informações do seu banco de dados!
 
 ---

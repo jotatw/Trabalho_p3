@@ -29,6 +29,8 @@
 
             <Button fx:id="btnUsuarios" mnemonicParsing="false" onAction="#abrirUsuarios" styleClass="nav-btn" text="🔐 Usuários" />
 
+            <Button fx:id="btnLogs" mnemonicParsing="false" onAction="#abrirLogs" styleClass="nav-btn" text="📋 Logs" />
+
             <Pane VBox.vgrow="ALWAYS" />
 
             <!-- Saída do sistema -->
