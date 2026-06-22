@@ -160,7 +160,7 @@ db.port=5432
 db.name=locadora_db
 
 # Usuário do PostgreSQL
-db.user=postgres
+db.user=seu_usuario
 
 # Senha do usuário do PostgreSQL
 db.password=sua_senha
