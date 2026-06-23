@@ -33,7 +33,7 @@ db.name=locadora_db
 
 # Usuário do PostgreSQL.
 # Altere conforme o usuário configurado na sua máquina.
-db.user=postgres
+db.user=seu_usuario
 
 # Senha do usuário do PostgreSQL.
 # Altere conforme a senha configurada na sua máquina.
